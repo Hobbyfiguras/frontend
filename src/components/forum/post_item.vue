@@ -21,12 +21,12 @@
 
       <div class="columns" v-if="!post.deleted">
         <div class="column is-2 has-text-centered forum-user">
-          <div class="columns is-multiline is-mobile is-centered">
-            <div class="column is-12-tablet is-hidden-tablet">
-              <figure class="image is-256x256">
+          <div class="columns is-multiline is-mobile">
+            <div class="column is-12-tablet is-one-third-mobile is-hidden-tablet">
+              <figure class="image is-128x128">
                 <div class="is-paddingless">
                   <router-link class="user-link" :to="{name: 'profile', params: {username: post.creator.username}}">
-                    <img class="is-rounded avatar" :src="post.creator.avatar"/>
+                    <img class="is-rounded" :src="post.creator.avatar"/>
                   </router-link>
                 </div>
               </figure>
@@ -42,7 +42,7 @@
               <figure class="image is-256x256">
                 <div class="is-paddingless">
                   <router-link class="user-link" :to="{name: 'profile', params: {username: post.creator.username}}">
-                    <img class="is-rounded avatar" :src="post.creator.avatar"/>
+                    <img class="is-rounded" :src="post.creator.avatar"/>
                   </router-link>
                 </div>
               </figure>
