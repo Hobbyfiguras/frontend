@@ -1,0 +1,132 @@
+@import "~bulma/sass/utilities/_all";
+@import "variables_light";
+@import "~bulma";
+@import '~bulma-divider/src/sass/index.sass';
+@import "~buefy/src/scss/buefy";
+
+.footer {
+    padding: 1.5rem 1.5rem 2rem;
+}
+
+#app {
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
+}
+
+.app-content {
+    flex: 1;
+}
+
+.container {
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+}
+
+.navbar .container {
+    padding-top: 0rem;
+    padding-bottom: 0rem;
+}
+
+
+.notification {
+  padding: 1.25rem 2.5rem 1.25rem 1.5rem;
+  border-radius: 2px !important;
+  border: 0 !important;
+  box-shadow: 0 2px 3px rgba(10, 10, 10, 0.1), 0 0 0 1px rgba(10, 10, 10, 0.1);
+}
+
+.is-vertical-center {
+    display: flex;
+    justify-content: center;
+  }
+  .is-horizontal-center {
+    justify-content: center;
+  }
+.content a {
+    text-decoration: underline;
+}
+
+.title a {
+    text-decoration: none;
+}
+
+
+.app-content {
+  background-image: url('./assets/images/background.svg');
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-position: right 3.5rem;
+  background-size: contain;
+}
+
+.emoji {
+  height: 1.45em;
+  margin-left: .05em;
+  margin-right: .1em;
+  object-fit: contain;
+  vertical-align: -.4em;
+  width: 1.45em;
+}
+
+.thread-content {
+  &.is-white {
+    background-color: rgba(255, 255, 255, 0.25)
+  }
+  &.is-warning {
+    background-color: $warning;
+  }
+}
+
+.card {
+  background-color: rgba(255, 255, 255, 0.25)
+}
+
+.mfc-thumbnail {
+  margin-left: 0.5rem;
+  margin-right: 0.5rem;
+  border: 1px solid $primary;
+  &:hover {
+    border: 1px solid $info;
+  }
+}
+
+.dropdown-content {
+  color: $text;
+}
+
+.dropdown-item, .dropdown .dropdown-menu .has-link a {
+  color: $text;
+}
+
+.notification a:not(.button) {
+  text-decoration: none;
+}
+
+.is-vertical-center {
+  display: flex;
+  align-items: center;
+}
+
+.mdi-profile {
+  color: #363636;
+}
+
+.navbar-item, .navbar-link {
+  color: $white;
+  &:hover {
+    background-color: darken($primary, 5%) !important;
+    color: $white;
+  }
+}
+a.navbar-item:hover {
+  color: $white !important;
+}
+
+.icon {
+  vertical-align: middle;
+}
+
+.user-moderator {
+  color: #58b958 !important;
+}
