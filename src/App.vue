@@ -2,9 +2,9 @@
     <div id="app" :class="{ 'dark': darkTheme === true}">
     <GDPRNoti/>
     <!-- HACK: Create a hidden navbar to ensure measures are correct (has-fixed-navbar-top doesn't work, I already tried) -->
-    <nav v-if="this.$route.name != 'index'" class="navbar">
+    <nav class="navbar">
     </nav>
-    <nav v-if="this.$route.name != 'index'" class="navbar is-primary is-fixed-top" role="navigation" aria-label="main navigation">
+    <nav class="navbar is-primary is-fixed-top" role="navigation" aria-label="main navigation">
       <AppNav/>
     </nav>
 

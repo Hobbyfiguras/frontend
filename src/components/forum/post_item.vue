@@ -62,11 +62,10 @@
             </div>
           </div>
         </div>
-        <div class="is-divider-vertical is-hidden-mobile"></div>
-          <div class="column is-9 has-vertically-aligned-content">
+          <div class="column is-10 has-vertically-aligned-content">
             <div class="columns">
               <div class="column is-12 content">
-              <vue-markdown v-if="!editing">{{post.content}}</vue-markdown>
+              <Markdown v-if="!editing" :source="post.content"></Markdown>
               <template v-else>
                 <MarkdownEditor v-model="post.content"></MarkdownEditor>
                 <div class="is-divider"></div>
@@ -129,11 +128,12 @@ import MarkdownEditor from '@/components/markdown_editor'
 import Forum from '@/api/forum'
 import petitionsMixin from '@/components/mixins/petitions'
 import UserSocial from '@/components/profile/user_social'
+import Markdown from '@/components/markdown'
 
 export default {
   name: 'post_item',
   mixins: [petitionsMixin],
-  components: { MarkdownEditor, UserSocial },
+  components: { MarkdownEditor, UserSocial, Markdown },
   props: ['post'],
   data () {
     return {
@@ -216,10 +216,6 @@ $forum-header-transition: all .25s ease-in-out;
 
 .forum-user {
   border-right: 0rem solid $grey-lighter;
-}
-
-.post-time {
-  padding: 0.35rem 2.5rem 0.35rem 1.5rem
 }
 
 .post-menu {

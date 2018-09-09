@@ -20,9 +20,8 @@
     </li>
   </ul>
 </nav>
-<div class="tile is-ancestor" v-if="thread">
-  <div v-if="!thread.nsfw || isNSFWEnabled" class="tile is-vertical is-12">
-    <div class="tile">
+<div class="tile is-ancestor is-vertical" v-if="thread">
+  <div v-if="!thread.nsfw || isNSFWEnabled" class="tile is-vertical">
       <div class="tile is-parent is-vertical">
         <article class="tile thread-title is-child notification is-primary">
           <p class="title">{{thread.title}}</p>
@@ -54,9 +53,6 @@
 
       </div>
     </div>
-
-  </div>
-
 </div>
 
 </div>

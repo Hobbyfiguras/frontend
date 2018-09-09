@@ -1,12 +1,12 @@
 <template>
   <div class="content">
-    <vue-markdown :source="source"></vue-markdown>
+      <vue-markdown :source="source"></vue-markdown>
   </div>
-
 </template>
 
 <script>
 import Vue from 'vue'
+
 export default {
   name: 'markdown',
   props: ['source'],

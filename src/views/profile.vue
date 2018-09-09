@@ -204,18 +204,24 @@ export default {
       this.editing = false
     },
     uploadAvatar () {
-      this.avatar = this.crop.generateDataUrl('image/jpeg')
-      this.crop.promisedBlob('image/jpeg').then((blob) => {
-        const data = new FormData()
-        data.append('avatar', blob, 'avatar.jpg')
-        var options = {
-          headers: {
-            'Content-Type': `multipart/form-data; boundary=${data._boundary}`
+      return new Promise((resolve, reject) => {
+        this.avatar = this.crop.generateDataUrl('image/jpeg')
+        this.crop.promisedBlob('image/jpeg').then((blob) => {
+          const data = new FormData()
+          data.append('avatar', blob, 'avatar.jpg')
+          var options = {
+            headers: {
+              'Content-Type': `multipart/form-data; boundary=${data._boundary}`
+            }
           }
-        }
-
-        return this.$awn.async(this.makePetition(FigureSite.updateUserAvatar(this.username, data, options)), 'Avatar actualizado correctamente',
-          'Error actualizando avatar', 'Actualizando avatar')
+          console.log('return')
+          this.$awn.async(this.makePetition(FigureSite.updateUserAvatar(this.username, data, options)), 'Avatar actualizado correctamente',
+            'Error actualizando avatar', 'Actualizando avatar').then(() => {
+            resolve()
+          }).catch((error) => {
+            reject(error)
+          })
+        })
       })
     },
     updateProfile () {
@@ -263,6 +269,7 @@ export default {
     margin: 0;
     padding: 0;
     display: block !important;
+
   }
   .avatar {
     min-height: 196px;
@@ -299,6 +306,7 @@ export default {
   .icon-remove {
     top: 0px !important;
     right: 0px !important;
+    position: absolute;
   }
 
   .icon {

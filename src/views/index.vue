@@ -1,87 +1,103 @@
 <template>
-<div>
-<section class="hero is-primary is-fullheight hero-1">
-  <!-- Hero head: will stick at the top -->
-  <div class="hero-head">
-    <header class="navbar is-fixed-top" role="navigation" aria-label="main navigation">
-      <AppNav/>
-    </header>
-  </div>
+  <div class="container">
+    <div class="columns">
+      <div class="column">
+        <div class="tile is-vertical is-ancestor">
+          <div class="tile is-parent is-vertical">
 
-  <!-- Hero content: will be in the middle -->
-  <div class="hero-body">
-    <div class="container has-text-centered">
-      <h1 class="title">
-        A sandbox eroge where you create your own story.
-      </h1>
+            <div class="tile is-child  notification is-primary post-time is-size-7">
+              <div class="level">
+                <div class="level-left">Ultimos posts</div>
+                <div class="level-right">
+                </div>
+              </div>
+            </div>
+            <article v-for="thread in threads" :key="thread.id" class="tile is-child notification is-white">
+              {{thread.title}} <br/>
+              <p class="is-size-7">por <a>{{thread.creator.username}}</a> en {{thread.forum.name}}</p>
+            </article>
+          </div>
+        </div>
+      </div>
+      <div class="column is-four-fifths">
+        <div class="tile is-vertical is-ancestor">
+          <div v-for="newsItem in news" :key="newsItem.id" class="tile is-parent is-vertical">
+            <article class="tile thread-title is-child notification is-primary">
+              <p class="title">Noticias</p>
+            </article>
+            <div class="tile is-child notification is-info post-time is-size-7">
+              <div class="level">
+                <div class="level-left">por {{newsItem.creator.username}} {{newsItem.created | moment("from")}}</div>
+                <div class="level-right">
+                </div>
+              </div>
+            </div>
+            <article class="tile is-child notification is-white thread-content">
+              <Markdown :source="newsItem.first_post.content"></Markdown>
+              <div class="level">
+                <div class="level-left"></div>
+                <div class="level-right">
+                  <div class="level-item">
+                    <router-link :to="getThreadLinkData(newsItem)">
+                      <b-icon icon="comment" class="badge" :data-badge="newsItem.post_count - 1"></b-icon>
+                    </router-link>
+                  </div>
+                </div>
+              </div>
+            </article>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
-</section>
-<section class="hero is-primary is-fullheight hero-2">
-  <div class="hero-body">
-    <div class="container">
-      <h1 class="title">
-        In ERO-ONE you make your own characters and then share the game world with them.
-      </h1>
-      <h2 class="subtitle">
-        Depending on how you treat them (and what personality they have) the story will unfold in one way or the other.
-      </h2>
-    </div>
-  </div>
-</section>
-
-</div>
 </template>
 
 <script>
-import AppNav from '@/components/nav.vue'
-
+import PetitionsMixin from '@/components/mixins/petitions'
+import Forum from '@/api/forum'
+import Markdown from '@/components/markdown'
 export default {
   name: 'index',
-  components: { AppNav }
+  mixins: [PetitionsMixin],
+  components: { Markdown },
+  data () {
+    return {
+      news: [],
+      threads: []
+    }
+  },
+  mounted () {
+    this.fetchData()
+  },
+  methods: {
+    fetchData () {
+      this.makePetition(Forum.getForumThreads('noticias', 1, 5)).then((news) => {
+        this.news = news.threads.results
+      })
+      this.makePetition(Forum.getThreads()).then((threads) => {
+        this.threads = threads.results
+      })
+    },
+    getThreadLinkData (thread) {
+      return {
+        name: 'thread',
+        params: {
+          id: thread.id,
+          slug: thread.slug,
+          forum: thread.forum.slug
+        }
+      }
+    }
+  }
 }
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="scss">
-@import "@/sass/variables_light.scss";
-
-  .hero-parallax {
-    position: fixed;
-    z-index: 1;
-    top: 0;
-    bottom:  0;
-    left: 0;
-    right: 0;
-    height: 170vh;
-    width: 100vw;
-
-    &:before {
-      content: '';
-      height: 100%;
-      width: 100%;
-      height: 170vh;
-      width: 100vw;
-      background: rgba(44,123,183,.5);
-      position: absolute;
-    }
-
-    h1 {
-      position: relative;
-      z-index: 1;
-
-      font-family: 'Pacifico', cursive;
-      color: rgba(255,255,255,1);;
-      text-align: center;
-      font-size: 4rem;
-      line-height: 4rem;
-
-      text-shadow: 0 2px 2px rgba(0,0,0,.35);
-      max-width: 25rem;
-      margin: 30vh auto 0;
-
-      /*-webkit-transition: 1s opacity ease-in-out;*/
-    }
-  }
-
+.thread-title {
+  padding: 1.0rem 2.5rem 1.0rem 1.5rem
+}
+.tile.is-vertical > .tile.is-child:not(:last-child) {
+  margin-bottom: 0.25rem !important;
+}
 </style>

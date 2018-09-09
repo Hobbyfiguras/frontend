@@ -2,7 +2,9 @@
 @import "variables_light";
 @import "~bulma";
 @import '~bulma-divider/src/sass/index.sass';
+@import '~bulma-badge/src/sass/index.sass';
 @import "~buefy/src/scss/buefy";
+@import '~vue-croppa/dist/vue-croppa.css';
 
 .footer {
     padding: 1.5rem 1.5rem 2rem;
@@ -30,7 +32,7 @@
 
 
 .notification {
-  padding: 1.25rem 2.5rem 1.25rem 1.5rem;
+  padding: 1.25rem 1.5rem 1.25rem 1.5rem;
   border-radius: 2px !important;
   border: 0 !important;
   box-shadow: 0 2px 3px rgba(10, 10, 10, 0.1), 0 0 0 1px rgba(10, 10, 10, 0.1);
@@ -129,4 +131,12 @@ a.navbar-item:hover {
 
 .user-moderator {
   color: #58b958 !important;
+}
+
+.post-time {
+  padding: 0.35rem 1.5rem 0.35rem 1.5rem
+}
+
+.text-align-center {
+  text-align: center;
 }
