@@ -1,5 +1,31 @@
 <template>
       <div class="container">
+      <Menu ref="navItem" :noOverlay="true" right>
+        <div class="level is-marginless bm-top" v-if="user">
+          <div class="level-left">
+
+          </div>
+          <div class="level-right bm-level-item">
+            <b-icon class="badge" data-badge="2" icon="bell"></b-icon>
+          </div>
+        </div>
+        <router-link class="level mobile-navbar-item bm-top is-top" v-if="user" :to="{'name': 'profile', 'params': {'username': user.username}}">
+            <div class="level-left">
+              <div class="level-item">
+                <figure class="image is-64x64">
+                  <img class="is-rounded" :src="user.avatar"/>
+                </figure>
+                <div>{{user.username}}</div>
+              </div>
+            </div>
+            <div class="level-right">
+            </div>
+        </router-link>
+
+        <router-link v-if="!user" :to="{name: 'login'}" class="mobile-navbar-item is-vertical-center"><b-icon icon="login"></b-icon> Entrar</router-link>
+        <a href="#" class="mobile-navbar-item is-vertical-center"><b-icon icon="home"></b-icon> Inicio</a>
+        <a href="#" class="mobile-navbar-item is-vertical-center"><b-icon icon="forum"></b-icon> Foro</a>
+      </Menu>
       <div class="navbar-brand">
         <router-link :to="{name: 'index'}" class="navbar-item">
           Niño que ase viendo dibugito
@@ -10,7 +36,7 @@
           <span aria-hidden="true"></span>
         </a>
       </div>
-      <div class="navbar-menu" :class="{'is-active': navIsActive}">
+      <div class="navbar-menu">
             <div class="navbar-start">
               <router-link :to="{name: 'index'}" class="navbar-item" exact-active-class="is-active">Home</router-link>
 
@@ -44,9 +70,11 @@
 <script>
 import { mapActions, mapGetters, mapState } from 'vuex'
 import LoginPrompt from '@/components/login_prompt'
+import { Menu } from 'vue-burger-menu'
+
 export default {
   name: 'AppNav',
-  components: { LoginPrompt },
+  components: { LoginPrompt, Menu },
   data () {
     return {
       navIsActive: false,
@@ -56,7 +84,9 @@ export default {
   methods: {
     ...mapActions('settings', ['updateDarkTheme']),
     toggleMenu () {
-      this.navIsActive = !this.navIsActive
+      this.$nextTick(() => {
+        this.$refs.navItem.openMenu()
+      })
     }
   },
   computed: {
@@ -71,6 +101,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import "src/sass/variables_light";
+
 h1, h2 {
   font-weight: normal;
 }
@@ -100,5 +132,29 @@ li {
 figure {
   display: inline-block;
   margin-right: 0.35rem;
+}
+.navbar-burger {
+  color: $white;
+  &:hover {
+    background-color: darken($primary, 5%);
+  }
+}
+
+.mobile-navbar-item {
+  padding-left: 2rem;
+  color: $white;
+  &:hover, &:active {
+    background-color: $primary;
+  }
+  display: flex;
+  &.is-top {
+    &:hover, &:active {
+      background-color: darken($info, 5%);
+    }
+  }
+}
+
+.level-item {
+  color: $white;
 }
 </style>

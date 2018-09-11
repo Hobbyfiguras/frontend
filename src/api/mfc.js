@@ -5,10 +5,10 @@ export default {
     return API.makeGET(`/api/mfc/figures/search?keywords=${search}&page=${page}`)
   },
   async getPictures (username = '', page = 1) {
-    return API.makeGET(`/api/mfc/pictures/search?username=${username}&page=${page}`)
+    return API.makeGET(`/api/mfc/pictures/search/?username=${username}&page=${page}`)
   },
   async getUserFigures (username = '', page = 1) {
-    return API.makeGET(`/api/mfc/figures/${username}?page=${page}`)
+    return API.makeGET(`/api/mfc/figures/${username}/?page=${page}`)
   },
   async getQuestions () {
     return API.makeGET(`/api/questions/`)

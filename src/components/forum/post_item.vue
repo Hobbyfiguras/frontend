@@ -3,8 +3,6 @@
     <div class="tile is-child notification is-info post-time is-size-7">
       <div class="level">
         <div class="level-left">{{post.created | moment("from")}}</div>
-        <div class="level-right" v-if="currentUser">
-        </div>
       </div>
     </div>
     <article class="tile is-child notification is-white thread-content" :class="{'is-warning': post.deleted}">

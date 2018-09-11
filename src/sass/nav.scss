@@ -1,0 +1,32 @@
+.bm-menu {
+    background-color: darken($primary, 5%);
+    color: $white;
+    box-shadow: 0 2px 3px rgba(10, 10, 10, 0.1), 0 0 0 1px rgba(10, 10, 10, 0.1);
+    padding-top: 0;
+  }
+  .bm-burger-button {
+    display: none;
+  }
+  
+  
+  .bm-item-list {
+    margin-left: 0;
+    color: $white;
+  }
+  
+  .bm-item-list > * > span {
+    margin-left: 0;  
+  }
+  
+  .bm-cross {
+    display: none;
+  }
+
+  .bm-level-item {
+    padding-top: 0rem;
+    padding-right: 1.5rem;
+  }
+
+  .bm-top {
+      background-color: $info;
+  }

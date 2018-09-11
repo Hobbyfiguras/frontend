@@ -2,7 +2,7 @@ import API from './api'
 
 export default {
   async getForumCategories () {
-    return API.makeGET('/api/forum/categories')
+    return API.makeGET('/api/forum/categories/')
   },
   async getForum (slug) {
     return API.makeGET(`/api/forum/${slug}/`)

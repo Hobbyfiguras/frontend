@@ -5,7 +5,7 @@
 @import '~bulma-badge/src/sass/index.sass';
 @import "~buefy/src/scss/buefy";
 @import '~vue-croppa/dist/vue-croppa.css';
-
+@import "variables_light";
 .footer {
     padding: 1.5rem 1.5rem 2rem;
 }
@@ -14,6 +14,7 @@
     display: flex;
     min-height: 100vh;
     flex-direction: column;
+    padding-top: 3.5rem;
 }
 
 .app-content {
@@ -38,10 +39,7 @@
   box-shadow: 0 2px 3px rgba(10, 10, 10, 0.1), 0 0 0 1px rgba(10, 10, 10, 0.1);
 }
 
-.is-vertical-center {
-    display: flex;
-    justify-content: center;
-  }
+
   .is-horizontal-center {
     justify-content: center;
   }
@@ -88,7 +86,7 @@
   margin-left: 0.5rem;
   margin-right: 0.5rem;
   border: 1px solid $primary;
-  &:hover {
+  &:hover, &:active {
     border: 1px solid $info;
   }
 }
@@ -116,7 +114,7 @@
 
 .navbar-item, .navbar-link {
   color: $white;
-  &:hover {
+  &:hover, &:active {
     background-color: darken($primary, 5%) !important;
     color: $white;
   }
@@ -140,3 +138,5 @@ a.navbar-item:hover {
 .text-align-center {
   text-align: center;
 }
+
+@import "nav";

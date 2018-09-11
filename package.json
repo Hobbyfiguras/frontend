@@ -23,6 +23,7 @@
     "vue": "^2.5.17",
     "vue-awesome-notifications": "^2.2.9",
     "vue-axios": "^2.1.3",
+    "vue-burger-menu": "^1.0.0",
     "vue-croppa": "^1.3.8",
     "vue-markdown": "git+https://github.com/FigureSite/vue-markdown.git",
     "vue-moment": "^4.0.0",
