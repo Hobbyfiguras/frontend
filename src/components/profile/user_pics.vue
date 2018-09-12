@@ -3,7 +3,7 @@
     <div v-if="!loading" v-for="picture in pictures.picture" :key="picture.id" class="column is-3">
       <a :href="getPictureURL(picture)">
         <div class="card gallery-image">
-          <div class="card-image is-overlay">
+          <div class="card-image">
             <figure class="image">
               <img :src="picture.medium"/>
             </figure>

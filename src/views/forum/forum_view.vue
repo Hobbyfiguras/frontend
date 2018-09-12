@@ -18,7 +18,7 @@
     <div class="tile">
       <div class="tile is-parent is-vertical">
         <article class="tile is-child notification is-primary">
-          <div class="level">
+          <div class="level is-mobile">
             <div class="level-left">
               <p class="title">{{forum.name}}</p>
             </div>

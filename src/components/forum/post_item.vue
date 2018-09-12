@@ -50,7 +50,7 @@
             </div>
 
             <div class="column is-12-tablet has-text-centered">
-              <div class="is-vertical-center">
+              <div class="is-vertical-center is-horizontal-center">
                 <b-icon custom-class="mdi-profile" icon="earth"></b-icon>
                 <span> Barcelona</span>
               </div>

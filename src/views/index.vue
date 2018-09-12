@@ -6,7 +6,7 @@
           <div class="tile is-parent is-vertical">
 
             <div class="tile is-child  notification is-primary post-time is-size-7">
-              <div class="level">
+              <div class="level is-mobile">
                 <div class="level-left">Ultimos posts</div>
                 <div class="level-right">
                 </div>
