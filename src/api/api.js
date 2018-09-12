@@ -5,6 +5,7 @@ import debouncePromise from 'debounce-promise'
 function _setAuthHeaders () {
   console.log('set auth headers')
   return store.dispatch('auth/inspectToken').then(() => {
+    console.log('mid inspect')
     if (store.getters['auth/hasAuthData']) {
       Vue.axios.defaults.headers.common = { Authorization: `Bearer ${store.state.auth.jwtAccess}` }
     }

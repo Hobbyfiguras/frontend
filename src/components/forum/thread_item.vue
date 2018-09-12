@@ -18,7 +18,7 @@
       </div>
       <div class="is-divider-vertical"></div>
       <div class="column is-2-tablet  has-text-right">
-        <p>{{thread.creator.username}}</p>
+        <p>{{thread.last_post.creator.username}}</p>
         {{thread.modified | moment("from")}}
       </div>
     </div>

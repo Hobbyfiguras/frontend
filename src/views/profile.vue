@@ -43,12 +43,18 @@
                   Editar perfil
                 </button>
                 <template v-else>
-                  <button @click="saveEdit()" class="button is-info is-outlined">
-                    Guardar
-                  </button>
-                  <button @click="cancelEdit()" class="button is-danger is-outlined">
-                    Cancelar
-                  </button>
+                  <div class="field is-grouped">
+                    <p class="control">
+                      <a class="button is-info" @click="saveEdit()">
+                        Guardar
+                      </a>
+                    </p>
+                    <p class="control">
+                      <a class="button is-danger" @click="cancelEdit()">
+                        Cancelar
+                      </a>
+                    </p>
+                  </div>
                 </template>
               </template>
             </div>
