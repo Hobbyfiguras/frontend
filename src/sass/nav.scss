@@ -1,32 +1,32 @@
 .bm-menu {
-    background-color: darken($primary, 5%);
-    color: $white;
-    box-shadow: 0 2px 3px rgba(10, 10, 10, 0.1), 0 0 0 1px rgba(10, 10, 10, 0.1);
-    padding-top: 0;
+    background-color: darken($primary, 5%) !important;
+    color: $white !important;
+    box-shadow: 0 2px 3px rgba(10, 10, 10, 0.1), 0 0 0 1px rgba(10, 10, 10, 0.1) !important;
+    padding-top: 0 !important;
   }
   .bm-burger-button {
-    display: none;
+    display: none !important;
   }
   
   
   .bm-item-list {
-    margin-left: 0;
-    color: $white;
+    margin-left: 0 !important;
+    color: $white !important;
   }
   
   .bm-item-list > * > span {
-    margin-left: 0;  
+    margin-left: 0 !important;
   }
   
   .bm-cross {
-    display: none;
+    display: none !important;
   }
 
   .bm-level-item {
-    padding-top: 0rem;
-    padding-right: 1.5rem;
+    padding-top: 0rem !important;
+    padding-right: 1.5rem !important;
   }
 
   .bm-top {
-      background-color: $info;
+      background-color: $info !important;
   }
