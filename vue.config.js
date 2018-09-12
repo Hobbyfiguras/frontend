@@ -1,7 +1,7 @@
 module.exports = {
   chainWebpack: config => {
       config.plugin("pwa").tap(args => {
-        return [pwaArgs];
+        return [args];
       });
     },
   pwa: {
