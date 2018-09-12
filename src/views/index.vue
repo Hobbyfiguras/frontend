@@ -23,7 +23,7 @@
         <div class="tile is-vertical is-ancestor">
           <div v-for="newsItem in news" :key="newsItem.id" class="tile is-parent is-vertical">
             <article class="tile thread-title is-child notification is-primary">
-              <p class="title">Noticias</p>
+              <p class="title">{{newsItem.title}}</p>
             </article>
             <div class="tile is-child notification is-info post-time is-size-7">
               <div class="level">
