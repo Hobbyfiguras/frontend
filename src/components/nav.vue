@@ -28,7 +28,7 @@
       </Menu>
       <div class="navbar-brand">
         <router-link :to="{name: 'index'}" class="navbar-item">
-          Niño que ase viendo dibugito
+          Hobbyfiguras
         </router-link>
         <a role="button" class="navbar-burger" @click="toggleMenu" :class="{'is-active': navIsActive}" aria-label="menu" aria-expanded="false">
           <span aria-hidden="true"></span>
