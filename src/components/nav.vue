@@ -45,7 +45,7 @@
               <b-dropdown hoverable v-if="user">
                 <a class="navbar-item" slot="trigger">
                   <figure class="image">
-                      <img class="is-rounded" :src="user.avatar"/>
+                      <img class="is-rounded navbar-avatar" :src="user.avatar"/>
                   </figure>
                   {{user.username}}
                 </a>
@@ -156,5 +156,9 @@ figure {
 
 .level-item {
   color: $white;
+}
+
+.navbar-avatar {
+  width: auto !important;
 }
 </style>

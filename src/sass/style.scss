@@ -1,11 +1,11 @@
 @import "~bulma/sass/utilities/_all";
 @import "variables_light";
+@import "nav";
 @import "~bulma";
 @import '~bulma-divider/src/sass/index.sass';
 @import '~bulma-badge/src/sass/index.sass';
 @import "~buefy/src/scss/buefy";
 @import '~vue-croppa/dist/vue-croppa.css';
-@import "variables_light";
 .footer {
     padding: 1.5rem 1.5rem 2rem;
 }
@@ -138,5 +138,3 @@ a.navbar-item:hover {
 .text-align-center {
   text-align: center;
 }
-
-@import "nav";
