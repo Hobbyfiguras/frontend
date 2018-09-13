@@ -14,17 +14,6 @@ function _setAuthHeaders () {
 
 var setAuthHeaders = debouncePromise(_setAuthHeaders, 500)
 
-function parseError (error) {
-  if (error.response.status === 429) {
-    var seconds = error.response.data.detail.split(' seconds')[0]
-    seconds = seconds.split('available in ')[1]
-    var message = `Vas muy rapido, prueba a hacer eso en ${seconds} seg.`
-    return message
-  } else {
-    return error.message
-  }
-}
-
 export default {
   makePOST (petition, payload) {
     return setAuthHeaders().then(() => {
@@ -32,15 +21,18 @@ export default {
         console.log(r)
         return r.data
       }).catch((err) => {
-        throw parseError(err)
+        throw err
       })
     })
   },
-  makePOSTnoHeaders (petition, payload) {
+  makePOSTnoHeaders (petition, payload, returnFull) {
     return Vue.axios.post(petition, payload).then((r) => {
+      if (returnFull) {
+        return r
+      }
       return r.data
     }).catch((err) => {
-      throw parseError(err)
+      throw err
     })
   },
   makePATCH (petition, payload, config) {
@@ -48,7 +40,7 @@ export default {
       return Vue.axios.patch(petition, payload, config).then((r) => {
         return r.data
       }).catch((err) => {
-        throw parseError(err)
+        throw err
       })
     })
   },
@@ -57,7 +49,7 @@ export default {
       return Vue.axios.get(petition).then((r) => {
         return r.data
       }).catch((err) => {
-        throw parseError(err)
+        throw err
       })
     })
   },
@@ -66,7 +58,7 @@ export default {
       return Vue.axios.delete(petition, payload).then((r) => {
         return r.data
       }).catch((err) => {
-        throw parseError(err)
+        throw err
       })
     })
   }

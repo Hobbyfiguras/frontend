@@ -40,7 +40,7 @@
         </b-pagination>
         </article>
 
-        <template>
+        <template v-if="currentUser">
               <div class="tile is-child notification is-info new-post is-size-7">
                 <div class="level">
                   <div class="level-left">Nuevo post</div>

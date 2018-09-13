@@ -15,6 +15,12 @@ export default {
     }
     return API.makePOSTnoHeaders('/api/auth/refresh/', payload)
   },
+  async registerUser (userData) {
+    return API.makePOSTnoHeaders('/api/auth/register/', userData, true)
+  },
+  async verifyEmail (key) {
+    return API.makePOSTnoHeaders('/api/auth/register/verify-email/', { key: key }, true)
+  },
   async getUser (username) {
     return API.makeGET(`/api/users/${username}/`)
   },

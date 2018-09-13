@@ -7,7 +7,7 @@
     </div>
     <article class="tile is-child notification is-white thread-content" :class="{'is-warning': post.deleted}">
       <div class="post-options" v-if="currentUser">
-        <b-dropdown v-if="currentUser.id === post.creator.id && !post.deleted">
+        <b-dropdown v-if="(currentUser.id === post.creator.id && !post.deleted) | currentUser.is_staff">
           <a class="" slot="trigger">
               <b-icon icon="dots-vertical"></b-icon>
           </a>
@@ -214,10 +214,6 @@ $forum-header-transition: all .25s ease-in-out;
 
 .forum-user {
   border-right: 0rem solid $grey-lighter;
-}
-
-.post-menu {
-  font-size: 0.75rem !important;
 }
 
 .user-link {

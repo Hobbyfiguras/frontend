@@ -39,9 +39,9 @@
           </p>
             <div v-if="currentUser">
               <template v-if="currentUser.id == profileUser.id">
-                <button v-if="!editing" @click="startEdit()" class="button is-primary is-outlined">
+                <a v-if="!editing" @click="startEdit()" class="button is-primary">
                   Editar perfil
-                </button>
+                </a>
                 <template v-else>
                   <div class="field is-grouped">
                     <p class="control">
@@ -120,7 +120,7 @@
   </div>
 </div>
   <b-tabs v-model="activeTab" expanded size="is-medium" v-if="!loading && profileUser.mfc_username">
-    <b-tab-item label="Figuras" >
+    <b-tab-item label="Figuras">
       <UserFigures :username="profileUser.mfc_username"></UserFigures>
     </b-tab-item>
     <b-tab-item label="Fotos" v-if="profileUser.mfc_username">

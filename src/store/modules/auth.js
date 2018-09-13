@@ -16,6 +16,11 @@ const getters = {
 }
 
 const actions = {
+  logOff ({ commit }) {
+    commit('removeToken')
+    commit('setCurrentUser', null)
+    console.log('user log off')
+  },
   logIn ({ commit, dispatch }, payload) {
     return new Promise((resolve, reject) => {
       figuresite.login(payload.username, payload.password).then((response) => {

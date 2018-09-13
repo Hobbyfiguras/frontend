@@ -38,8 +38,8 @@
       </div>
       <div class="navbar-menu">
             <div class="navbar-start">
-              <router-link :to="{name: 'index'}" class="navbar-item" exact-active-class="is-active">Home</router-link>
-
+              <router-link :to="{name: 'index'}" class="navbar-item" exact-active-class="is-active"><b-icon icon="home"></b-icon></router-link>
+              <router-link :to="{name: 'forum_index'}" class="navbar-item" exact-active-class="is-active"><b-icon icon="forum"></b-icon></router-link>
             </div>
             <div class="navbar-end">
               <b-dropdown hoverable v-if="user">
@@ -55,7 +55,7 @@
                   </router-link>
                 </b-dropdown-item>
                 <b-dropdown-item><b-icon icon="settings"></b-icon> <span style="vertical-align: middle;">Preferencias</span></b-dropdown-item>
-                <b-dropdown-item><b-icon icon="logout"></b-icon> <span style="vertical-align: middle;">Salir</span></b-dropdown-item>
+                <b-dropdown-item  @click="logOff()"><b-icon icon="logout"></b-icon> <span style="vertical-align: middle;">Salir</span></b-dropdown-item>
               </b-dropdown>
               <router-link v-else class="navbar-item" :to="{'name': 'login'}">Entrar</router-link>
               <a v-if="patreon_enabled" class="navbar-item is-paddingless patreon-link" slot="trigger" href="https://patreon.com/EIRTeam">
@@ -83,6 +83,7 @@ export default {
   },
   methods: {
     ...mapActions('settings', ['updateDarkTheme']),
+    ...mapActions('auth', ['logOff']),
     toggleMenu () {
       this.$nextTick(() => {
         this.$refs.navItem.openMenu()

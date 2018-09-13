@@ -5,6 +5,8 @@ import notfound from '@/views/notfound'
 import privacy from '@/views/privacy'
 import profile from '@/views/profile'
 import login from '@/views/login'
+import register from '@/views/register'
+import emailVerify from '@/views/email_verify'
 import forumIndex from '@/views/forum/forum_index'
 import forumView from '@/views/forum/forum_view'
 import threadView from '@/views/forum/thread_view'
@@ -65,6 +67,17 @@ const router = new Router({
       path: '/login',
       name: 'login',
       component: login
+    },
+    {
+      path: '/registro',
+      name: 'register',
+      component: register
+    },
+    {
+      path: '/verificar/:email_key',
+      name: 'email_verify',
+      component: emailVerify,
+      props: true
     },
     {
       path: '/404',

@@ -12,10 +12,13 @@
                 </div>
               </div>
             </div>
-            <article v-for="thread in threads" :key="thread.id" class="tile is-child notification is-white">
-              {{thread.title}} <br/>
-              <p class="is-size-7">por <a>{{thread.creator.username}}</a> en {{thread.forum.name}}</p>
-            </article>
+            <router-link class="tile is-child notification is-white" v-for="thread in threads" :key="thread.id" :to="getThreadLinkData(thread)">
+              <article>
+                {{thread.title}} <br/>
+                <p class="is-size-7">por <a>{{thread.creator.username}}</a> en {{thread.forum.name}}</p>
+              </article>
+            </router-link>
+
           </div>
         </div>
       </div>
@@ -23,11 +26,13 @@
         <div class="tile is-vertical is-ancestor">
           <div v-for="newsItem in news" :key="newsItem.id" class="tile is-parent is-vertical">
             <article class="tile thread-title is-child notification is-primary">
-              <p class="title">{{newsItem.title}}</p>
+              <router-link class="title" :to="getThreadLinkData(newsItem)">
+                {{newsItem.title}}
+              </router-link>
             </article>
             <div class="tile is-child notification is-info post-time is-size-7">
               <div class="level">
-                <div class="level-left">por {{newsItem.creator.username}} {{newsItem.created | moment("from")}}</div>
+                <div class="level-left"><p>por <router-link :to="{name: 'profile', params: {username: newsItem.creator.username}}">{{newsItem.creator.username}}</router-link> {{newsItem.created | moment("from")}}</p></div>
               </div>
             </div>
             <article class="tile is-child notification is-white thread-content">
