@@ -1,5 +1,13 @@
 export default {
   methods: {
+    setErrors (errors) {
+      Object.keys(this.errors).forEach((key) => {
+        this.errors[key] = null
+      })
+      Object.keys(errors).forEach((key) => {
+        this.errors[key] = errors[key][0]
+      })
+    },
     makePetition (promise, errorMessage = true) {
       return new Promise((resolve, reject) => {
         this.$Progress.start()

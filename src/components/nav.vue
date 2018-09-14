@@ -23,12 +23,12 @@
         </router-link>
 
         <router-link v-if="!user" :to="{name: 'login'}" class="mobile-navbar-item is-vertical-center"><b-icon icon="login"></b-icon> Entrar</router-link>
-        <a href="#" class="mobile-navbar-item is-vertical-center"><b-icon icon="home"></b-icon> Inicio</a>
-        <a href="#" class="mobile-navbar-item is-vertical-center"><b-icon icon="forum"></b-icon> Foro</a>
+        <router-link class="mobile-navbar-item is-vertical-center" :to="{'name': 'index'}"><b-icon icon="home"></b-icon> Inicio</router-link>
+        <router-link class="mobile-navbar-item is-vertical-center" :to="{'name': 'forum_index'}"><b-icon icon="forum"></b-icon> Foro</router-link>
       </Menu>
       <div class="navbar-brand">
         <router-link :to="{name: 'index'}" class="navbar-item">
-          Hobbyfiguras
+          <img src="@/assets/logo.png" alt="">
         </router-link>
         <a role="button" class="navbar-burger" @click="toggleMenu" :class="{'is-active': navIsActive}" aria-label="menu" aria-expanded="false">
           <span aria-hidden="true"></span>

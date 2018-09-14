@@ -22,17 +22,9 @@ const actions = {
     console.log('user log off')
   },
   logIn ({ commit, dispatch }, payload) {
-    return new Promise((resolve, reject) => {
-      figuresite.login(payload.username, payload.password).then((response) => {
-        console.log(response)
-        commit('setRefreshToken', response.refresh)
-        commit('setAccessToken', response.access)
-        dispatch('getCurrentUser')
-        resolve()
-      }).catch((error) => {
-        reject(error)
-      })
-    })
+    commit('setRefreshToken', payload.refresh)
+    commit('setAccessToken', payload.access)
+    dispatch('getCurrentUser')
   },
   inspectToken ({ commit, dispatch, state }) {
     if (state.refreshingToken) {

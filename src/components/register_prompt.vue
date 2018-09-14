@@ -81,17 +81,11 @@ export default {
         password2: this.password2,
         email: this.email
       }
-      this.makePetition(FigureSite.registerUser(userData)).then((response) => {
+      this.makePetition(FigureSite.registerUser(userData), false).then((response) => {
         this.postRegister = true
       }).catch((error) => {
         if (error.response.status === 400) {
-          var errors = error.response.data
-          Object.keys(this.errors).forEach((key) => {
-            this.errors[key] = null
-          })
-          Object.keys(errors).forEach((key) => {
-            this.errors[key] = errors[key][0]
-          })
+          this.setErrors(error.response.data)
         }
       })
     },
