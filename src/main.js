@@ -16,6 +16,7 @@ import VueMoment from 'vue-moment'
 import VueMarkdown from 'vue-markdown'
 import Croppa from 'vue-croppa'
 import VueScrollTo from 'vue-scrollto'
+import VueMeta from 'vue-meta'
 
 // buefy
 Vue.use(Buefy)
@@ -73,6 +74,10 @@ Vue.use(VueScrollTo, {
   duration: 1000,
   offset: -75
 })
+
+// vue-meta
+
+Vue.use(VueMeta)
 
 Vue.config.productionTip = false
 

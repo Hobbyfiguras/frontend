@@ -79,6 +79,11 @@ export default {
       transitonName: 'asdasd'
     }
   },
+  metaInfo () {
+    return {
+      title: this.thread ? this.thread.title : ''
+    }
+  },
   mounted () {
     this.fetchData()
   },

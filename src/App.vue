@@ -55,6 +55,17 @@ export default {
     ...mapGetters('auth', [
       'hasAuthData'
     ])
+  },
+  metaInfo: {
+    name: 'Hobbyfiguras',
+    titleTemplate: '%s | Hobbyfiguras',
+    meta: [
+      { name: 'twitter:card', content: 'summary' },
+      { name: 'twitter:site', content: 'https://www.google.com' },
+      { name: 'twitter:title', content: 'testing ← My Site' },
+      { name: 'twitter:description', content: 'I have things here on my site.' },
+      { name: 'twitter:image:src', content: 'https://i.imgur.com/0Zr7Z2U.jpg' }
+    ]
   }
 }
 </script>
