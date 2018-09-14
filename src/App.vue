@@ -58,7 +58,10 @@ export default {
   },
   metaInfo: {
     name: 'Hobbyfiguras',
-    titleTemplate: '%s | Hobbyfiguras',
+    titleTemplate: (titleChunk) => {
+      // If undefined or blank then we don't need the hyphen
+      return titleChunk ? `${titleChunk} - Hobbyfiguras` : 'Hobbyfiguras'
+    },
     meta: [
       { name: 'twitter:card', content: 'summary' },
       { name: 'twitter:site', content: 'https://www.google.com' },
