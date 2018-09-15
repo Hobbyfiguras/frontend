@@ -63,7 +63,7 @@
           <div class="column is-10 has-vertically-aligned-content">
             <div class="columns">
               <div class="column is-12 content">
-              <Markdown v-if="!editing" :source="post.content"></Markdown>
+              <Markdown v-if="!editing" :source="post.content" ref="content"></Markdown>
               <template v-else>
                 <MarkdownEditor v-model="post.content"></MarkdownEditor>
                 <div class="is-divider"></div>
@@ -132,7 +132,7 @@ export default {
   name: 'post_item',
   mixins: [petitionsMixin],
   components: { MarkdownEditor, UserSocial, Markdown },
-  props: ['post'],
+  props: ['post', 'isOP'],
   data () {
     return {
       editing: false,
@@ -143,6 +143,9 @@ export default {
     ...mapState({
       currentUser: state => state.auth.currentUser
     })
+  },
+  mounted () {
+    this.getMeta()
   },
   methods: {
     startEditing () {
@@ -180,6 +183,30 @@ export default {
         this.$awn.success('Post eliminado con exito')
         this.$emit('deletePost', post)
       }))
+    },
+    getMeta () {
+      if (this.isOP && this.$refs.content) {
+        var el = this.$refs.content.$el
+        var images = Array.from(el.getElementsByTagName('img'))
+        var image = images.find((image) => {
+          if (!image.classList.contains('mfc-thumbnail')) {
+            return true
+          }
+        })
+        if (image) {
+          console.log(image)
+          return [
+            { name: 'twitter:image:src', content: image.src }
+          ]
+        }
+      }
+      return []
+    }
+  },
+  metaInfo () {
+    return {
+      title: this.thread ? this.thread.title : '',
+      meta: this.getMeta()
     }
   }
 }

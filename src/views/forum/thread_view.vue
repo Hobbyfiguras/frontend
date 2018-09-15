@@ -27,7 +27,7 @@
           <p class="title">{{thread.title}}</p>
         </article>
         <transition-group :name="transitonName">
-          <PostItem class="post_item" v-for="post in thread.posts.results" :post="post" @changePost="changePost" :key="post.id" @deletePost="deletePost" :ref="'#' + post.id">
+          <PostItem class="post_item" v-for="(post, index) in thread.posts.results" :isOP="index === 0 && currentPage === 1" :post="post" @changePost="changePost" :key="post.id" @deletePost="deletePost" :ref="'#' + post.id">
           </PostItem>
         </transition-group>
         <article class="container">
@@ -81,7 +81,12 @@ export default {
   },
   metaInfo () {
     return {
-      title: this.thread ? this.thread.title : ''
+      title: this.thread ? this.thread.title : '',
+      meta: [
+        { name: 'twitter:card', content: 'summary' },
+        { name: 'twitter:site', content: '@hobbyfiguras' },
+        { name: 'twitter:title', content: this.thread ? this.thread.title : 'Hobbyfiguras' }
+      ]
     }
   },
   mounted () {
