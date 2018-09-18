@@ -63,7 +63,8 @@ export default {
       return titleChunk ? `${titleChunk} - Hobbyfiguras` : 'Hobbyfiguras'
     },
     meta: [
-      { property: 'og:site_name', content: 'Hobbyfiguras' }
+      { property: 'og:site_name', content: 'Hobbyfiguras' },
+      { property: 'og:type', content: 'website' }
     ]
   }
 }
