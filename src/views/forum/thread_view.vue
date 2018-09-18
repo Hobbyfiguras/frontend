@@ -67,7 +67,7 @@ import PostCreate from '@/views/forum/post_create'
 import { mapGetters, mapState } from 'vuex'
 import debounce from 'debounce'
 
-const removeMd = require('remove-markdown');
+const removeMd = require('remove-markdown')
 
 export default {
   name: 'thread_view',
@@ -88,7 +88,7 @@ export default {
         { name: 'twitter:card', content: 'summary' },
         { name: 'twitter:site', content: '@hobbyfiguras' },
         { name: 'twitter:title', content: this.thread ? this.thread.title : 'Hobbyfiguras' },
-        { propery: 'og:description', content: removeMd(this.thread.content) }
+        { propery: 'og:description', content: this.thread ? removeMd(this.thread.content) : '' }
       ]
     }
   },
