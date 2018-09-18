@@ -184,6 +184,7 @@ export default {
         this.$emit('deletePost', post)
       }))
     },
+    // Injects image into meta info for OpenGraph and Twitter Cards
     getMeta () {
       if (this.isOP && this.$refs.content) {
         var el = this.$refs.content.$el
@@ -196,7 +197,9 @@ export default {
         if (image) {
           console.log(image)
           return [
-            { name: 'twitter:image:src', content: image.src }
+            { name: 'twitter:image:src', content: image.src },
+            { property: 'og:image', content: image.src },
+            { itemprop: 'image', content: image.src }
           ]
         }
       }
@@ -224,10 +227,13 @@ $forum-header-transition: all .25s ease-in-out;
   &.is-info {
     transition: $forum-header-transition;
     background-color: $info;
-    &:hover{
+    &:hover, &:active {
       background-color: darken($info, 5%);
       transform: scale(1.01);
     }
+  }
+  &.is-sticky {
+    background-color: #58b958;
   }
 }
 
@@ -249,8 +255,10 @@ $forum-header-transition: all .25s ease-in-out;
 
 .post-options {
   position: absolute;
-  right: 1.25rem;
+  right: 1.0rem;
   top: 1.25rem;
+  transform: scale(0);
+  transition: transform .10s ease-in-out;
 }
 
 .has-vertically-aligned-content {
@@ -267,12 +275,15 @@ $forum-header-transition: all .25s ease-in-out;
   &:not(:last-child) {
     margin-right: 0.25rem;
   }
-  &:hover {
+  &:hover, &:active {
     opacity: 1;
   }
 }
-.thread-content:hover {
+.thread-content:hover, .thread-content:active {
   .vote-icon {
+    transform: scale(1);
+  }
+  .post-options {
     transform: scale(1);
   }
 }

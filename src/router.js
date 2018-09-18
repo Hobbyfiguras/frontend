@@ -66,6 +66,7 @@ const router = new Router({
     {
       path: '/login',
       name: 'login',
+      props: true,
       component: login
     },
     {

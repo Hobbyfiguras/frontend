@@ -1,9 +1,9 @@
 <template>
   <router-link :to="getThreadLinkData(thread)">
-  <article class="tile is-child notification forum-header is-info">
+  <article class="tile is-child notification forum-header is-info" :class="{'is-sticky': thread.is_sticky}">
     <div class="columns is-multiline is-mobile">
       <div class="column is-7-tablet is-12-mobile">
-        <p class="subtitle">{{thread.title}} <b-tag v-if="thread.nsfw" type="is-danger">NSFW</b-tag></p>
+        <p class="subtitle">{{thread.title}} <b-tag v-if="thread.nsfw" type="is-danger">NSFW</b-tag> <b-icon icon="pin" v-if="thread.is_sticky"></b-icon> </p>
         por {{thread.creator.username}}, {{thread.created | moment("from")}}
       </div>
       <div class="is-divider-vertical"></div>
@@ -71,6 +71,12 @@ $forum-header-transition: all .25s ease-in-out;
     &:hover{
       background-color: darken($info, 5%);
       transform: scale(1.01);
+    }
+  }
+  &.is-sticky {
+    background-color: #58b958;
+    &:hover {
+      background-color: darken(#58b958, 5%);
     }
   }
 }

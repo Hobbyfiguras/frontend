@@ -22,7 +22,7 @@
             </div>
         </router-link>
 
-        <router-link v-if="!user" :to="{name: 'login'}" class="mobile-navbar-item is-vertical-center"><b-icon icon="login"></b-icon> Entrar</router-link>
+        <router-link v-if="!user" :to="{name: 'login', query: {from: $route.path}}" class="mobile-navbar-item is-vertical-center"><b-icon icon="login"></b-icon> Entrar</router-link>
         <router-link class="mobile-navbar-item is-vertical-center" :to="{'name': 'index'}"><b-icon icon="home"></b-icon> Inicio</router-link>
         <router-link class="mobile-navbar-item is-vertical-center" :to="{'name': 'forum_index'}"><b-icon icon="forum"></b-icon> Foro</router-link>
       </Menu>
@@ -57,7 +57,7 @@
                 <b-dropdown-item><b-icon icon="settings"></b-icon> <span style="vertical-align: middle;">Preferencias</span></b-dropdown-item>
                 <b-dropdown-item  @click="logOff()"><b-icon icon="logout"></b-icon> <span style="vertical-align: middle;">Salir</span></b-dropdown-item>
               </b-dropdown>
-              <router-link v-else class="navbar-item" :to="{'name': 'login'}">Entrar</router-link>
+              <router-link v-else class="navbar-item" :to="{'name': 'login', query: {from: $route.path}}">Entrar</router-link>
               <a v-if="patreon_enabled" class="navbar-item is-paddingless patreon-link" slot="trigger" href="https://patreon.com/EIRTeam">
                 <img class="patreon-image" src="../assets/images/become_a_patron_button.png" alt="">
               </a>

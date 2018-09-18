@@ -61,7 +61,10 @@ export default {
     titleTemplate: (titleChunk) => {
       // If undefined or blank then we don't need the hyphen
       return titleChunk ? `${titleChunk} - Hobbyfiguras` : 'Hobbyfiguras'
-    }
+    },
+    meta: [
+      { property: 'og:site_name', content: 'Hobbyfiguras' }
+    ]
   }
 }
 </script>

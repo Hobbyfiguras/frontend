@@ -56,6 +56,11 @@ export default {
     doLogIn () {
       this.makePetition(FigureSite.login(this.username, this.password), false).then((response) => {
         this.logIn(response)
+        if (this.$route.query.from) {
+          this.$router.push(this.$route.query.from)
+        } else {
+          this.$router.push({ name: 'index' })
+        }
       }).catch((error) => {
         if (error.response.status === 400) {
           this.setErrors(error.response.data)
