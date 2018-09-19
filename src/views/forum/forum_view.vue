@@ -22,7 +22,7 @@
             <div class="level-left">
               <p class="title">{{forum.name}}</p>
             </div>
-            <div class="level-right" v-if="!currentUser">
+            <div class="level-right" v-if="currentUser">
               <router-link :to="{name: 'thread_new', props: {slug: forum.slug}}">
                 <button class="button is-info">Nuevo tema</button>
               </router-link>
@@ -60,6 +60,7 @@ export default {
       itemsPerPage: 15,
       forum: {
         threads: {
+          count: 0,
           results: []
         }
       }
