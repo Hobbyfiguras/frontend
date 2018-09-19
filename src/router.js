@@ -16,6 +16,22 @@ import store from '@/store'
 
 Vue.use(Router)
 
+function requireAuth (to, from, next) {
+  if (store.getters['auth/hasAuthData']) {
+    next()
+  } else {
+    next('/')
+  }
+}
+
+function requireNotAuth (to, from, next) {
+  if (store.getters['auth/hasAuthData']) {
+    next('/')
+  } else {
+    next()
+  }
+}
+
 const router = new Router({
   mode: 'history',
   routes: [
@@ -55,7 +71,8 @@ const router = new Router({
       path: '/foro/:slug/nuevo',
       name: 'thread_new',
       props: true,
-      component: threadCreate
+      component: threadCreate,
+      beforeEnter: requireAuth
     },
     {
       path: '/foro/:forum?/:id/:slug?/:page?',
@@ -67,18 +84,42 @@ const router = new Router({
       path: '/login',
       name: 'login',
       props: true,
-      component: login
+      component: login,
+      beforeEnter: requireNotAuth
     },
     {
       path: '/registro',
       name: 'register',
-      component: register
+      component: register,
+      beforeEnter: requireNotAuth
     },
     {
       path: '/verificar/:email_key',
       name: 'email_verify',
       component: emailVerify,
-      props: true
+      props: true,
+      beforeEnter: requireNotAuth
+    },
+    {
+      path: '/admin',
+      component: () => import('@/views/admin/admin_base'),
+      children: [
+        {
+          path: '',
+          name: 'admin',
+          component: () => import('@/views/admin/admin_index')
+        },
+        {
+          path: 'reportes',
+          name: 'admin_reports',
+          component: () => import('@/views/admin/admin_reports')
+        },
+        {
+          path: 'categorias',
+          name: 'admin_forum_categories',
+          component: () => import('@/views/admin/admin_forum_categories')
+        }
+      ]
     },
     {
       path: '/404',

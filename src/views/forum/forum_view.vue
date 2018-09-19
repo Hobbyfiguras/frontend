@@ -22,7 +22,7 @@
             <div class="level-left">
               <p class="title">{{forum.name}}</p>
             </div>
-            <div class="level-right">
+            <div class="level-right" v-if="!currentUser">
               <router-link :to="{name: 'thread_new', props: {slug: forum.slug}}">
                 <button class="button is-info">Nuevo tema</button>
               </router-link>
@@ -50,7 +50,7 @@ import Forum from '@/api/forum'
 import PetitionsMixin from '@/components/mixins/petitions'
 import thread from '@/components/forum/thread_item'
 import debounce from 'debounce'
-
+import { mapState } from 'vuex'
 export default {
   name: 'forum_view',
   mixins: [PetitionsMixin],
@@ -104,6 +104,11 @@ export default {
       }
       this.currentPage = page
     }, 500)
+  },
+  computed: {
+    ...mapState({
+      currentUser: state => state.auth.currentUser
+    })
   }
 }
 </script>

@@ -4,6 +4,15 @@ export default {
   async getForumCategories () {
     return API.makeGET('/api/forum/categories/')
   },
+  async createForumCategory (payload) {
+    return API.makePOST('/api/forum/categories/', payload)
+  },
+  async updateForumCategory (payload) {
+    return API.makePATCH(`/api/forum/categories/${payload.slug}/`)
+  },
+  async deleteForumCategory (id) {
+    return API.makeDELETE(`/api/forum/categories/${id}/`)
+  },
   async getForum (slug) {
     return API.makeGET(`/api/forum/${slug}/`)
   },
@@ -27,5 +36,8 @@ export default {
   },
   async createPost (thread, content) {
     return API.makePOST(`/api/thread/${thread.id}/create_post/`, { content: content })
+  },
+  async getReports (page = 1) {
+    return API.makeGET(`/api/reports/?page=${page}`)
   }
 }
