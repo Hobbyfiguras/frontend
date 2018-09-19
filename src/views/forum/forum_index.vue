@@ -2,7 +2,7 @@
   <div class="container">
 <div class="tile is-ancestor">
   <div class="tile is-vertical is-12">
-    <div class="tile">
+    <div class="tile is-vertical">
       <div v-for="category in categories" :key="category.id" class="tile is-parent is-vertical">
         <article class="tile is-child notification is-primary">
           <p class="subtitle">{{category.name}}</p>
