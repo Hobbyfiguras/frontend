@@ -2,7 +2,7 @@
   <tr>
     <td>
       <figure class="image is-64x64">
-        <img src="../../assets/icono-forov2.png" class="is-rounded" alt="">
+        <img :src="value.icon" class="is-rounded" alt="">
       </figure>
     </td>
     <td>{{ value.name }}</td>
