@@ -212,7 +212,6 @@ export default {
   },
   metaInfo () {
     return {
-      title: this.thread ? this.thread.title : '',
       meta: this.getMeta()
     }
   }

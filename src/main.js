@@ -99,8 +99,6 @@ Vue.mixin({
           .use(stripMarkdown)
           .process(content, (err, file) => {
             var str = String(file)
-            console.log(str)
-
             if (err) {
               reject(err)
             }
@@ -109,7 +107,6 @@ Vue.mixin({
               '<!doctype html><body>' + str,
               'text/html')
             var decodedString = dom.body.textContent
-            console.log(decodedString)
             decodedString = decodedString.replace(/->|<-|\\/g, '')
             resolve(decodedString)
           })
