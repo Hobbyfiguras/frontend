@@ -1,6 +1,7 @@
 import API from './api'
 
 export default {
+  // Forum categories
   async getForumCategories () {
     return API.makeGET('/api/forum/categories/')
   },
@@ -13,8 +14,24 @@ export default {
   async deleteForumCategory (id) {
     return API.makeDELETE(`/api/forum/categories/${id}/`)
   },
+  // Forum
+  async createForum (payload) {
+    return API.makePOST('/api/forum/', payload)
+  },
   async getForum (slug) {
     return API.makeGET(`/api/forum/${slug}/`)
+  },
+  async moveForumUp (slug) {
+    return API.makePOST(`/api/forum/${slug}/move_up/`, {})
+  },
+  async moveForumDown (slug) {
+    return API.makePOST(`/api/forum/${slug}/move_down/`, {})
+  },
+  async deleteForum (slug) {
+    return API.makeDELETE(`/api/forum/${slug}/`)
+  },
+  async updateForum (slug, payload) {
+    return API.makePATCH(`/api/forum/${slug}/`, payload)
   },
   async getThreads (page = 1, pageSize = 5) {
     return API.makeGET(`/api/thread/?page=${page}&page_size=${pageSize}`)

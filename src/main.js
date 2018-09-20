@@ -81,6 +81,29 @@ Vue.use(VueMeta)
 
 Vue.config.productionTip = false
 
+Vue.mixin({
+  methods: {
+    fileToBase64 (file) {
+      return new Promise((resolve, reject) => {
+        var reader = new FileReader()
+        reader.onload = function () { resolve(reader.result) }
+        reader.onerror = reject
+        reader.readAsDataURL(file)
+      })
+    }
+  }
+})
+
+Vue.axios.interceptors.request.use((config) => {
+  return store.dispatch('auth/inspectToken').then(() => {
+    console.log('mid inspect')
+    if (store.getters['auth/hasAuthData']) {
+      config.headers.common = { Authorization: `Bearer ${store.state.auth.jwtAccess}` }
+    }
+    return Promise.resolve(config)
+  })
+})
+
 new Vue({
   router,
   store,

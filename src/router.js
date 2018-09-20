@@ -102,22 +102,27 @@ const router = new Router({
     },
     {
       path: '/admin',
-      component: () => import('@/views/admin/admin_base'),
+      component: () => import(/* webpackChunkName: "admin" */ '@/views/admin/admin_base'),
       children: [
         {
           path: '',
           name: 'admin',
-          component: () => import('@/views/admin/admin_index')
+          component: () => import(/* webpackChunkName: "admin" */ '@/views/admin/admin_index')
         },
         {
           path: 'reportes',
           name: 'admin_reports',
-          component: () => import('@/views/admin/admin_reports')
+          component: () => import(/* webpackChunkName: "admin" */ '@/views/admin/admin_reports')
         },
         {
           path: 'categorias',
           name: 'admin_forum_categories',
-          component: () => import('@/views/admin/admin_forum_categories')
+          component: () => import(/* webpackChunkName: "admin" */ '@/views/admin/admin_forum_categories')
+        },
+        {
+          path: 'foros',
+          name: 'admin_forum_forums',
+          component: () => import(/* webpackChunkName: "admin" */ '@/views/admin/admin_forum_forums')
         }
       ]
     },

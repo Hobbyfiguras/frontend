@@ -18,7 +18,7 @@
 <script>
 import petitionsMixin from '@/components/mixins/petitions'
 import Forum from '@/api/forum'
-import CreateForumModel from '@/views/admin/modals/create_forum_category'
+import CreateForumCategory from '@/views/admin/modals/create_forum_category'
 import AdminCategory from '@/components/admin/admin_category'
 export default {
   name: 'admin_forum_categories',
@@ -44,7 +44,7 @@ export default {
     createCategory () {
       this.$modal.open({
         parent: this,
-        component: CreateForumModel,
+        component: CreateForumCategory,
         hasModalCard: true,
         events: {
           'createCategory': this.onCategoryCreated
