@@ -17,6 +17,8 @@ import VueMarkdown from 'vue-markdown'
 import Croppa from 'vue-croppa'
 import VueScrollTo from 'vue-scrollto'
 import VueMeta from 'vue-meta'
+import stripMarkdown from 'strip-markdown'
+import remark from 'remark'
 
 // buefy
 Vue.use(Buefy)
@@ -90,15 +92,41 @@ Vue.mixin({
         reader.onerror = reject
         reader.readAsDataURL(file)
       })
+    },
+    stripMd (content) {
+      return new Promise((resolve, reject) => {
+        remark()
+          .use(stripMarkdown)
+          .process(content, (err, file) => {
+            var str = String(file)
+            console.log(str)
+
+            if (err) {
+              reject(err)
+            }
+            var parser = new DOMParser()
+            var dom = parser.parseFromString(
+              '<!doctype html><body>' + str,
+              'text/html')
+            var decodedString = dom.body.textContent
+            console.log(decodedString)
+            decodedString = decodedString.replace(/->|<-|\\/g, '')
+            resolve(decodedString)
+          })
+      })
     }
   }
 })
 
 Vue.axios.interceptors.request.use((config) => {
-  return store.dispatch('auth/inspectToken').then(() => {
+  return store.dispatch('auth/inspectToken').then((newToken) => {
     console.log('mid inspect')
     if (store.getters['auth/hasAuthData']) {
-      config.headers.common = { Authorization: `Bearer ${store.state.auth.jwtAccess}` }
+      if (newToken) {
+        config.headers.common = { Authorization: `Bearer ${newToken}` }
+      } else {
+        config.headers.common = { Authorization: `Bearer ${store.state.auth.jwtAccess}` }
+      }
     }
     return Promise.resolve(config)
   })

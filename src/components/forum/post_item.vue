@@ -136,7 +136,8 @@ export default {
   data () {
     return {
       editing: false,
-      oldPost: null
+      oldPost: null,
+      prettyDesc: null
     }
   },
   computed: {
@@ -145,7 +146,9 @@ export default {
     })
   },
   mounted () {
-    this.getMeta()
+    this.stripMd(this.post.content).then((desc) => {
+      this.prettyDesc = desc
+    })
   },
   methods: {
     startEditing () {
@@ -199,7 +202,8 @@ export default {
           return [
             { name: 'twitter:image:src', content: image.src },
             { property: 'og:image', content: image.src },
-            { itemprop: 'image', content: image.src }
+            { itemprop: 'image', content: image.src },
+            { property: 'og:description', content: this.post.isOP ? '' : this.prettyDesc }
           ]
         }
       }

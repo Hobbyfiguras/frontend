@@ -67,8 +67,6 @@ import PostCreate from '@/views/forum/post_create'
 import { mapGetters, mapState } from 'vuex'
 import debounce from 'debounce'
 
-const removeMd = require('remove-markdown')
-
 export default {
   name: 'thread_view',
   mixins: [PetitionsMixin, NSFWWarningMixin],
@@ -87,8 +85,7 @@ export default {
       meta: [
         { name: 'twitter:card', content: 'summary' },
         { name: 'twitter:site', content: '@hobbyfiguras' },
-        { name: 'twitter:title', content: this.thread ? this.thread.title : 'Hobbyfiguras' },
-        { property: 'og:description', content: this.thread ? removeMd(this.thread.content) : '' }
+        { name: 'twitter:title', content: this.thread ? this.thread.title : 'Hobbyfiguras' }
       ]
     }
   },
@@ -128,7 +125,6 @@ export default {
 
       this.makePetition(Forum.getThread(this.id, page)).then((thread) => {
         this.thread = thread
-        console.log(removeMd(this.thread.content))
         if (page === 'last') {
           this.currentPage = Math.ceil(this.thread.posts.count / this.postsPerPage)
         } else {

@@ -65,8 +65,8 @@ const actions = {
 
           if (renewAccess) {
             commit('removeAccessToken')
-            dispatch('refreshToken').then(() => {
-              resolve()
+            dispatch('refreshToken').then((newToken) => {
+              resolve(newToken)
             })
           }
         } catch (err) {
@@ -87,7 +87,7 @@ const actions = {
         commit('setAccessToken', response.access)
         dispatch('getCurrentUser')
         commit('setRefreshingToken', false)
-        resolve()
+        resolve(response.access)
       }).catch((error) => {
         commit('removeToken')
         commit('setRefreshingToken', false)
