@@ -85,7 +85,8 @@ export default {
       meta: [
         { name: 'twitter:card', content: 'summary' },
         { name: 'twitter:site', content: '@hobbyfiguras' },
-        { name: 'twitter:title', content: this.thread ? this.thread.title : 'Hobbyfiguras' }
+        { name: 'twitter:title', content: this.thread ? this.thread.title : 'Hobbyfiguras' },
+        { property: 'og:title', content: this.thread ? this.thread.title : 'Hobbyfiguras' }
       ]
     }
   },
