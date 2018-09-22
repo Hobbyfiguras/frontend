@@ -20,7 +20,7 @@
           </tr>
         </thead>
         <tbody>
-          <AdminForumRow v-for="(forum, index) in orderedForums(category.forums)" :key="forum.id" @deleteForum="deleteForum" @forumUp="forumUp" @forumDown="forumDown" v-model="orderedForums(category.forums)[index]">
+          <AdminForumRow v-for="(forum) in orderedForums(category.forums)" :key="forum.id" @deleteForum="deleteForum" @forumUp="forumUp" @forumDown="forumDown" :value="forum" @updateForum="updateForum">
           </AdminForumRow>
         </tbody>
       </table>
@@ -84,6 +84,18 @@ export default {
             this.categories[index].forums[bottomForumIDX].order--
             this.makePetition(Forum.moveForumDown(forum.slug))
           }
+        }
+      })
+    },
+    updateForum (forum) {
+      console.log(forum)
+      this.categories.forEach((category, catIdx) => {
+        var idx = category.forums.findIndex((foundForum) => foundForum.id === forum.id)
+        console.log(idx)
+        if (idx !== -1) {
+          console.log(this.categories[catIdx].forums[idx])
+          this.categories[catIdx].forums.splice(idx, 1)
+          this.categories[catIdx].forums.push(forum)
         }
       })
     },

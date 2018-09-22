@@ -13,7 +13,7 @@
           <div class="columns is-vertical-center">
             <div class="column is-1">
               <figure class="image is-64x64">
-                <img src="../../assets/icono-forov2.png" class="is-rounded" alt="">
+                <img :src="forum.icon" class="is-rounded" alt="">
               </figure>
             </div>
             <div class="column is-9">

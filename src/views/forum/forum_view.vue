@@ -20,7 +20,14 @@
         <article class="tile is-child notification is-primary">
           <div class="level is-mobile">
             <div class="level-left">
-              <p class="title">{{forum.name}}</p>
+              <div class="level-item">
+                <figure class="image is-64x64">
+                  <img :src="forum.icon" class="is-rounded" alt="">
+                </figure>
+              </div>
+              <div class="level-item">
+                <p class="title">{{forum.name}}</p>
+              </div>
             </div>
             <div class="level-right" v-if="currentUser">
               <router-link :to="{name: 'thread_new', props: {slug: forum.slug}}">

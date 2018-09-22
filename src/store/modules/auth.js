@@ -41,7 +41,7 @@ const actions = {
           if (tokenAccess) {
             const decodedAccess = jwtDecode(tokenAccess)
             const expAccess = decodedAccess.exp
-            if (Math.floor((expAccess - Date.now() / 1000)) / 60 <= 5 && (Date.now)) {
+            if (Math.floor((expAccess - Date.now() / 1000)) / 60 <= 5) {
               // If access token has under 5 minutes left or is not there, try to refresh it
               renewAccess = true
             }
