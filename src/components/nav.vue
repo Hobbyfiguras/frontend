@@ -40,7 +40,6 @@
             <div class="navbar-start">
               <router-link :to="{name: 'index'}" class="navbar-item" exact-active-class="is-active"><b-icon icon="home"></b-icon></router-link>
               <router-link :to="{name: 'ForumIndex'}" class="navbar-item" active-class="is-active"><b-icon icon="forum"></b-icon></router-link>
-              <router-link :to="{name: 'admin_index'}" class="navbar-item" active-class="is-active"><b-icon icon="fire"></b-icon></router-link>
             </div>
             <div class="navbar-end">
               <b-dropdown hoverable v-if="user">
