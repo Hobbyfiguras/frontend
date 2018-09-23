@@ -4,7 +4,7 @@
     <div class="columns is-multiline is-mobile">
       <div class="column is-7-tablet is-12-mobile">
         <p class="subtitle">{{thread.title}} <b-tag v-if="thread.nsfw" type="is-danger">NSFW</b-tag> <b-icon icon="pin" v-if="thread.is_sticky"></b-icon> </p>
-        por {{thread.creator.username}}, {{thread.created | moment("from")}}
+        por {{thread.creator.username}}, {{thread.created | timeDiff("from")}}
       </div>
       <div class="is-divider-vertical"></div>
       <div class="column has-text-centered">
@@ -19,7 +19,7 @@
       <div class="is-divider-vertical"></div>
       <div class="column is-2-tablet  has-text-right">
         <p>{{thread.last_post.creator.username}}</p>
-        {{thread.modified | moment("from")}}
+        {{thread.modified | timeDiff("from")}}
       </div>
     </div>
 

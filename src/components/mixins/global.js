@@ -1,5 +1,7 @@
 import stripMarkdown from 'strip-markdown'
 import remark from 'remark'
+import distanceInWordsToNow from 'date-fns/distance_in_words_to_now'
+import esLocale from 'date-fns/locale/es'
 
 export default {
   methods: {
@@ -29,6 +31,11 @@ export default {
             resolve(decodedString.substring(0, decodedString.length - 1))
           })
       })
+    }
+  },
+  filters: {
+    timeDiff (value) {
+      return 'hace ' + distanceInWordsToNow(value, { locale: esLocale })
     }
   }
 }

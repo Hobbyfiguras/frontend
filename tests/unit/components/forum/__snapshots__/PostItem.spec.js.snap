@@ -1,0 +1,260 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`PostItem.vue renders properly 1`] = `
+<div>
+  <div
+    class="tile is-child notification is-info post-time is-size-7"
+  >
+    <div
+      class="level"
+    >
+      <div
+        class="level-left"
+      >
+        hace 3 días
+      </div>
+    </div>
+  </div>
+   
+  <article
+    class="tile is-child notification is-white thread-content"
+  >
+    <div
+      class="post-options"
+    >
+      <b-dropdown-stub>
+        <a>
+          <bicon-stub
+            icon="dots-vertical"
+          />
+        </a>
+         
+        <b-dropdown-item-stub>
+          <bicon-stub
+            icon="pencil"
+          />
+           Editar
+        </b-dropdown-item-stub>
+         
+        <b-dropdown-item-stub>
+          <bicon-stub
+            icon="delete"
+          />
+           Eliminar
+        </b-dropdown-item-stub>
+      </b-dropdown-stub>
+    </div>
+     
+    <div
+      class="columns"
+    >
+      <div
+        class="column is-2 has-text-centered forum-user"
+      >
+        <div
+          class="columns is-multiline is-mobile"
+        >
+          <div
+            class="column is-12-tablet is-one-third-mobile is-hidden-tablet"
+          >
+            <figure
+              class="image is-128x128"
+            >
+              <div
+                class="is-paddingless"
+              >
+                <router-link-stub
+                  class="user-link"
+                  to="[object Object]"
+                >
+                  <img
+                    class="is-rounded"
+                    src="http://127.0.0.1:8081/static/avatars/avatar_2.png"
+                  />
+                </router-link-stub>
+              </div>
+            </figure>
+          </div>
+           
+          <div
+            class="column is-12-tablet"
+          >
+            <p
+              class="subtitle"
+            >
+              <router-link-stub
+                class="user-link user-moderator"
+                to="[object Object]"
+              >
+                
+              test user
+              
+              </router-link-stub>
+            </p>
+          </div>
+           
+          <div
+            class="column is-12-tablet is-hidden-mobile"
+          >
+            <figure
+              class="image is-256x256"
+            >
+              <div
+                class="is-paddingless"
+              >
+                <router-link-stub
+                  class="user-link"
+                  to="[object Object]"
+                >
+                  <img
+                    class="is-rounded"
+                    src="http://127.0.0.1:8081/static/avatars/avatar_2.png"
+                  />
+                </router-link-stub>
+              </div>
+            </figure>
+          </div>
+           
+          <div
+            class="column is-12-tablet has-text-centered is-hidden-mobile"
+          >
+            <usersocial-stub
+              class="is-horizontal-center"
+              user="[object Object]"
+            />
+          </div>
+           
+          <div
+            class="column is-12-tablet has-text-centered"
+          >
+            <div
+              class="is-vertical-center is-horizontal-center"
+            >
+              <bicon-stub
+                customclass="mdi-profile"
+                icon="earth"
+              />
+               
+              <span>
+                 Barcelona
+              </span>
+            </div>
+             
+            <div>
+              <span>
+                Mensajes: 70.000
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+       
+      <div
+        class="column is-10 has-vertically-aligned-content"
+      >
+        <div
+          class="columns"
+        >
+          <div
+            class="column is-12 content"
+          >
+            <markdown-stub
+              source="# Test"
+            />
+          </div>
+        </div>
+         
+        <div
+          class="columns"
+          style="margin-top: auto;"
+        >
+          <div
+            class="column is-12"
+          >
+            <div
+              class="has-vertically-aligned-content"
+            >
+              <div
+                class="level is-mobile"
+              >
+                <div
+                  class="level-left"
+                >
+                  <div>
+                    <btooltip-stub
+                      active="true"
+                      label="Neko"
+                      position="is-top"
+                      size="is-medium"
+                    >
+                      <bicon-stub
+                        icon="cat"
+                      />
+                       
+                      <sub>
+                        x 2
+                      </sub>
+                    </btooltip-stub>
+                  </div>
+                </div>
+                 
+                <div
+                  class="level-right"
+                >
+                  <btooltip-stub
+                    active="true"
+                    label="Neko"
+                    position="is-top"
+                    size="is-medium"
+                  >
+                    <bicon-stub
+                      class="vote-icon"
+                      icon="cat"
+                    />
+                  </btooltip-stub>
+                   
+                  <btooltip-stub
+                    active="true"
+                    label="Neko"
+                    position="is-top"
+                    size="is-medium"
+                  >
+                    <bicon-stub
+                      class="vote-icon"
+                      icon="cat"
+                    />
+                  </btooltip-stub>
+                   
+                  <btooltip-stub
+                    active="true"
+                    label="Neko"
+                    position="is-top"
+                    size="is-medium"
+                  >
+                    <bicon-stub
+                      class="vote-icon"
+                      icon="cat"
+                    />
+                  </btooltip-stub>
+                   
+                  <btooltip-stub
+                    active="true"
+                    label="Neko"
+                    position="is-top"
+                    size="is-medium"
+                  >
+                    <bicon-stub
+                      class="vote-icon"
+                      icon="cat"
+                    />
+                  </btooltip-stub>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </article>
+</div>
+`;
