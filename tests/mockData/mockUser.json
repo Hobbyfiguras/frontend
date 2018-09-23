@@ -1,0 +1,20 @@
+{
+  "id": "LAi8",
+  "avatar": "http://127.0.0.1:8081/static/avatars/avatar_2.png",
+  "last_login": "2018-09-19T08:43:11.472005Z",
+  "is_superuser": true,
+  "username": "test",
+  "first_name": "",
+  "last_name": "",
+  "email": "eirexe123@gmail.com",
+  "is_staff": true,
+  "is_active": true,
+  "date_joined": "2018-09-19T08:41:08.601336Z",
+  "mal_username": null,
+  "anilist_username": null,
+  "mfc_username": null,
+  "twitter_username": null,
+  "nsfw_enabled": false,
+  "groups": [],
+  "user_permissions": []
+}

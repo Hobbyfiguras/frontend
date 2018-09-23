@@ -5,7 +5,7 @@
 
   <ul>
     <li>
-      <router-link :to="{name: 'forum_index'}">
+      <router-link :to="{name: 'ForumIndex'}">
           <span></span>
           <b-icon icon="home"></b-icon>
       </router-link>

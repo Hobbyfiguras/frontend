@@ -7,10 +7,10 @@ import profile from '@/views/profile'
 import login from '@/views/login'
 import register from '@/views/register'
 import emailVerify from '@/views/email_verify'
-import forumIndex from '@/views/forum/forum_index'
+import forumIndex from '@/views/forum/ForumIndex'
 import forumView from '@/views/forum/forum_view'
 import threadView from '@/views/forum/thread_view'
-import threadCreate from '@/views/forum/thread_create'
+import threadCreate from '@/views/forum/ThreadCreate'
 import markdownGuide from '@/views/markdown_guide'
 import store from '@/store'
 
@@ -53,7 +53,7 @@ const router = new Router({
     },
     {
       path: '/foro',
-      name: 'forum_index',
+      name: 'ForumIndex',
       component: forumIndex
     },
     {

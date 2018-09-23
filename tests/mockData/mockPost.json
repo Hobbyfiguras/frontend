@@ -1,0 +1,52 @@
+{
+   "id":"0mSw",
+   "content":">->Good Smile Company abre reservas de su figura a escala de Shiro, la protagonista femenida de No Game No Life. A manos del escultor Katahara Itashi, tenemos una gran figura de Shiro representada en una pose muy dinamica y con un trabajo de pintura sobresaliente.<- \n\n->![](https://static.myfigurecollection.net/pics/figure/large/591632.jpg)<- \n\n->**Categoría:** Prepintada\n**Personaje:** Shiro\n**Origen:** No Game No Life\n**Compañía:** Good Smile Company\n**Escala:** 1/8\n**Altura:** 19cm\n**Precio:** 11,111¥\n**Fecha:** 09/2018<- \n\n---\n\n->![](https://static.myfigurecollection.net/image/Mao1499951303.jpeg)<- \n->![](https://static.myfigurecollection.net/image/Agon1499951361.jpeg)<-",
+   "creator":{
+      "id":"LAi8",
+      "avatar":"http://127.0.0.1:8081/static/avatars/avatar_2.png",
+      "last_login":"2018-09-19T08:43:11.472005Z",
+      "is_superuser":true,
+      "username":"test user",
+      "first_name":"",
+      "last_name":"",
+      "is_staff":true,
+      "is_active":true,
+      "date_joined":"2018-09-19T08:41:08.601336Z",
+      "mal_username":null,
+      "anilist_username":null,
+      "mfc_username":null,
+      "twitter_username":null,
+      "groups":[
+
+      ],
+      "user_permissions":[
+
+      ]
+   },
+   "thread":{
+      "id":2,
+      "forum":{
+         "id":20,
+         "thread_count":3,
+         "order":0,
+         "name":"Noticias",
+         "description":"sashimi 2 3 4",
+         "slug":"noticias",
+         "only_staff_can_post":false,
+         "icon":"http://127.0.0.1:8081/media/forum_icons/noticias_ZTk4IBj.png",
+         "category":2
+      },
+      "title":"No Game No Life - Shiro - 1/8 (Good Smile Company)",
+      "created":"2018-09-20T22:25:54.287445Z",
+      "modified":"2018-09-20T22:25:54.287453Z",
+      "slug":"no-game-no-life-shiro-18-good-smile-company",
+      "nsfw":false,
+      "is_sticky":false,
+      "creator":1
+   },
+   "created":"2018-09-20T22:25:54.300828Z",
+   "modified":"2018-09-20T22:25:54.300837Z",
+   "deleted":false,
+   "delete_reason":"",
+   "modified_by":null
+}

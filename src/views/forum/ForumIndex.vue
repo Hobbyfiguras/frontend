@@ -41,7 +41,7 @@
 import Forum from '@/api/forum'
 import PetitionsMixin from '@/components/mixins/petitions'
 export default {
-  name: 'forum_index',
+  name: 'ForumIndex',
   mixins: [PetitionsMixin],
   data () {
     return {

@@ -129,7 +129,7 @@ import UserSocial from '@/components/profile/user_social'
 import Markdown from '@/components/markdown'
 
 export default {
-  name: 'post_item',
+  name: 'PostItem',
   mixins: [petitionsMixin],
   components: { MarkdownEditor, UserSocial, Markdown },
   props: ['post', 'isOP'],

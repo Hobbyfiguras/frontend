@@ -24,7 +24,7 @@
 
         <router-link v-if="!user" :to="{name: 'login', query: {from: $route.path}}" class="mobile-navbar-item is-vertical-center"><b-icon icon="login"></b-icon> Entrar</router-link>
         <router-link class="mobile-navbar-item is-vertical-center" :to="{'name': 'index'}"><b-icon icon="home"></b-icon> Inicio</router-link>
-        <router-link class="mobile-navbar-item is-vertical-center" :to="{'name': 'forum_index'}"><b-icon icon="forum"></b-icon> Foro</router-link>
+        <router-link class="mobile-navbar-item is-vertical-center" :to="{'name': 'ForumIndex'}"><b-icon icon="forum"></b-icon> Foro</router-link>
       </Menu>
       <div class="navbar-brand">
         <router-link :to="{name: 'index'}" class="navbar-item">
@@ -39,7 +39,7 @@
       <div class="navbar-menu">
             <div class="navbar-start">
               <router-link :to="{name: 'index'}" class="navbar-item" exact-active-class="is-active"><b-icon icon="home"></b-icon></router-link>
-              <router-link :to="{name: 'forum_index'}" class="navbar-item" active-class="is-active"><b-icon icon="forum"></b-icon></router-link>
+              <router-link :to="{name: 'ForumIndex'}" class="navbar-item" active-class="is-active"><b-icon icon="forum"></b-icon></router-link>
               <router-link :to="{name: 'admin_index'}" class="navbar-item" active-class="is-active"><b-icon icon="fire"></b-icon></router-link>
             </div>
             <div class="navbar-end">
