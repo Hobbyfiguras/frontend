@@ -11,9 +11,9 @@
           <a class="" slot="trigger">
               <b-icon icon="dots-vertical"></b-icon>
           </a>
-          <b-dropdown-item v-if="!editing" ref="editButton" @click="startEditing()"><b-icon icon="pencil"></b-icon> Editar</b-dropdown-item>
-          <b-dropdown-item v-else ref="cancelEditButton" @click="cancelEditing()"><b-icon icon="pencil"></b-icon> Dejar de editar</b-dropdown-item>
-          <b-dropdown-item @click="askDeletePost()" ref="deleteButton"><b-icon icon="delete"></b-icon> Eliminar</b-dropdown-item>
+          <b-dropdown-item v-if="!editing" @click="startEditing()"><b-icon icon="pencil"></b-icon> Editar</b-dropdown-item>
+          <b-dropdown-item v-else @click="cancelEditing()"><b-icon icon="pencil"></b-icon> Dejar de editar</b-dropdown-item>
+          <b-dropdown-item @click="askDeletePost()"><b-icon icon="delete"></b-icon> Eliminar</b-dropdown-item>
         </b-dropdown>
       </div>
 
@@ -152,7 +152,6 @@ export default {
   },
   methods: {
     startEditing () {
-      console.log('start editing')
       this.editing = true
       this.oldPost = JSON.parse(JSON.stringify(this.post))
     },
@@ -183,7 +182,7 @@ export default {
       var post = JSON.parse(JSON.stringify(this.post))
       post.delete_reason = reason
       this.$awn.async(this.makePetition(Forum.deletePost(this.post.id, reason), 'Post eliminado con exito',
-        'Error eliminando post', 'Eliminando post').then((thread) => {
+        'Error eliminando post', 'Eliminando post').then((resultingPost) => {
         this.$awn.success('Post eliminado con exito')
         this.$emit('deletePost', post)
       }))
