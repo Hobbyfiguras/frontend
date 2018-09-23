@@ -11,9 +11,9 @@
           <a class="" slot="trigger">
               <b-icon icon="dots-vertical"></b-icon>
           </a>
-          <b-dropdown-item v-if="!editing" @click="startEditing()"><b-icon icon="pencil"></b-icon> Editar</b-dropdown-item>
-          <b-dropdown-item v-else @click="cancelEditing()"><b-icon icon="pencil"></b-icon> Dejar de editar</b-dropdown-item>
-          <b-dropdown-item @click="askDeletePost()"><b-icon icon="delete"></b-icon> Eliminar</b-dropdown-item>
+          <b-dropdown-item v-if="!editing" ref="editButton" @click="startEditing()"><b-icon icon="pencil"></b-icon> Editar</b-dropdown-item>
+          <b-dropdown-item v-else ref="cancelEditButton" @click="cancelEditing()"><b-icon icon="pencil"></b-icon> Dejar de editar</b-dropdown-item>
+          <b-dropdown-item @click="askDeletePost()" ref="deleteButton"><b-icon icon="delete"></b-icon> Eliminar</b-dropdown-item>
         </b-dropdown>
       </div>
 
@@ -137,7 +137,7 @@ export default {
     return {
       editing: false,
       oldPost: null,
-      prettyDesc: null
+      prettyDesc: this.post.content
     }
   },
   computed: {
@@ -152,6 +152,7 @@ export default {
   },
   methods: {
     startEditing () {
+      console.log('start editing')
       this.editing = true
       this.oldPost = JSON.parse(JSON.stringify(this.post))
     },
@@ -203,7 +204,7 @@ export default {
             { name: 'twitter:image:src', content: image.src },
             { property: 'og:image', content: image.src },
             { itemprop: 'image', content: image.src },
-            { property: 'og:description', content: this.post.isOP ? '' : this.prettyDesc }
+            { property: 'og:description', content: this.prettyDesc }
           ]
         }
       }

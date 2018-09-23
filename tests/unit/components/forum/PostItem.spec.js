@@ -62,4 +62,18 @@ describe('PostItem.vue', () => {
     await flushPromises()
     expect(wrapper.vm.prettyDesc).toBe('Test')
   })
+  it('edit button enables editing', () => {
+    const wrapper = mount(PostItem, { store,
+      propsData: {
+        isOP: true,
+        post: mockPost
+      },
+      stubs: ['router-link', 'router-view', 'b-dropdown-item', 'b-dropdown'],
+      localVue
+    })
+    expect(wrapper.vm.editing).toBe(false)
+    wrapper.find({ ref: 'editButton' }).trigger('click')
+    // wrapper.vm.startEditing()
+    expect(wrapper.vm.editing).toBe(true)
+  })
 })

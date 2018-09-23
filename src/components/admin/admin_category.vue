@@ -50,7 +50,7 @@
 <script>
 import petitionsMixin from '@/components/mixins/petitions'
 import Forum from '@/api/forum'
-import PostItem from '@/components/forum/post_item'
+import PostItem from '@/components/forum/PostItem'
 export default {
   name: 'admin_forum_categories',
   mixins: [petitionsMixin],

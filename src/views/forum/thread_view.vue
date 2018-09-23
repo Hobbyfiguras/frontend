@@ -27,7 +27,7 @@
           <p class="title">{{thread.title}}</p>
         </article>
         <transition-group :name="transitonName">
-          <PostItem class="post_item" v-for="(post, index) in thread.posts.results" :isOP="index === 0 && currentPage === 1" :post="post" @changePost="changePost" :key="post.id" @deletePost="deletePost" :ref="'#' + post.id">
+          <PostItem class="PostItem" v-for="(post, index) in thread.posts.results" :isOP="index === 0 && currentPage === 1" :post="post" @changePost="changePost" :key="post.id" @deletePost="deletePost" :ref="'#' + post.id">
           </PostItem>
         </transition-group>
         <article class="container">
@@ -61,7 +61,7 @@
 <script>
 import Forum from '@/api/forum'
 import PetitionsMixin from '@/components/mixins/petitions'
-import PostItem from '@/components/forum/post_item'
+import PostItem from '@/components/forum/PostItem'
 import NSFWWarningMixin from '@/components/mixins/nsfw_warning_mixin'
 import PostCreate from '@/views/forum/post_create'
 import { mapGetters, mapState } from 'vuex'

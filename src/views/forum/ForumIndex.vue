@@ -11,7 +11,7 @@
         <router-link v-for="forum in category.forums" :key="forum.id" :to="{name: 'forum', params: {slug: forum.slug}}">
                   <article class="tile is-child notification forum-header  is-info">
           <div class="columns is-vertical-center">
-            <div class="column is-1">
+            <div class="column is-1 is-flex is-horizontal-center">
               <figure class="image is-64x64">
                 <img :src="forum.icon" class="is-rounded" alt="">
               </figure>
