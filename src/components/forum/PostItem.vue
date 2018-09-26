@@ -85,11 +85,20 @@
               <div class="column is-12">
                           <div class="has-vertically-aligned-content">
             <div class="level is-mobile">
-              <div class="level-left">
-                <div>
-                  <b-tooltip label="Neko">
-                    <b-icon icon="cat"></b-icon> <sub>x 2</sub>
-                  </b-tooltip>
+              <div class="level-left is-vertical">
+                <div class="level-item" v-for="vote in post.votes" :key="vote.id">
+                  <div class="tile is-vertical is-ancestor">
+                    <div class="tile">
+                      <b-tooltip :label="vote.name">
+                        <figure class="image is-32x32">
+                          <img :src="vote.icon">
+                        </figure>
+                      </b-tooltip>
+                    </div>
+                    <div class="tile is-horizontal-center">
+                      1
+                    </div>
+                  </div>
                 </div>
               </div>
               <div class="level-right">

@@ -48,5 +48,14 @@
    "modified":"2018-09-20T22:25:54.300837Z",
    "deleted":false,
    "delete_reason":"",
-   "modified_by":null
+   "modified_by":null,
+   "votes": [
+        {
+            "users": [
+                "EIREXE"
+            ],
+            "vote_count": 1,
+            "type": "8GCN"
+        }
+    ]
 }

@@ -1,14 +1,12 @@
 import Vue from 'vue'
 
 import axios from 'axios'
-import moment from 'moment'
 
 import Buefy from 'buefy'
 import VueAxios from 'vue-axios'
 import VueProgressBar from 'vue-progressbar'
 import VueAWN from 'vue-awesome-notifications'
 import PortalVue from 'portal-vue'
-import VueMoment from 'vue-moment'
 import VueMarkdown from 'vue-markdown'
 import Croppa from 'vue-croppa'
 import VueScrollTo from 'vue-scrollto'
@@ -53,13 +51,6 @@ Vue.use(VueAWN, AWNOptions)
 
 // portal-vue
 Vue.use(PortalVue)
-
-// vue-moment
-moment.locale('es')
-
-Vue.use(VueMoment, {
-  moment
-})
 
 // vue-markdown
 Vue.use(VueMarkdown)

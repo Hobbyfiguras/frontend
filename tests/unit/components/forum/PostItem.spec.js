@@ -73,7 +73,7 @@ describe('PostItem.vue', () => {
         isOP: true,
         post: mockPost
       },
-      stubs: ['router-link', 'router-view', 'b-dropdown'],
+      stubs: ['router-link', 'router-view', 'b-dropdown-item', 'b-dropdown'],
       localVue
     })
     expect(wrapper.vm.editing).toBe(false)
@@ -86,7 +86,7 @@ describe('PostItem.vue', () => {
         isOP: true,
         post: mockPost
       },
-      stubs: ['router-link', 'router-view', 'b-dropdown'],
+      stubs: ['router-link', 'router-view', 'b-dropdown-item', 'b-dropdown'],
       localVue
     })
     expect(wrapper.vm.editing).toBe(false)
@@ -101,7 +101,7 @@ describe('PostItem.vue', () => {
         isOP: true,
         post: mockPost
       },
-      stubs: ['router-link', 'router-view', 'b-dropdown'],
+      stubs: ['router-link', 'router-view', 'b-dropdown-item', 'b-dropdown'],
       localVue
     })
     expect(wrapper.vm.editing).toBe(false)
@@ -119,7 +119,7 @@ describe('PostItem.vue', () => {
         isOP: true,
         post: mockPost
       },
-      stubs: ['router-link', 'router-view', 'b-dropdown'],
+      stubs: ['router-link', 'router-view', 'b-dropdown-item', 'b-dropdown'],
       localVue
     })
     wrapper.vm.deletePost()
@@ -131,7 +131,7 @@ describe('PostItem.vue', () => {
         isOP: true,
         post: mockPost
       },
-      stubs: ['router-link', 'router-view', 'b-dropdown'],
+      stubs: ['router-link', 'router-view', 'b-dropdown-item', 'b-dropdown'],
       localVue
     })
     expect(wrapper.vm.editing).toBe(false)
@@ -146,7 +146,7 @@ describe('PostItem.vue', () => {
         isOP: true,
         post: mockPost
       },
-      stubs: ['router-link', 'router-view', 'b-dropdown'],
+      stubs: ['router-link', 'router-view', 'b-dropdown-item', 'b-dropdown'],
       localVue
     })
     expect(wrapper.vm.editing).toBe(false)
@@ -156,6 +156,12 @@ describe('PostItem.vue', () => {
     expect(Forum.updatePost).toHaveBeenCalledWith(mockPost.id, mockPost.content)
   })
   it('renders properly', () => {
+    var post = mockPost
+    var date = new Date()
+
+    date.setDate(date.getDate() - 3)
+    post.created = date.toISOString()
+
     const wrapper = shallowMount(PostItem, { store,
       localVue,
       stubs: ['router-link', 'router-view'],
