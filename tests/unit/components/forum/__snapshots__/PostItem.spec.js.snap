@@ -178,23 +178,38 @@ exports[`PostItem.vue renders properly 1`] = `
                 class="level is-mobile"
               >
                 <div
-                  class="level-left"
+                  class="level-left is-vertical"
                 >
-                  <div>
-                    <btooltip-stub
-                      active="true"
-                      label="Neko"
-                      position="is-top"
-                      size="is-medium"
+                  <div
+                    class="level-item"
+                  >
+                    <div
+                      class="tile is-vertical is-ancestor"
                     >
-                      <bicon-stub
-                        icon="cat"
-                      />
+                      <div
+                        class="tile"
+                      >
+                        <btooltip-stub
+                          active="true"
+                          position="is-top"
+                          size="is-medium"
+                        >
+                          <figure
+                            class="image is-32x32"
+                          >
+                            <img />
+                          </figure>
+                        </btooltip-stub>
+                      </div>
                        
-                      <sub>
-                        x 2
-                      </sub>
-                    </btooltip-stub>
+                      <div
+                        class="tile is-horizontal-center"
+                      >
+                        
+                          1
+                        
+                      </div>
+                    </div>
                   </div>
                 </div>
                  

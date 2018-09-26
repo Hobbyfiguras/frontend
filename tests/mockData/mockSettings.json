@@ -1,0 +1,10 @@
+{
+    "vote_types": [
+        {
+            "name": "mi polla gorda",
+            "order": 0,
+            "icon": "http://127.0.0.1:8081/media/forum_icons/mi-polla-gorda.png",
+            "id": "8GCN"
+        }
+    ]
+}

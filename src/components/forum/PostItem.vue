@@ -16,7 +16,6 @@
           <b-dropdown-item @click="askDeletePost()"><b-icon icon="delete"></b-icon> Eliminar</b-dropdown-item>
         </b-dropdown>
       </div>
-
       <div class="columns" v-if="!post.deleted">
         <div class="column is-2 has-text-centered forum-user">
           <div class="columns is-multiline is-mobile">
@@ -83,41 +82,40 @@
             </div>
             <div class="columns" style="margin-top: auto;">
               <div class="column is-12">
-                          <div class="has-vertically-aligned-content">
-            <div class="level is-mobile">
-              <div class="level-left is-vertical">
-                <div class="level-item" v-for="vote in post.votes" :key="vote.id">
-                  <div class="tile is-vertical is-ancestor">
-                    <div class="tile">
-                      <b-tooltip :label="vote.name">
-                        <figure class="image is-32x32">
-                          <img :src="vote.icon">
-                        </figure>
-                      </b-tooltip>
+                <div class="has-vertically-aligned-content">
+                  <div class="level is-mobile">
+                    <div class="level-left is-vertical">
+                      <div class="level-item" v-for="vote in post.votes" :key="vote.id">
+                        <div class="tile is-vertical is-ancestor">
+                          <div class="tile">
+                            <b-tooltip :label="vote.name">
+                              <figure class="image is-32x32">
+                                <img :src="vote.icon">
+                              </figure>
+                            </b-tooltip>
+                          </div>
+                          <div class="tile is-horizontal-center">
+                            1
+                          </div>
+                        </div>
+                      </div>
                     </div>
-                    <div class="tile is-horizontal-center">
-                      1
+                    <div class="level-right">
+                      <b-tooltip label="Neko">
+                        <b-icon class="vote-icon" icon="cat"></b-icon>
+                      </b-tooltip>
+                      <b-tooltip label="Neko">
+                        <b-icon class="vote-icon" icon="cat"></b-icon>
+                      </b-tooltip>
+                      <b-tooltip label="Neko">
+                        <b-icon class="vote-icon" icon="cat"></b-icon>
+                      </b-tooltip>
+                      <b-tooltip label="Neko">
+                        <b-icon class="vote-icon" icon="cat"></b-icon>
+                      </b-tooltip>
                     </div>
                   </div>
                 </div>
-              </div>
-              <div class="level-right">
-                <b-tooltip label="Neko">
-                  <b-icon class="vote-icon" icon="cat"></b-icon>
-                </b-tooltip>
-                <b-tooltip label="Neko">
-                  <b-icon class="vote-icon" icon="cat"></b-icon>
-                </b-tooltip>
-                <b-tooltip label="Neko">
-                  <b-icon class="vote-icon" icon="cat"></b-icon>
-                </b-tooltip>
-                <b-tooltip label="Neko">
-                  <b-icon class="vote-icon" icon="cat"></b-icon>
-                </b-tooltip>
-
-              </div>
-            </div>
-          </div>
               </div>
             </div>
         </div>
@@ -130,107 +128,119 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
-import MarkdownEditor from '@/components/markdown_editor'
-import Forum from '@/api/forum'
-import petitionsMixin from '@/components/mixins/petitions'
-import UserSocial from '@/components/profile/user_social'
-import Markdown from '@/components/markdown'
+import { mapState } from "vuex";
+import MarkdownEditor from "@/components/markdown_editor";
+import Forum from "@/api/forum";
+import petitionsMixin from "@/components/mixins/petitions";
+import UserSocial from "@/components/profile/user_social";
+import Markdown from "@/components/markdown";
 
 export default {
-  name: 'PostItem',
+  name: "PostItem",
   mixins: [petitionsMixin],
   components: { MarkdownEditor, UserSocial, Markdown },
-  props: ['post', 'isOP'],
-  data () {
+  props: ["post", "isOP"],
+  data() {
     return {
       editing: false,
       oldPost: null,
       prettyDesc: this.post.content
-    }
+    };
   },
   computed: {
     ...mapState({
       currentUser: state => state.auth.currentUser
     })
   },
-  mounted () {
-    this.stripMd(this.post.content).then((desc) => {
-      this.prettyDesc = desc
-    })
+  mounted() {
+    this.stripMd(this.post.content).then(desc => {
+      this.prettyDesc = desc;
+    });
   },
   methods: {
-    startEditing () {
-      this.editing = true
-      this.oldPost = JSON.parse(JSON.stringify(this.post))
+    startEditing() {
+      this.editing = true;
+      this.oldPost = JSON.parse(JSON.stringify(this.post));
     },
-    saveEditing () {
-      this.$awn.async(this.makePetition(Forum.updatePost(this.post.id, this.post.content), 'Post actualizado con exito',
-        'Error actualizando post', 'Actualizando post').then((thread) => {
-        this.editing = false
-        this.$awn.success('Post actualizado con exito')
-      }))
+    saveEditing() {
+      this.$awn.async(
+        this.makePetition(
+          Forum.updatePost(this.post.id, this.post.content),
+          "Post actualizado con exito",
+          "Error actualizando post",
+          "Actualizando post"
+        ).then(thread => {
+          this.editing = false;
+          this.$awn.success("Post actualizado con exito");
+        })
+      );
     },
-    cancelEditing () {
-      this.$emit('changePost', JSON.parse(JSON.stringify(this.oldPost)))
-      this.editing = false
+    cancelEditing() {
+      this.$emit("changePost", JSON.parse(JSON.stringify(this.oldPost)));
+      this.editing = false;
     },
-    askDeletePost () {
+    askDeletePost() {
       this.$dialog.prompt({
-        title: 'Borrar post',
+        title: "Borrar post",
         inputAttrs: {
-          placeholder: 'Motivo'
+          placeholder: "Motivo"
         },
-        confirmText: 'Si',
-        cancelText: 'No',
-        type: 'is-danger',
-        onConfirm: (reason) => this.deletePost(reason)
-      })
+        confirmText: "Si",
+        cancelText: "No",
+        type: "is-danger",
+        onConfirm: reason => this.deletePost(reason)
+      });
     },
-    deletePost (reason = '') {
-      var post = JSON.parse(JSON.stringify(this.post))
-      post.delete_reason = reason
-      this.$awn.async(this.makePetition(Forum.deletePost(this.post.id, reason), 'Post eliminado con exito',
-        'Error eliminando post', 'Eliminando post').then((resultingPost) => {
-        this.$awn.success('Post eliminado con exito')
-        this.$emit('deletePost', post)
-      }))
+    deletePost(reason = "") {
+      var post = JSON.parse(JSON.stringify(this.post));
+      post.delete_reason = reason;
+      this.$awn.async(
+        this.makePetition(
+          Forum.deletePost(this.post.id, reason),
+          "Post eliminado con exito",
+          "Error eliminando post",
+          "Eliminando post"
+        ).then(resultingPost => {
+          this.$awn.success("Post eliminado con exito");
+          this.$emit("deletePost", post);
+        })
+      );
     },
     // Injects image into meta info for OpenGraph and Twitter Cards
-    getMeta () {
+    getMeta() {
       if (this.isOP && this.$refs.content) {
-        var el = this.$refs.content.$el
-        var images = Array.from(el.getElementsByTagName('img'))
-        var image = images.find((image) => {
-          if (!image.classList.contains('mfc-thumbnail')) {
-            return true
+        var el = this.$refs.content.$el;
+        var images = Array.from(el.getElementsByTagName("img"));
+        var image = images.find(image => {
+          if (!image.classList.contains("mfc-thumbnail")) {
+            return true;
           }
-        })
+        });
         if (image) {
-          console.log(image)
+          console.log(image);
           return [
-            { name: 'twitter:image:src', content: image.src },
-            { property: 'og:image', content: image.src },
-            { itemprop: 'image', content: image.src },
-            { property: 'og:description', content: this.prettyDesc }
-          ]
+            { name: "twitter:image:src", content: image.src },
+            { property: "og:image", content: image.src },
+            { itemprop: "image", content: image.src },
+            { property: "og:description", content: this.prettyDesc }
+          ];
         }
       }
-      return []
+      return [];
     }
   },
-  metaInfo () {
+  metaInfo() {
     return {
       meta: this.getMeta()
-    }
+    };
   }
-}
+};
 </script>
 
 <style lang="scss" scoped>
 @import "src/sass/variables_light";
 
-$forum-header-transition: all .25s ease-in-out;
+$forum-header-transition: all 0.25s ease-in-out;
 
 .forum-header {
   cursor: pointer;
@@ -239,7 +249,8 @@ $forum-header-transition: all .25s ease-in-out;
   &.is-info {
     transition: $forum-header-transition;
     background-color: $info;
-    &:hover, &:active {
+    &:hover,
+    &:active {
       background-color: darken($info, 5%);
       transform: scale(1.01);
     }
@@ -254,7 +265,7 @@ $forum-header-transition: all .25s ease-in-out;
 }
 
 .thread-title {
-  padding: 1.0rem 2.5rem 1.0rem 1.5rem
+  padding: 1rem 2.5rem 1rem 1.5rem;
 }
 
 .forum-user {
@@ -267,10 +278,10 @@ $forum-header-transition: all .25s ease-in-out;
 
 .post-options {
   position: absolute;
-  right: 1.0rem;
+  right: 1rem;
   top: 1.25rem;
   transform: scale(0);
-  transition: transform .10s ease-in-out;
+  transition: transform 0.1s ease-in-out;
 }
 
 .has-vertically-aligned-content {
@@ -280,18 +291,20 @@ $forum-header-transition: all .25s ease-in-out;
 }
 
 .vote-icon {
-  transition: transform .10s ease-in-out;
+  transition: transform 0.1s ease-in-out;
   transform: scale(0);
   cursor: pointer;
   opacity: 0.5;
   &:not(:last-child) {
     margin-right: 0.25rem;
   }
-  &:hover, &:active {
+  &:hover,
+  &:active {
     opacity: 1;
   }
 }
-.thread-content:hover, .thread-content:active {
+.thread-content:hover,
+.thread-content:active {
   .vote-icon {
     transform: scale(1);
   }
