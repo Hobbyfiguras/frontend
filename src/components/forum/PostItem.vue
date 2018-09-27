@@ -365,7 +365,7 @@ $forum-header-transition: all 0.25s ease-in-out;
 }
 
 .level-vote {
-  margin-right: 0.25rem !important;
+  margin-right: 1.0rem !important;
 }
 
 .vote-list-item {
