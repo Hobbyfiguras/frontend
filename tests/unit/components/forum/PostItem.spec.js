@@ -17,6 +17,12 @@ jest.mock('@/api/forum', () => ({
   updatePost: jest.fn(() => Promise.resolve({}))
 }))
 
+const baseStubs = {
+  'router-link': true,
+  'router-view': true,
+  transition: false
+}
+
 describe('PostItem.vue', () => {
   let store
   beforeEach(() => {
@@ -38,7 +44,7 @@ describe('PostItem.vue', () => {
   it('getMeta is empty array if isOP is false', () => {
     const wrapper = shallowMount(PostItem, { store,
       localVue,
-      stubs: ['router-link', 'router-view'],
+      stubs: baseStubs,
       propsData: {
         isOP: false,
         post: mockPost
@@ -52,17 +58,16 @@ describe('PostItem.vue', () => {
         isOP: true,
         post: mockPost
       },
-      stubs: ['router-link', 'router-view', 'b-dropdown-item', 'b-dropdown'],
+      stubs: baseStubs,
       localVue
     })
     await flushPromises()
-    console.log(wrapper.vm.getMeta())
     expect(wrapper.vm.getMeta()).not.toHaveLength(0)
   })
   it('strips markdown from post description', async () => {
     const wrapper = shallowMount(PostItem, { store,
       localVue,
-      stubs: ['router-link', 'router-view'],
+      stubs: baseStubs,
       propsData: {
         isOP: false,
         post: { ...mockPost, ...{ content: '# Test' } }
@@ -71,93 +76,97 @@ describe('PostItem.vue', () => {
     await flushPromises()
     expect(wrapper.vm.prettyDesc).toBe('Test')
   })
-  it('startEditing enables editing', () => {
+  it('Clicking the start editing button enables editing', () => {
     const wrapper = mount(PostItem, { store,
       propsData: {
         isOP: true,
         post: mockPost
       },
-      stubs: ['router-link', 'router-view', 'b-dropdown-item', 'b-dropdown'],
+      stubs: baseStubs,
       localVue
     })
     expect(wrapper.vm.editing).toBe(false)
-    wrapper.vm.startEditing()
+    wrapper.find({ ref: 'editButton' }).trigger('click')
     expect(wrapper.vm.editing).toBe(true)
   })
-  it('cancelEditing disables editing', () => {
+  it('Clicking the cancel edit button disables editing', () => {
     const wrapper = mount(PostItem, { store,
       propsData: {
         isOP: true,
         post: mockPost
       },
-      stubs: ['router-link', 'router-view', 'b-dropdown-item', 'b-dropdown'],
+      stubs: baseStubs,
       localVue
     })
     expect(wrapper.vm.editing).toBe(false)
-    wrapper.vm.startEditing()
+    wrapper.find({ ref: 'editButton' }).trigger('click')
     expect(wrapper.vm.editing).toBe(true)
-    wrapper.vm.cancelEditing()
-    expect(wrapper.vm.editing).toBe(false)
+    wrapper.vm.$nextTick(() => {
+      wrapper.find({ ref: 'cancelEditButton' }).trigger('click')
+      expect(wrapper.vm.editing).toBe(false)
+    })
   })
-  it('cancelEditing calls changePost event', () => {
+  it('Clicking the cancel edit button calls changePost event', () => {
     const wrapper = mount(PostItem, { store,
       propsData: {
         isOP: true,
         post: mockPost
       },
-      stubs: ['router-link', 'router-view', 'b-dropdown-item', 'b-dropdown'],
+      stubs: baseStubs,
       localVue
     })
-    expect(wrapper.vm.editing).toBe(false)
-    wrapper.vm.startEditing()
-    expect(wrapper.vm.editing).toBe(true)
-    wrapper.vm.cancelEditing()
-    expect(wrapper.vm.editing).toBe(false)
-    expect(wrapper.emitted().changePost).toBeTruthy()
-    expect(wrapper.emitted().changePost.length).toBe(1)
+    wrapper.find({ ref: 'editButton' }).trigger('click')
+    wrapper.vm.$nextTick(() => {
+      wrapper.find({ ref: 'cancelEditButton' }).trigger('click')
+      expect(wrapper.emitted().changePost).toBeTruthy()
+      expect(wrapper.emitted().changePost.length).toBe(1)
+    })
   })
-
-  it('deletePost calls Forum.deletePost', () => {
+  it('Clicking the delete post button opens a modal', () => {
     const wrapper = mount(PostItem, { store,
       propsData: {
         isOP: true,
         post: mockPost
       },
-      stubs: ['router-link', 'router-view', 'b-dropdown-item', 'b-dropdown'],
+      stubs: baseStubs,
       localVue
     })
-    wrapper.vm.deletePost()
-    expect(Forum.deletePost).toHaveBeenCalledWith(mockPost.id, '')
+    wrapper.find({ ref: 'deleteButton' }).trigger('click')
+    const modal = wrapper.find('.modal')
+    wrapper.vm.$nextTick(() => {
+      expect(modal.exists()).toBe(true)
+    })
   })
-  it('saveEditing calls Forum.updatePost', () => {
+  it('Clicking the delete button in the delete modal calls Forum.deletePost', () => {
     const wrapper = mount(PostItem, { store,
       propsData: {
         isOP: true,
         post: mockPost
       },
-      stubs: ['router-link', 'router-view', 'b-dropdown-item', 'b-dropdown'],
+      stubs: baseStubs,
       localVue
     })
-    expect(wrapper.vm.editing).toBe(false)
-    wrapper.vm.startEditing()
-    expect(wrapper.vm.editing).toBe(true)
-    wrapper.vm.saveEditing()
-    expect(Forum.updatePost).toHaveBeenCalledWith(mockPost.id, mockPost.content)
+    wrapper.find({ ref: 'deleteButton' }).trigger('click')
+    const modal = wrapper.find('.modal')
+    wrapper.vm.$nextTick(() => {
+      modal.find('.is-danger').trigger('click')
+      expect(Forum.deletePost).toHaveBeenCalledWith(mockPost.id, mockPost.content)
+    })
   })
-  it('askDeletePost opens modal', () => {
+  it('Clicking the save editing button calls Forum.updatePost', () => {
     const wrapper = mount(PostItem, { store,
       propsData: {
         isOP: true,
         post: mockPost
       },
-      stubs: ['router-link', 'router-view', 'b-dropdown-item', 'b-dropdown'],
+      stubs: baseStubs,
       localVue
     })
-    expect(wrapper.vm.editing).toBe(false)
-    wrapper.vm.startEditing()
-    expect(wrapper.vm.editing).toBe(true)
-    wrapper.vm.saveEditing()
-    expect(Forum.updatePost).toHaveBeenCalledWith(mockPost.id, mockPost.content)
+    wrapper.find({ ref: 'editButton' }).trigger('click')
+    wrapper.vm.$nextTick(() => {
+      wrapper.find({ ref: 'saveEditButton' }).trigger('click')
+      expect(wrapper.emitted().updatePost).toBeTruthy()
+    })
   })
   it('renders properly', () => {
     var post = mockPost
@@ -165,13 +174,14 @@ describe('PostItem.vue', () => {
 
     date.setDate(date.getDate() - 3)
     post.created = date.toISOString()
+    post.creator.id = 'LRLE'
 
     const wrapper = shallowMount(PostItem, { store,
       localVue,
-      stubs: ['router-link', 'router-view'],
+      stubs: baseStubs,
       propsData: {
         isOP: false,
-        post: { ...mockPost, ...{ content: '# Test' } }
+        post: { ...post, ...{ content: '# Test' } }
       }
     })
     expect(wrapper.element).toMatchSnapshot()

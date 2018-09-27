@@ -12,11 +12,11 @@
               <b-icon icon="dots-vertical"></b-icon>
           </a>
           <template v-if="(currentUser.id === post.creator.id && !post.deleted || currentUser.is_staff)">
-            <b-dropdown-item v-if="!editing" @click="startEditing()"><b-icon icon="pencil"></b-icon> Editar</b-dropdown-item>
-            <b-dropdown-item v-else @click="cancelEditing()"><b-icon icon="pencil"></b-icon> Dejar de editar</b-dropdown-item>
-            <b-dropdown-item @click="askDeletePost()"><b-icon icon="delete"></b-icon> Eliminar</b-dropdown-item>
+            <b-dropdown-item ref="editButton" v-if="!editing" @click="startEditing()"><b-icon icon="pencil"></b-icon> Editar</b-dropdown-item>
+            <b-dropdown-item v-else ref="cancelEditButton" @click="cancelEditing()"><b-icon icon="pencil"></b-icon> Dejar de editar</b-dropdown-item>
+            <b-dropdown-item ref="deleteButton" @click="askDeletePost()"><b-icon icon="delete"></b-icon> Eliminar</b-dropdown-item>
           </template>
-          <b-dropdown-item v-if="currentUser.id !== post.creator.id"><b-icon icon="flag"></b-icon> Reportar</b-dropdown-item>
+          <b-dropdown-item ref="reportButton" v-if="currentUser.id !== post.creator.id"><b-icon icon="flag"></b-icon> Reportar</b-dropdown-item>
         </b-dropdown>
       </div>
       <div class="columns" v-if="!post.deleted">
@@ -73,7 +73,7 @@
                     <div class="level-left"></div>
                     <div class="level-right">
                       <div class="level-item">
-                        <button class="button is-primary" :disabled="post.content.trim() == ''" @click="saveEditing">Guardar</button>
+                        <button class="button is-primary" ref="saveEditButton" :disabled="post.content.trim() == ''" @click="saveEditing">Guardar</button>
                       </div>
                       <div class="level-item">
                         <button class="button is-danger" @click="cancelEditing">Cancelar</button>
