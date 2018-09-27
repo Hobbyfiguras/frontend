@@ -7,7 +7,7 @@
     </nav>
 
     <main class="app-content">
-      <router-view/>
+      <router-view v-if="hasForumSettings"/>
     </main>
   <footer class="footer">
     <div class="content has-text-centered">
@@ -44,9 +44,11 @@ export default {
       console.log('get')
       this.getCurrentUser()
     }
+    this.getForumSettings()
   },
   methods: {
-    ...mapActions('auth', ['getCurrentUser'])
+    ...mapActions('auth', ['getCurrentUser']),
+    ...mapActions('forum', ['getForumSettings'])
   },
   computed: {
     ...mapState({
@@ -54,6 +56,9 @@ export default {
     }),
     ...mapGetters('auth', [
       'hasAuthData'
+    ]),
+    ...mapGetters('forum', [
+      'hasForumSettings'
     ])
   },
   metaInfo: {

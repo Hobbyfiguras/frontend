@@ -138,7 +138,11 @@ export default {
     },
     changePost (newpost) {
       console.log(newpost)
-      this.thread.posts.results[this.thread.posts.results.findIndex(post => post.id === newpost.id)].content = newpost.content
+      var i = this.thread.posts.results.findIndex(post => post.id === newpost.id)
+      this.thread.posts.results[i].content = newpost.content
+      if (newpost.votes) {
+        this.thread.posts.results[i].votes = newpost.votes
+      }
     },
     scrollToHash () {
       if (this.$route.hash) {

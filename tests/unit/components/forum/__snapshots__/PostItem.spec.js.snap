@@ -22,27 +22,31 @@ exports[`PostItem.vue renders properly 1`] = `
     <div
       class="post-options"
     >
-      <b-dropdown-stub>
+      <bdropdown-stub
+        mobilemodal="true"
+      >
         <a>
           <bicon-stub
             icon="dots-vertical"
           />
         </a>
          
-        <b-dropdown-item-stub>
+        <bdropdownitem-stub>
           <bicon-stub
             icon="pencil"
           />
            Editar
-        </b-dropdown-item-stub>
+        </bdropdownitem-stub>
          
-        <b-dropdown-item-stub>
+        <bdropdownitem-stub>
           <bicon-stub
             icon="delete"
           />
            Eliminar
-        </b-dropdown-item-stub>
-      </b-dropdown-stub>
+        </bdropdownitem-stub>
+         
+        <!---->
+      </bdropdown-stub>
     </div>
      
     <div
@@ -195,7 +199,7 @@ exports[`PostItem.vue renders properly 1`] = `
                           size="is-medium"
                         >
                           <figure
-                            class="image is-32x32"
+                            class="image is-32x32 vote-list-item"
                           >
                             <img />
                           </figure>
@@ -205,9 +209,18 @@ exports[`PostItem.vue renders properly 1`] = `
                       <div
                         class="tile is-horizontal-center"
                       >
-                        
+                        <btooltip-stub
+                          active="true"
+                          class="user-vote-tooltip"
+                          label="EIREXE
+"
+                          position="is-bottom"
+                          size="is-medium"
+                        >
+                          
                           1
-                        
+                          
+                        </btooltip-stub>
                       </div>
                     </div>
                   </div>
@@ -216,53 +229,8 @@ exports[`PostItem.vue renders properly 1`] = `
                 <div
                   class="level-right"
                 >
-                  <btooltip-stub
-                    active="true"
-                    label="Neko"
-                    position="is-top"
-                    size="is-medium"
-                  >
-                    <bicon-stub
-                      class="vote-icon"
-                      icon="cat"
-                    />
-                  </btooltip-stub>
-                   
-                  <btooltip-stub
-                    active="true"
-                    label="Neko"
-                    position="is-top"
-                    size="is-medium"
-                  >
-                    <bicon-stub
-                      class="vote-icon"
-                      icon="cat"
-                    />
-                  </btooltip-stub>
-                   
-                  <btooltip-stub
-                    active="true"
-                    label="Neko"
-                    position="is-top"
-                    size="is-medium"
-                  >
-                    <bicon-stub
-                      class="vote-icon"
-                      icon="cat"
-                    />
-                  </btooltip-stub>
-                   
-                  <btooltip-stub
-                    active="true"
-                    label="Neko"
-                    position="is-top"
-                    size="is-medium"
-                  >
-                    <bicon-stub
-                      class="vote-icon"
-                      icon="cat"
-                    />
-                  </btooltip-stub>
+                  <!---->
+                  <!---->
                 </div>
               </div>
             </div>

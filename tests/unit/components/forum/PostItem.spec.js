@@ -5,6 +5,8 @@ import Vuex from 'vuex'
 
 import mockPost from '../../../mockData/mockPost'
 import mockUser from '../../../mockData/mockUser'
+import mockSettings from '../../../mockData/mockSettings'
+
 import Forum from '@/api/forum'
 const localVue = createLocalVue()
 
@@ -16,17 +18,19 @@ jest.mock('@/api/forum', () => ({
 }))
 
 describe('PostItem.vue', () => {
-  let state
   let store
   beforeEach(() => {
-    state = {
-      currentUser: mockUser
-    }
-
     store = new Vuex.Store({
       modules: {
         auth: {
-          state
+          state: {
+            currentUser: mockUser
+          }
+        },
+        forum: {
+          state: {
+            forumSettings: mockSettings
+          }
         }
       }
     })

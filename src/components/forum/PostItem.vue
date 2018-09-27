@@ -7,13 +7,16 @@
     </div>
     <article class="tile is-child notification is-white thread-content" :class="{'is-warning': post.deleted}">
       <div class="post-options" v-if="currentUser">
-        <b-dropdown v-if="(currentUser.id === post.creator.id && !post.deleted) | currentUser.is_staff">
+        <b-dropdown>
           <a class="" slot="trigger">
               <b-icon icon="dots-vertical"></b-icon>
           </a>
-          <b-dropdown-item v-if="!editing" @click="startEditing()"><b-icon icon="pencil"></b-icon> Editar</b-dropdown-item>
-          <b-dropdown-item v-else @click="cancelEditing()"><b-icon icon="pencil"></b-icon> Dejar de editar</b-dropdown-item>
-          <b-dropdown-item @click="askDeletePost()"><b-icon icon="delete"></b-icon> Eliminar</b-dropdown-item>
+          <template v-if="(currentUser.id === post.creator.id && !post.deleted || currentUser.is_staff)">
+            <b-dropdown-item v-if="!editing" @click="startEditing()"><b-icon icon="pencil"></b-icon> Editar</b-dropdown-item>
+            <b-dropdown-item v-else @click="cancelEditing()"><b-icon icon="pencil"></b-icon> Dejar de editar</b-dropdown-item>
+            <b-dropdown-item @click="askDeletePost()"><b-icon icon="delete"></b-icon> Eliminar</b-dropdown-item>
+          </template>
+          <b-dropdown-item v-if="currentUser.id !== post.creator.id"><b-icon icon="flag"></b-icon> Reportar</b-dropdown-item>
         </b-dropdown>
       </div>
       <div class="columns" v-if="!post.deleted">
@@ -89,30 +92,32 @@
                         <div class="tile is-vertical is-ancestor">
                           <div class="tile">
                             <b-tooltip :label="vote.name">
-                              <figure class="image is-32x32">
+                              <figure class="image is-32x32 vote-list-item" @click="votePostWithID(vote.id)">
                                 <img :src="vote.icon">
                               </figure>
                             </b-tooltip>
                           </div>
                           <div class="tile is-horizontal-center">
-                            1
+                            <b-tooltip class="user-vote-tooltip" position="is-bottom" :label="getUsersTooltip(vote)">
+                            {{vote.vote_count}}
+                            </b-tooltip>
                           </div>
                         </div>
                       </div>
                     </div>
                     <div class="level-right">
-                      <b-tooltip label="Neko">
-                        <b-icon class="vote-icon" icon="cat"></b-icon>
-                      </b-tooltip>
-                      <b-tooltip label="Neko">
-                        <b-icon class="vote-icon" icon="cat"></b-icon>
-                      </b-tooltip>
-                      <b-tooltip label="Neko">
-                        <b-icon class="vote-icon" icon="cat"></b-icon>
-                      </b-tooltip>
-                      <b-tooltip label="Neko">
-                        <b-icon class="vote-icon" icon="cat"></b-icon>
-                      </b-tooltip>
+                      <template v-if="!hasVoted && currentUser">
+                        <div class="level-item level-vote" v-if="currentUser.id !== post.creator.id" v-for="vote in orderedVoteTypes" :key="vote.id">
+                          <b-tooltip :label="vote.name">
+                            <figure class="image is-32x32 vote-icon" @click="votePost(vote)">
+                              <img :src="vote.icon">
+                            </figure>
+                          </b-tooltip>
+                        </div>
+                      </template>
+                      <div v-else class="level-item" :class="[hasError ? 'has-text-danger' : 'has-text-success']">
+                        <b-icon v-if="!hasError" icon="check"></b-icon> <b-icon v-else icon="close"></b-icon> {{error}}
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -128,113 +133,157 @@
 </template>
 
 <script>
-import { mapState } from "vuex";
-import MarkdownEditor from "@/components/markdown_editor";
-import Forum from "@/api/forum";
-import petitionsMixin from "@/components/mixins/petitions";
-import UserSocial from "@/components/profile/user_social";
-import Markdown from "@/components/markdown";
+import { mapState } from 'vuex'
+import MarkdownEditor from '@/components/markdown_editor'
+import Forum from '@/api/forum'
+import petitionsMixin from '@/components/mixins/petitions'
+import UserSocial from '@/components/profile/user_social'
+import Markdown from '@/components/markdown'
 
 export default {
-  name: "PostItem",
+  name: 'PostItem',
   mixins: [petitionsMixin],
   components: { MarkdownEditor, UserSocial, Markdown },
-  props: ["post", "isOP"],
-  data() {
+  props: ['post', 'isOP'],
+  data () {
     return {
       editing: false,
       oldPost: null,
-      prettyDesc: this.post.content
-    };
+      prettyDesc: this.post.content,
+      hasVoted: false,
+      hasError: false,
+      error: 'Cosas'
+    }
   },
   computed: {
+    orderedVoteTypes () {
+      return this.forumSettings.vote_types.slice().sort((a, b) => {
+        return a.order > b.order
+      })
+    },
     ...mapState({
       currentUser: state => state.auth.currentUser
+    }),
+    ...mapState({
+      forumSettings: state => state.forum.forumSettings
     })
   },
-  mounted() {
+  mounted () {
     this.stripMd(this.post.content).then(desc => {
-      this.prettyDesc = desc;
-    });
+      this.prettyDesc = desc
+    })
   },
   methods: {
-    startEditing() {
-      this.editing = true;
-      this.oldPost = JSON.parse(JSON.stringify(this.post));
+    startEditing () {
+      this.editing = true
+      this.oldPost = JSON.parse(JSON.stringify(this.post))
     },
-    saveEditing() {
+    saveEditing () {
       this.$awn.async(
         this.makePetition(
           Forum.updatePost(this.post.id, this.post.content),
-          "Post actualizado con exito",
-          "Error actualizando post",
-          "Actualizando post"
+          'Post actualizado con exito',
+          'Error actualizando post',
+          'Actualizando post'
         ).then(thread => {
-          this.editing = false;
-          this.$awn.success("Post actualizado con exito");
+          this.editing = false
+          this.$awn.success('Post actualizado con exito')
         })
-      );
+      )
     },
-    cancelEditing() {
-      this.$emit("changePost", JSON.parse(JSON.stringify(this.oldPost)));
-      this.editing = false;
+    cancelEditing () {
+      this.$emit('changePost', JSON.parse(JSON.stringify(this.oldPost)))
+      this.editing = false
     },
-    askDeletePost() {
+    votePostWithID (voteTypeID) {
+      this.votePost(this.forumSettings.vote_types.find((vote) => vote.id === voteTypeID))
+    },
+    getUsersTooltip (voteType) {
+      var result = ''
+      for (let user of voteType.users) {
+        console.log(user)
+        result = result.concat(user + '\n')
+      }
+      return result
+    },
+    votePost (voteType) {
+      Forum.votePost(this.post.id, voteType.id).then((message) => {
+        this.hasVoted = true
+        this.error = message.success
+        this.oldPost = JSON.parse(JSON.stringify(this.post))
+        this.oldPost.votes = []
+        var voteIDX = this.oldPost.votes.findIndex((vote) => vote.id === voteType.id)
+        if (voteIDX === -1) {
+          voteType.vote_count = 0
+          voteType.users = []
+          voteIDX = this.oldPost.votes.push(voteType) - 1
+        }
+        this.oldPost.votes[voteIDX].vote_count++
+        this.oldPost.votes[voteIDX].users.push(this.currentUser.username)
+        this.$emit('changePost', JSON.parse(JSON.stringify(this.oldPost)))
+      }).catch((error) => {
+        console.log(error)
+        this.hasVoted = true
+        this.hasError = true
+        this.error = error.response.data.error
+      })
+    },
+    askDeletePost () {
       this.$dialog.prompt({
-        title: "Borrar post",
+        title: 'Borrar post',
         inputAttrs: {
-          placeholder: "Motivo"
+          placeholder: 'Motivo'
         },
-        confirmText: "Si",
-        cancelText: "No",
-        type: "is-danger",
+        confirmText: 'Si',
+        cancelText: 'No',
+        type: 'is-danger',
         onConfirm: reason => this.deletePost(reason)
-      });
+      })
     },
-    deletePost(reason = "") {
-      var post = JSON.parse(JSON.stringify(this.post));
-      post.delete_reason = reason;
+    deletePost (reason = '') {
+      var post = JSON.parse(JSON.stringify(this.post))
+      post.delete_reason = reason
       this.$awn.async(
         this.makePetition(
           Forum.deletePost(this.post.id, reason),
-          "Post eliminado con exito",
-          "Error eliminando post",
-          "Eliminando post"
+          'Post eliminado con exito',
+          'Error eliminando post',
+          'Eliminando post'
         ).then(resultingPost => {
-          this.$awn.success("Post eliminado con exito");
-          this.$emit("deletePost", post);
+          this.$awn.success('Post eliminado con exito')
+          this.$emit('deletePost', post)
         })
-      );
+      )
     },
     // Injects image into meta info for OpenGraph and Twitter Cards
-    getMeta() {
+    getMeta () {
       if (this.isOP && this.$refs.content) {
-        var el = this.$refs.content.$el;
-        var images = Array.from(el.getElementsByTagName("img"));
+        var el = this.$refs.content.$el
+        var images = Array.from(el.getElementsByTagName('img'))
         var image = images.find(image => {
-          if (!image.classList.contains("mfc-thumbnail")) {
-            return true;
+          if (!image.classList.contains('mfc-thumbnail')) {
+            return true
           }
-        });
+        })
         if (image) {
-          console.log(image);
+          console.log(image)
           return [
-            { name: "twitter:image:src", content: image.src },
-            { property: "og:image", content: image.src },
-            { itemprop: "image", content: image.src },
-            { property: "og:description", content: this.prettyDesc }
-          ];
+            { name: 'twitter:image:src', content: image.src },
+            { property: 'og:image', content: image.src },
+            { itemprop: 'image', content: image.src },
+            { property: 'og:description', content: this.prettyDesc }
+          ]
         }
       }
-      return [];
+      return []
     }
   },
-  metaInfo() {
+  metaInfo () {
     return {
       meta: this.getMeta()
-    };
+    }
   }
-};
+}
 </script>
 
 <style lang="scss" scoped>
@@ -290,6 +339,8 @@ $forum-header-transition: all 0.25s ease-in-out;
   justify-content: end;
 }
 
+.level-item
+
 .vote-icon {
   transition: transform 0.1s ease-in-out;
   transform: scale(0);
@@ -310,6 +361,19 @@ $forum-header-transition: all 0.25s ease-in-out;
   }
   .post-options {
     transform: scale(1);
+  }
+}
+
+.level-vote {
+  margin-right: 0.25rem !important;
+}
+
+.vote-list-item {
+  cursor: pointer;
+}
+.user-vote-tooltip {
+  &.tooltip:after {
+    white-space: pre;
   }
 }
 </style>

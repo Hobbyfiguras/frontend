@@ -1,10 +1,17 @@
+
 {
     "vote_types": [
         {
-            "name": "mi polla gorda",
+            "name": "Perro",
             "order": 0,
-            "icon": "http://127.0.0.1:8081/media/forum_icons/mi-polla-gorda.png",
+            "icon": "http://127.0.0.1:8081/media/forum_votes/perro.png",
             "id": "8GCN"
+        },
+        {
+            "name": "polla gorda",
+            "order": 1,
+            "icon": "http://127.0.0.1:8081/media/forum_votes/polla-gorda.png",
+            "id": "p2Cg"
         }
     ]
 }

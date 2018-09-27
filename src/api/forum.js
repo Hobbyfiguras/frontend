@@ -52,9 +52,16 @@ export default {
     return API.makePOST(`/api/posts/${postID}/delete/`, { delete_reason: reason })
   },
   async createPost (thread, content) {
+    console.log(thread.id)
     return API.makePOST(`/api/thread/${thread.id}/create_post/`, { content: content })
   },
   async getReports (page = 1) {
     return API.makeGET(`/api/reports/?page=${page}`)
+  },
+  async getForumSettings () {
+    return API.makeGET(`/api/settings/`)
+  },
+  async votePost (postID, postTypeID) {
+    return API.makePOST(`/api/posts/${postID}/vote/`, { vote_type: postTypeID })
   }
 }
