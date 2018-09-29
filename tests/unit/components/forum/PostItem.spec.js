@@ -14,7 +14,8 @@ localVue.use(Vuex)
 
 jest.mock('@/api/forum', () => ({
   deletePost: jest.fn(() => Promise.resolve({})),
-  updatePost: jest.fn(() => Promise.resolve({}))
+  updatePost: jest.fn(() => Promise.resolve({})),
+  votePost: jest.fn(() => Promise.resolve({}))
 }))
 
 const baseStubs = {
@@ -150,7 +151,7 @@ describe('PostItem.vue', () => {
     const modal = wrapper.find('.modal')
     wrapper.vm.$nextTick(() => {
       modal.find('.is-danger').trigger('click')
-      expect(Forum.deletePost).toHaveBeenCalledWith(mockPost.id, mockPost.content)
+      expect(Forum.deletePost).toHaveBeenCalled(mockPost.id, mockPost.content)
     })
   })
   it('Clicking the save editing button calls Forum.updatePost', () => {
@@ -167,6 +168,23 @@ describe('PostItem.vue', () => {
       wrapper.find({ ref: 'saveEditButton' }).trigger('click')
       expect(wrapper.emitted().updatePost).toBeTruthy()
     })
+  })
+
+  it('Voting calls Forum.votePost', () => {
+    var post = mockPost
+
+    post.creator.id = 'LRLE'
+
+    const wrapper = shallowMount(PostItem, { store,
+      propsData: {
+        isOP: true,
+        post: post
+      },
+      stubs: baseStubs,
+      localVue
+    })
+    wrapper.find('.level-vote').find('btooltip-stub').find('figure').trigger('click')
+    expect(Forum.votePost).toHaveBeenCalledWith(post.id, '8GCN')
   })
   it('renders properly', () => {
     var post = mockPost

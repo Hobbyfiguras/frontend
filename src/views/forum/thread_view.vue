@@ -62,7 +62,7 @@
 import Forum from '@/api/forum'
 import PetitionsMixin from '@/components/mixins/petitions'
 import PostItem from '@/components/forum/PostItem'
-import NSFWWarningMixin from '@/components/mixins/nsfw_warning_mixin'
+import NSFWWarningMixin from '@/components/mixins/NSFWWarningMixin'
 import PostCreate from '@/views/forum/post_create'
 import { mapGetters, mapState } from 'vuex'
 import debounce from 'debounce'

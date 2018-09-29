@@ -1,3 +1,5 @@
+import FigureSite from '@/api/figuresite'
+
 const state = {
   darkTheme: localStorage.getItem('darkTheme') === 'true',
   GDPRConsent: localStorage.getItem('GDPRConsent') === 'true',
@@ -21,6 +23,13 @@ const actions = {
   },
   updateGDPRConsent ({ commit }, value) {
     commit('setGDPRConsent', value)
+  },
+  setNSFW ({ commit, rootState }, value) {
+    var user = JSON.parse(JSON.stringify(rootState.auth.currentUser))
+    user.nsfw_enabled = value
+    return FigureSite.updateUser(user.username, user).then(() => {
+      commit('auth/setCurrentUser', user, { root: true })
+    })
   }
 }
 

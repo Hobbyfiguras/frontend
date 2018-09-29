@@ -1,20 +1,10 @@
-import { mapState, mapMutations } from 'vuex'
-import FigureSite from '../../api/figuresite'
+import { mapState, mapMutations, mapActions } from 'vuex'
 export default {
   methods: {
     enableNSFW () {
-      var user = JSON.parse(JSON.stringify(this.currentUser))
-      if (this.currentUser) {
-        user.nsfw_enabled = true
-        this.$awn.async(this.makePetition(FigureSite.updateUser(user.username, user)), 'Perfil actualizado correctamente',
-          'Error actualizando perfil', 'Actualizando perfil').then(() => {
-          this.setCurrentUser(user)
-        })
-      } else {
-        this.setLocalNSFW(true)
-      }
-
-      this.$toast.open('Habilitado el contenido NSFW!')
+      this.setNSFW(true).then(() => {
+        this.$toast.open('Habilitado el contenido NSFW!')
+      })
     },
     askNSFW () {
       this.$dialog.confirm({
@@ -29,7 +19,7 @@ export default {
       })
     },
     ...mapMutations('auth', ['setCurrentUser']),
-    ...mapMutations('settings', ['setLocalNSFW'])
+    ...mapActions('settings', ['setNSFW'])
   },
   computed: {
     ...mapState({
