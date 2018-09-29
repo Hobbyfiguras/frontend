@@ -105,8 +105,8 @@
                         </div>
                       </div>
                     </div>
-                    <div class="level-right">
-                      <template v-if="!hasVoted && currentUser">
+                    <div class="level-right" v-if="currentUser">
+                      <template v-if="!hasVoted">
                         <div class="level-item level-vote" v-if="currentUser.id !== post.creator.id" v-for="vote in orderedVoteTypes" :key="vote.id">
                           <b-tooltip :label="vote.name">
                             <figure class="image is-32x32 vote-icon" @click="votePost(vote)">
@@ -115,7 +115,7 @@
                           </b-tooltip>
                         </div>
                       </template>
-                      <div v-else class="level-item" :class="[hasError ? 'has-text-danger' : 'has-text-success']">
+                      <div class="level-item" :class="[hasError ? 'has-text-danger' : 'has-text-success']">
                         <b-icon v-if="!hasError" icon="check"></b-icon> <b-icon v-else icon="close"></b-icon> {{error}}
                       </div>
                     </div>

@@ -26,10 +26,14 @@ const actions = {
   },
   setNSFW ({ commit, rootState }, value) {
     var user = JSON.parse(JSON.stringify(rootState.auth.currentUser))
-    user.nsfw_enabled = value
-    return FigureSite.updateUser(user.username, user).then(() => {
-      commit('auth/setCurrentUser', user, { root: true })
-    })
+    if (user) {
+      user.nsfw_enabled = value
+      return FigureSite.updateUser(user.username, user).then(() => {
+        commit('auth/setCurrentUser', user, { root: true })
+      })
+    } else {
+      commit('setLocalNSFW', true)
+    }
   }
 }
 
