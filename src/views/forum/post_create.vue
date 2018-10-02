@@ -45,6 +45,9 @@ export default {
         this.post.created = Date.now()
         this.post.id = post.id
         this.$emit('createPost', this.post)
+        this.post = {
+          content: ''
+        }
       }))
     }
   }
