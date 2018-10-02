@@ -40,22 +40,25 @@ export default {
     }
   },
   created () {
-    if (this.hasAuthData) {
+    if (this.hasRefreshToken) {
       console.log('get')
       this.getCurrentUser()
+      this.connectToNotificationsService()
     }
     this.getForumSettings()
   },
   methods: {
     ...mapActions('auth', ['getCurrentUser']),
-    ...mapActions('forum', ['getForumSettings'])
+    ...mapActions('forum', ['getForumSettings']),
+    ...mapActions('notifications', ['connectToNotificationsService'])
   },
   computed: {
     ...mapState({
       darkTheme: state => state.settings.darkTheme
     }),
     ...mapGetters('auth', [
-      'hasAuthData'
+      'hasAuthData',
+      'hasRefreshToken'
     ]),
     ...mapGetters('forum', [
       'hasForumSettings'

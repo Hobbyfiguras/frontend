@@ -33,7 +33,8 @@
     "vue-progressbar": "^0.7.5",
     "vue-router": "^3.0.1",
     "vue-scrollto": "^2.11.0",
-    "vuex": "^3.0.1"
+    "vuex": "^3.0.1",
+    "websocket": "^1.0.28"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "^3.0.1",

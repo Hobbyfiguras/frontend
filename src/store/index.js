@@ -3,6 +3,7 @@ import Vuex from 'vuex'
 import settings from './modules/settings'
 import auth from './modules/auth'
 import forum from './modules/forum'
+import notifications from './modules/notifications'
 
 Vue.use(Vuex)
 
@@ -12,7 +13,8 @@ export default new Vuex.Store({
   modules: {
     settings,
     auth,
-    forum
+    forum,
+    notifications
   },
   strict: debug
 })

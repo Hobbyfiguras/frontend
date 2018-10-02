@@ -57,6 +57,16 @@
                 <b-dropdown-item><b-icon icon="settings"></b-icon> <span style="vertical-align: middle;">Preferencias</span></b-dropdown-item>
                 <b-dropdown-item  @click="logOff()"><b-icon icon="logout"></b-icon> <span style="vertical-align: middle;">Salir</span></b-dropdown-item>
               </b-dropdown>
+              <b-dropdown v-if="user">
+                <a class="navbar-item badge" slot="trigger">
+                  <span class="badge" data-badge="2"><b-icon class="is-vertical-center" icon="bell"></b-icon></span>
+                </a>
+                <b-dropdown-item has-link>
+                  <router-link :to="{'name': 'profile', 'params': {'username': user.username}}">
+                    <b-icon icon="account"></b-icon><span style="vertical-align: middle;">Ver Perfil</span>
+                  </router-link>
+                </b-dropdown-item>
+              </b-dropdown>
               <router-link v-else class="navbar-item" :to="{'name': 'login', query: {from: $route.path}}">Entrar</router-link>
               <a v-if="patreon_enabled" class="navbar-item is-paddingless patreon-link" slot="trigger" href="https://patreon.com/EIRTeam">
                 <img class="patreon-image" src="../assets/images/become_a_patron_button.png" alt="">

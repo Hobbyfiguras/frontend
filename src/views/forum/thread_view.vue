@@ -166,7 +166,7 @@ export default {
       var totalPages = Math.ceil(this.thread.posts.count / this.postsPerPage)
       if ((totalPages === this.currentPage) && this.thread.posts.results.length < this.postsPerPage) {
         this.transitonName = 'post'
-        this.thread.posts.results.push(post)
+        this.thread.posts.results.push(JSON.parse(JSON.stringify(post)))
       } else {
         var data = this.getThreadLinkData(this.thread)
         data.hash = '#' + String(post.id)

@@ -31,52 +31,45 @@ const actions = {
       console.log('return promise')
       return state.refreshTokenPromise
     }
-    return new Promise((resolve, reject) => {
-      const tokenRefresh = state.jwtRefresh
+    const tokenRefresh = state.jwtRefresh
 
-      if (tokenRefresh) {
-        try {
-          const tokenAccess = state.jwtAccess
-          var renewAccess = false
-          if (tokenAccess) {
-            const decodedAccess = jwtDecode(tokenAccess)
-            const expAccess = decodedAccess.exp
-            if (Math.floor((expAccess - Date.now() / 1000)) / 60 <= 5) {
-              // If access token has under 5 minutes left or is not there, try to refresh it
-              renewAccess = true
-            }
-          } else {
+    if (tokenRefresh) {
+      try {
+        const tokenAccess = state.jwtAccess
+        var renewAccess = false
+        if (tokenAccess) {
+          const decodedAccess = jwtDecode(tokenAccess)
+          const expAccess = decodedAccess.exp
+          if (Math.floor((expAccess - Date.now() / 1000)) / 60 <= 5) {
+            // If access token has under 5 minutes left or is not there, try to refresh it
             renewAccess = true
           }
-          const decodedRefresh = jwtDecode(tokenRefresh)
-
-          const expRefresh = decodedRefresh.exp
-
-          console.log('probando token')
-
-          // If refresh token is expired, remove it so we aren't authenticated anymore
-          if (Math.floor((expRefresh - Date.now() / 1000)) / 3600 / 24 <= 0 && (Date.now)) {
-            console.log('borrando token porque ha expirado')
-            commit('removeToken')
-            resolve()
-          } else {
-            resolve()
-          }
-
-          if (renewAccess) {
-            commit('removeAccessToken')
-            dispatch('refreshToken').then((newToken) => {
-              resolve(newToken)
-            })
-          }
-        } catch (err) {
-          console.log('borrando token por algo que no se', err)
-          commit('removeAccessToken')
+        } else {
+          renewAccess = true
         }
-      } else {
-        resolve()
+        const decodedRefresh = jwtDecode(tokenRefresh)
+
+        const expRefresh = decodedRefresh.exp
+
+        console.log('probando token')
+
+        // If refresh token is expired, remove it so we aren't authenticated anymore
+        if (Math.floor((expRefresh - Date.now() / 1000)) / 3600 / 24 <= 0 && (Date.now)) {
+          console.log('borrando token porque ha expirado')
+          commit('removeToken')
+        }
+
+        if (renewAccess) {
+          commit('removeAccessToken')
+          console.log('returning refresh promise')
+          return dispatch('refreshToken')
+        }
+      } catch (err) {
+        console.log('borrando token por algo que no se', err)
+        commit('removeAccessToken')
       }
-    })
+    }
+    return Promise.resolve(state.jwtAccess)
   },
   refreshToken ({ commit, state, dispatch }) {
     commit('setRefreshingToken', true)
