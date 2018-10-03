@@ -15,6 +15,7 @@ import VueMarkdown from 'vue-markdown'
 import Croppa from 'vue-croppa'
 import VueScrollTo from 'vue-scrollto'
 import VueMeta from 'vue-meta'
+import VueAnalytics from 'vue-analytics'
 
 import GlobalMixin from '@/components/mixins/global'
 
@@ -66,6 +67,12 @@ Vue.use(Croppa)
 Vue.use(VueScrollTo, {
   duration: 1000,
   offset: -75
+})
+
+// vue-analytics
+Vue.use(VueAnalytics, {
+  id: 'UA-126975682-1',
+  router
 })
 
 // vue-meta
