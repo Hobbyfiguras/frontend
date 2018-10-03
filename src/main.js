@@ -72,7 +72,10 @@ Vue.use(VueScrollTo, {
 // vue-analytics
 Vue.use(VueAnalytics, {
   id: 'UA-126975682-1',
-  router
+  router,
+  debug: {
+    enabled: true
+  }
 })
 
 // vue-meta
