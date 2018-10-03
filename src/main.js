@@ -74,7 +74,7 @@ Vue.use(VueAnalytics, {
   id: 'UA-126975682-1',
   router,
   debug: {
-    enabled: true
+    enabled: false
   }
 })
 
