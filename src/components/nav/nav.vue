@@ -5,9 +5,12 @@
           <div class="level-left">
 
           </div>
-          <div class="level-right bm-level-item">
-            <b-icon class="badge" data-badge="2" icon="bell"></b-icon>
-          </div>
+          <Notifications v-if="user">
+            <div class="level-right bm-level-item" slot="trigger">
+              <b-icon class="badge" :data-badge="unreadNotificationCount" icon="bell"></b-icon>
+            </div>
+          </Notifications>
+
         </div>
         <router-link class="level mobile-navbar-item bm-top is-top" v-if="user" :to="{'name': 'profile', 'params': {'username': user.username}}">
             <div class="level-left">
@@ -57,21 +60,12 @@
                 <b-dropdown-item><b-icon icon="settings"></b-icon> <span style="vertical-align: middle;">Preferencias</span></b-dropdown-item>
                 <b-dropdown-item  @click="logOff()"><b-icon icon="logout"></b-icon> <span style="vertical-align: middle;">Salir</span></b-dropdown-item>
               </b-dropdown>
-              <b-dropdown v-if="user">
+              <Notifications v-if="user">
                 <a class="navbar-item badge" slot="trigger">
-                  <span class="badge" data-badge="2"><b-icon class="is-vertical-center" icon="bell"></b-icon></span>
+                  <span class="badge" :data-badge="unreadNotificationCount"><b-icon class="is-vertical-center" icon="bell"></b-icon></span>
                 </a>
-                <b-dropdown-item has-link>
-                  <router-link :to="{'name': 'profile', 'params': {'username': user.username}}">
-                    <b-icon icon="account"></b-icon><span style="vertical-align: middle;">Ver Perfil</span>
-                  </router-link>
-                </b-dropdown-item>
-              </b-dropdown>
+              </Notifications>
               <router-link v-else class="navbar-item" :to="{'name': 'login', query: {from: $route.path}}">Entrar</router-link>
-              <a v-if="patreon_enabled" class="navbar-item is-paddingless patreon-link" slot="trigger" href="https://patreon.com/EIRTeam">
-                <img class="patreon-image" src="../assets/images/become_a_patron_button.png" alt="">
-              </a>
-
             </div>
         </div>
         </div>
@@ -80,11 +74,12 @@
 <script>
 import { mapActions, mapGetters, mapState } from 'vuex'
 import LoginPrompt from '@/components/login_prompt'
+import Notifications from '@/components/nav/notification_dropdown'
 import { Menu } from 'vue-burger-menu'
 
 export default {
   name: 'AppNav',
-  components: { LoginPrompt, Menu },
+  components: { LoginPrompt, Menu, Notifications },
   data () {
     return {
       navIsActive: false,
@@ -105,7 +100,8 @@ export default {
       'isAuthenticated'
     ]),
     ...mapState({
-      user: state => state.auth.currentUser
+      user: state => state.auth.currentUser,
+      unreadNotificationCount: state => state.notifications.unreadNotificationCount
     })
   }
 }

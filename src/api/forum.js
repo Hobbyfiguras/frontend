@@ -63,5 +63,8 @@ export default {
   },
   async votePost (postID, postTypeID) {
     return API.makePOST(`/api/posts/${postID}/vote/`, { vote_type: postTypeID })
+  },
+  async changeThreadSubscription (postID, subscribed) {
+    return API.makePOST(`/api/thread/${postID}/change_subscription/`, { subscribed })
   }
 }

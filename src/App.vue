@@ -26,7 +26,7 @@
 </template>
 
 <script>
-import AppNav from './components/nav.vue'
+import AppNav from './components/nav/nav.vue'
 import GDPRNoti from './components/gdprnoti.vue'
 import { mapState, mapGetters, mapActions } from 'vuex'
 import petitionsMixin from './components/mixins/petitions'
@@ -43,6 +43,7 @@ export default {
     if (this.hasRefreshToken) {
       console.log('get')
       this.getCurrentUser()
+      this.getUnreadNotifications()
       this.connectToNotificationsService()
     }
     this.getForumSettings()
@@ -50,7 +51,7 @@ export default {
   methods: {
     ...mapActions('auth', ['getCurrentUser']),
     ...mapActions('forum', ['getForumSettings']),
-    ...mapActions('notifications', ['connectToNotificationsService'])
+    ...mapActions('notifications', ['connectToNotificationsService', 'getUnreadNotifications'])
   },
   computed: {
     ...mapState({

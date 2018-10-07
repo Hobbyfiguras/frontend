@@ -24,7 +24,18 @@
   <div v-if="!thread.nsfw || isNSFWEnabled" class="tile is-vertical">
       <div class="tile is-parent is-vertical">
         <article class="tile thread-title is-child notification is-primary">
-          <p class="title">{{thread.title}}</p>
+          <div v class="level">
+            <div class="level-left">
+              <div class="level-item">
+                <p class="title">{{thread.title}}</p>
+              </div>
+            </div>
+            <div class="level-right">
+              <div class="level-item">
+                <a class="button" @click="toggleSubscription"><b-icon v-if="thread.subscribed" icon="eye-off"></b-icon> <b-icon v-else icon="eye"></b-icon></a>
+              </div>
+            </div>
+          </div>
         </article>
         <transition-group :name="transitonName">
           <PostItem class="PostItem" v-for="(post, index) in thread.posts.results" :isOP="index === 0 && currentPage === 1" :post="post" @changePost="changePost" :key="post.id" @deletePost="deletePost" :ref="'#' + post.id">
@@ -110,11 +121,10 @@ export default {
     })
   },
   updated: debounce(function () {
-    console.log('updated')
     this.$nextTick(() => {
       this.scrollToHash()
     })
-  }, 250), // increase to ur needs
+  }, 500), // increase to ur needs
   methods: {
     fetchData () {
       var page = this.page
@@ -153,6 +163,11 @@ export default {
           }
         }
       }
+    },
+    toggleSubscription () {
+      this.makePetition(Forum.changeThreadSubscription(this.thread.id, !this.thread.subscribed)).then(() => {
+        this.thread.subscribed = !this.thread.subscribed
+      })
     },
     deletePost (postToDelete) {
       console.log(postToDelete)

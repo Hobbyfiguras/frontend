@@ -115,7 +115,7 @@
                           </b-tooltip>
                         </div>
                       </template>
-                      <div class="level-item" :class="[hasError ? 'has-text-danger' : 'has-text-success']">
+                      <div class="level-item" v-if="hasVoted" :class="[hasError ? 'has-text-danger' : 'has-text-success']">
                         <b-icon v-if="!hasError" icon="check"></b-icon> <b-icon v-else icon="close"></b-icon> {{error}}
                       </div>
                     </div>

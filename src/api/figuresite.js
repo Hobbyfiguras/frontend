@@ -41,5 +41,16 @@ export default {
   },
   async getUserThreads (username, page = 1) {
     return API.makeGET(`/api/users/${username}/threads/?page=${page}`)
+  },
+  async getNotifications (page = 1) {
+    return API.makeGET(`/api/notifications/?page=${page}`)
+  },
+  async getUnreadNotifications (page = 1) {
+    return API.makeGET(`/api/notifications/unread/?page=${page}`)
+  },
+  async updateNotification (notification) {
+    delete notification.user
+    delete notification.actor
+    return API.makePATCH(`/api/notifications/${notification.id}/`, notification)
   }
 }
