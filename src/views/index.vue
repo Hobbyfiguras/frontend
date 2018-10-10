@@ -36,7 +36,10 @@
               </div>
             </div>
             <article class="tile is-child notification is-white thread-content">
-              <Markdown :source="newsItem.first_post.content"></Markdown>
+              <div class="readmore-box">
+                <Markdown :source="newsItem.first_post.content"></Markdown>
+                <p class="read-more"><a href="#" class="button">Leer más</a></p>
+              </div>
               <div class="level">
                 <div class="level-left"></div>
                 <div class="level-right">
@@ -102,5 +105,20 @@ export default {
 }
 .tile.is-vertical > .tile.is-child:not(:last-child) {
   margin-bottom: 0.25rem !important;
+}
+.readmore-box {
+  max-height: 520px;
+  position: relative;
+  overflow: hidden;
+  .read-more {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    text-align: center;
+    margin: 0; padding: 1rem 0;
+    /* "transparent" only works here because == rgba(0,0,0,0) */
+    background-image: linear-gradient(to bottom, transparent, white);
+  }
 }
 </style>
