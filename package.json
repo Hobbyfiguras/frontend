@@ -29,6 +29,7 @@
     "vue-axios": "^2.1.3",
     "vue-burger-menu": "^1.0.0",
     "vue-croppa": "^1.3.8",
+    "vue-element-query": "^3.0.1",
     "vue-markdown": "git+https://github.com/FigureSite/vue-markdown.git",
     "vue-meta": "^1.5.3",
     "vue-progressbar": "^0.7.5",

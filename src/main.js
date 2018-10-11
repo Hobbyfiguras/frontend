@@ -18,6 +18,7 @@ import VueMeta from 'vue-meta'
 import VueAnalytics from 'vue-analytics'
 
 import GlobalMixin from '@/components/mixins/global'
+import VueElementQuery from 'vue-element-query'
 
 // buefy
 Vue.use(Buefy)
@@ -77,6 +78,9 @@ Vue.use(VueAnalytics, {
     enabled: false
   }
 })
+
+// vue-element-query
+Vue.use(VueElementQuery)
 
 // vue-meta
 
