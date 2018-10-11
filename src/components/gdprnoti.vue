@@ -7,18 +7,16 @@
               <div class="level is-marginless">
                 <div class="level-left">
                   <div class="level-item">
-                    <div class="content">
-                      <h3>Cookies disclaimer</h3>
-                    </div>
+                    <p class="title is-white">Aviso de cookies</p>
                   </div>
                 </div>
                 <div class="level-right">
                     <div class="level-item">
-                      <button class="button is-info is-pulled-right" @click="updateGDPRConsent(true)">Agree</button>
+                      <button class="button is-info is-pulled-right" @click="updateGDPRConsent(true)">Aceptar</button>
                     </div>
                 </div>
               </div>
-              We use <a href="https://en.wikipedia.org/wiki/HTTP_cookie#Terminology">cookies</a> to, amongst other things, store your preferences and to protect against abusive behavior. Learn more in our <router-link :to="{name: 'privacy'}">Privacy Policy</router-link> page.
+              Usamos <a href="https://es.wikipedia.org/wiki/Cookie_(inform%C3%A1tica)#Prop%C3%B3sito">cookies</a> para, entre otras cosas, almacenar tus preferencias y protegerte ante comportamientos abusivos. Aprende mas en nuestra <router-link :to="{name: 'privacy'}">Politica de privacidad</router-link>.
             </div>
           </div>
           <div class="column is-3"></div>
@@ -49,5 +47,10 @@ export default {
     left: 50%;
     transform: translateX(-50%);
     z-index: 100;
+  }
+  .notification {
+    a {
+      text-decoration: underline !important;
+    }
   }
 </style>
