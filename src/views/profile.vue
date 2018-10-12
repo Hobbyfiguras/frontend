@@ -33,7 +33,7 @@
 
           </figure>
         </div>
-        <div class="column is-4-tablet is-6-mobile name">
+        <div class="column is-4-tablet is-6-mobile name" v-if="!editing">
           <p>
             <span class="title is-bold">{{profileUser.username}}</span>
           </p>
@@ -43,55 +43,21 @@
                   Editar perfil
                 </a>
                 <template v-else>
-                  <div class="field is-grouped">
-                    <p class="control">
-                      <a class="button is-info" @click="saveEdit()">
-                        Guardar
-                      </a>
-                    </p>
-                    <p class="control">
-                      <a class="button is-danger" @click="cancelEdit()">
-                        Cancelar
-                      </a>
-                    </p>
-                  </div>
                 </template>
               </template>
             </div>
 
           <template v-if="!editing">
             <div class="container">
-              <div class="location-item">
-                <b-icon custom-class="mdi-profile" icon="earth"></b-icon> Barcelona
+              <div class="location-item" v-if="profileUser.location">
+                <b-icon custom-class="mdi-profile" icon="earth"></b-icon> {{profileUser.location}}
               </div>
               <UserSocial :user="profileUser"></UserSocial>
             </div>
-            <p class="tagline">
-              3 pistolas tengo
-            </p>
-          </template>
-          <template v-else>
-            <b-field label="Nombre">
-              <b-input v-model="tempUser.first_name"></b-input>
-            </b-field>
-            <b-field label="Apellido">
-              <b-input v-model="tempUser.second_name"></b-input>
-            </b-field>
-            <b-field label="Usuario de MyFigureCollection">
-              <b-input v-model="tempUser.mfc_username"></b-input>
-            </b-field>
-            <b-field label="Usuario de MyAnimeList">
-              <b-input v-model="tempUser.mal_username"></b-input>
-            </b-field>
-            <b-field label="Usuario de Anilist">
-              <b-input v-model="tempUser.anilist_username"></b-input>
-            </b-field>
-            <b-field label="Usuario de Twitter">
-              <b-input v-model="tempUser.twitter_username"></b-input>
-            </b-field>
+            <Markdown :source="profileUser.bio"></Markdown>
           </template>
         </div>
-        <div class="column is-2-tablet is-4-mobile has-text-centered">
+        <div class="column is-2-tablet is-4-mobile has-text-centered" v-if="!editing">
           <p class="stat-val">
             <portal-target  name="figurecount">
               <p>...</p>
@@ -99,7 +65,7 @@
           </p>
           <p class="stat-key">figuras</p>
         </div>
-        <div class="column is-2-tablet is-4-mobile has-text-centered">
+        <div class="column is-2-tablet is-4-mobile has-text-centered" v-if="!editing">
             <p class="stat-val">
               <portal-target  name="photocount">
                 <p>...</p>
@@ -107,7 +73,7 @@
             </p>
           <p class="stat-key">fotos</p>
         </div>
-        <div class="column is-2-tablet is-4-mobile has-text-centered">
+        <div class="column is-2-tablet is-4-mobile has-text-centered" v-if="!editing">
             <p class="stat-val">
               <portal-target  name="threadcount">
                 <p>...</p>
@@ -115,24 +81,66 @@
             </p>
           <p class="stat-key">temas</p>
         </div>
+        <div class="column is-10-tablet is-12-mobile is-multiline" v-if="editing">
+          <div class="columns">
+            <div class="column">
+              <b-field label="Nombre">
+                <b-input v-model="tempUser.first_name"></b-input>
+              </b-field>
+              <b-field label="Apellido">
+                <b-input v-model="tempUser.second_name"></b-input>
+              </b-field>
+              <b-field label="Usuario de MyFigureCollection">
+                <b-input v-model="tempUser.mfc_username"></b-input>
+              </b-field>
+              <b-field label="Usuario de MyAnimeList">
+                <b-input v-model="tempUser.mal_username"></b-input>
+              </b-field>
+              <b-field label="Usuario de Anilist">
+                <b-input v-model="tempUser.anilist_username"></b-input>
+              </b-field>
+              <b-field label="Usuario de Twitter">
+                <b-input v-model="tempUser.twitter_username"></b-input>
+              </b-field>
+              <b-field label="Lugar">
+                <b-input v-model="tempUser.location"></b-input>
+              </b-field>
+            </div>
+            <div class="column">
+              <b-field label="Bio">
+                <MarkdownEditor v-model="tempUser.bio"></MarkdownEditor>
+              </b-field>
+            </div>
+          </div>
+          <div class="columns">
+            <div class="column is-12">
+              <div class="field is-grouped">
+                <p class="control">
+                  <a class="button is-info" @click="saveEdit()">
+                    Guardar
+                  </a>
+                </p>
+                <p class="control">
+                  <a class="button is-danger" @click="cancelEdit()">
+                    Cancelar
+                  </a>
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
 </div>
-  <b-tabs v-model="activeTab" expanded size="is-medium" v-if="!loading && profileUser.mfc_username">
-    <b-tab-item label="Figuras">
+  <b-tabs v-model="activeTab" expanded size="is-medium" v-if="!loading">
+    <b-tab-item label="Figuras" v-if="profileUser.mfc_username">
       <UserFigures :username="profileUser.mfc_username"></UserFigures>
     </b-tab-item>
     <b-tab-item label="Fotos" v-if="profileUser.mfc_username">
       <UserPics :username="profileUser.mfc_username"></UserPics>
     </b-tab-item>
-    <b-tab-item label="Temas">
-      <UserThreads :username="profileUser.username"></UserThreads>
-    </b-tab-item>
-  </b-tabs>
-
-  <b-tabs v-model="activeTab" expanded size="is-medium" v-else-if="!loading">
-    <b-tab-item label="Temas">
+    <b-tab-item label="Temas" v-if="profileUser.thread_count">
       <UserThreads :username="profileUser.username"></UserThreads>
     </b-tab-item>
   </b-tabs>
@@ -147,9 +155,12 @@ import FigureSite from '@/api/figuresite'
 import UserThreads from '@/components/profile/user_threads'
 import UserSocial from '@/components/profile/user_social'
 import { mapGetters, mapState } from 'vuex'
+import MarkdownEditor from '@/components/markdown_editor'
+import Markdown from '@/components/markdown'
+
 export default {
   name: 'profile',
-  components: { UserFigures, UserPics, UserThreads, UserSocial },
+  components: { UserFigures, UserPics, UserThreads, UserSocial, MarkdownEditor, Markdown },
   mounted () {
     this.fetchData()
   },

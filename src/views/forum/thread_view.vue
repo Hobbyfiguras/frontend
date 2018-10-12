@@ -31,7 +31,7 @@
               </div>
             </div>
             <div class="level-right">
-              <div class="level-item" v-if="user">
+              <div class="level-item" v-if="currentUser">
                 <a class="button" @click="toggleSubscription"><b-icon v-if="thread.subscribed" icon="eye-off"></b-icon> <b-icon v-else icon="eye"></b-icon></a>
               </div>
             </div>

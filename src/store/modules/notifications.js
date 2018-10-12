@@ -28,6 +28,7 @@ const actions = {
       // HACK, we use sec-websocket-protocol to send the access token
       // because websockets are a bunch of idiots
       if (process.env.NODE_ENV === 'development') {
+        console.log(`connecting using token: ${token}`)
         client = new W3CWebSocket(`ws://127.0.0.1:8081/ws/notifications/?token=${token}`)
       } else {
         client = new W3CWebSocket(`wss://hobbyfiguras.moe/ws/notifications/?token=${token}`)

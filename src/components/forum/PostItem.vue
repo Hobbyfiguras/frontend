@@ -33,7 +33,7 @@
             </div>
             <div class="column is-12-tablet">
               <p class="subtitle">
-                <router-link class="user-link" :class="{'user-moderator': post.creator.is_staff}" :to="{name: 'profile', params: {username: post.creator.username}}">
+                <router-link class="user-link" :class="{'user-moderator': post.creator.is_staff, 'user-banned': isUserBanned(post.creator)}" :to="{name: 'profile', params: {username: post.creator.username}}">
                 {{post.creator.username}}
                 </router-link>
               </p>
@@ -42,7 +42,8 @@
               <figure class="image is-256x256">
                 <div class="is-paddingless">
                   <router-link class="user-link" :to="{name: 'profile', params: {username: post.creator.username}}">
-                    <img class="is-rounded" :src="post.creator.avatar"/>
+                    <img v-if="!isUserBanned(post.creator)" class="is-rounded" :src="post.creator.avatar"/>
+                    <img v-else src="../../assets/images/ban.png"/>
                   </router-link>
                 </div>
               </figure>
@@ -52,12 +53,12 @@
             </div>
 
             <div class="column is-12-tablet has-text-centered">
-              <div class="is-vertical-center is-horizontal-center">
+              <div class="is-vertical-center is-horizontal-center" v-if="post.creator.location">
                 <b-icon custom-class="mdi-profile" icon="earth"></b-icon>
-                <span> Barcelona</span>
+                <span> {{post.creator.location}}</span>
               </div>
               <div class="">
-                <span>Mensajes: 70.000</span>
+                <span>Mensajes: {{post.creator.post_count}}</span>
               </div>
             </div>
           </div>
@@ -65,7 +66,11 @@
           <div class="column is-10 has-vertically-aligned-content">
             <div class="columns">
               <div class="column is-12 content">
-              <Markdown v-if="!editing" :source="post.content" ref="content"></Markdown>
+              <template v-if="!editing">
+                <Markdown :source="post.content" ref="content"></Markdown>
+                <div v-if="post.ban_reason" class="user-banned">(Este usuario fue baneado por este post ("{{post.ban_reason}}") - {{post.banner.username}})</div>
+                <div v-if="post.modified && post.modified_by" class="is-size-7"><b-icon icon="pencil" size="is-small"></b-icon> Editado por {{post.modified_by.username}} {{post.modified | timeDiff("from")}}</div>
+              </template>
               <template v-else>
                 <MarkdownEditor v-model="post.content"></MarkdownEditor>
                 <div class="is-divider"></div>

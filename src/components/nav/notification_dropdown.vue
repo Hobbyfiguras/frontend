@@ -2,7 +2,7 @@
 <b-dropdown>
   <slot name="trigger" slot="trigger">
   </slot>
-  <b-dropdown-item v-for="notification in unreadNotifications" :key="notification.id">
+  <b-dropdown-item v-for="notification in unreadNotifications.slice(0, 4)" :key="notification.id">
     <router-link :to="getNotificationLink(notification)">
       <article class="media">
         <figure class="media-left">

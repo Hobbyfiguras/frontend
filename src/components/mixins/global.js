@@ -13,6 +13,15 @@ export default {
         reader.readAsDataURL(file)
       })
     },
+    isUserBanned (user) {
+      if (user.ban_expiry_date) {
+        console.log('user is banned', user.username)
+        console.log(user.ban_expiry_date)
+        return Date.parse(user.ban_expiry_date) > Date.now()
+      } else {
+        return false
+      }
+    },
     stripMd (content) {
       return new Promise((resolve, reject) => {
         remark()
