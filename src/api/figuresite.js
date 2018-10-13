@@ -21,6 +21,15 @@ export default {
   async verifyEmail (key) {
     return API.makePOSTnoHeaders('/api/auth/register/verify-email/', { key: key }, true)
   },
+  async resetPassword (payload) {
+    return API.makePOSTnoHeaders('/api/auth/password_reset/verify/', payload, true)
+  },
+  async requestResetPassword (payload) {
+    return API.makePOSTnoHeaders('/api/auth/password_reset/', payload, true)
+  },
+  async changePassword (payload) {
+    return API.makePOST('/api/auth/change_password/', payload, true)
+  },
   async getUser (username) {
     return API.makeGET(`/api/users/${username}/`)
   },

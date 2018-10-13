@@ -38,8 +38,7 @@ export default {
   },
   methods: {
     createPost () {
-      this.$awn.async(this.makePetition(Forum.createPost(this.thread, this.post.content), 'Post creado con exito',
-        'Error creando post', 'creando post').then((post) => {
+      this.$awn.async(this.makePetition(Forum.createPost(this.thread, this.post.content)).then((post) => {
         this.$awn.success('Post creado con exito')
         this.post.creator = this.currentUser
         this.post.created = Date.now()
@@ -48,7 +47,7 @@ export default {
         this.post = {
           content: ''
         }
-      }))
+      }), 'Post creado con exito', 'Error creando post', 'Creando post')
     }
   }
 }

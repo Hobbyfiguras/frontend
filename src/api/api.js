@@ -3,9 +3,11 @@ import axios from 'axios'
 const noRequestAxios = axios.create()
 
 export default {
-  makePOST (petition, payload) {
+  makePOST (petition, payload, returnFull) {
     return Vue.axios.post(petition, payload).then((r) => {
-      console.log(r)
+      if (returnFull) {
+        return r
+      }
       return r.data
     }).catch((err) => {
       throw err

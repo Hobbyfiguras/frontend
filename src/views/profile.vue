@@ -192,6 +192,7 @@ export default {
   methods: {
     fetchData () {
       this.loading = true
+      console.log(this.username)
       this.makePetition(FigureSite.getUser(this.username)).then((username) => {
         this.profileUser = username
         this.avatar = this.profileUser.avatar

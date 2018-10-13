@@ -17,8 +17,7 @@
                                 value=""
                                 v-model="email"
                                 placeholder="Correo electronico"
-                                size="is-large"
-                                message="errors['email']">
+                                size="is-large">
                             </b-input>
                         </b-field>
 

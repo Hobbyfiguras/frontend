@@ -57,7 +57,7 @@
                     <b-icon icon="account"></b-icon><span style="vertical-align: middle;">Ver Perfil</span>
                   </router-link>
                 </b-dropdown-item>
-                <b-dropdown-item><b-icon icon="settings"></b-icon> <span style="vertical-align: middle;">Preferencias</span></b-dropdown-item>
+                <b-dropdown-item has-link><router-link :to="{name: 'preferences'}"><b-icon icon="settings"></b-icon> <span style="vertical-align: middle;">Preferencias</span></router-link></b-dropdown-item>
                 <b-dropdown-item  @click="logOff()"><b-icon icon="logout"></b-icon> <span style="vertical-align: middle;">Salir</span></b-dropdown-item>
               </b-dropdown>
               <Notifications v-if="user">

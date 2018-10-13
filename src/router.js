@@ -12,13 +12,18 @@ import forumView from '@/views/forum/forum_view'
 import threadView from '@/views/forum/thread_view'
 import threadCreate from '@/views/forum/ThreadCreate'
 import markdownGuide from '@/views/markdown_guide'
+import PasswordResetVerify from '@/views/PasswordResetVerify'
+import PasswordReset from '@/views/PasswordReset'
+
 import store from '@/store'
 
 Vue.use(Router)
 
 function requireAuth (to, from, next) {
   if (store.getters['auth/hasAuthData']) {
-    next()
+    store.dispatch('auth/getCurrentUser').then(() => {
+      next()
+    })
   } else {
     next('/')
   }
@@ -50,6 +55,16 @@ const router = new Router({
       name: 'profile',
       component: profile,
       props: true
+    },
+    {
+      path: '/confirmar_cambio_pass',
+      name: 'password_change_confirm',
+      component: PasswordResetVerify
+    },
+    {
+      path: '/cambio_pass',
+      name: 'password_change',
+      component: PasswordReset
     },
     {
       path: '/foro',
@@ -86,6 +101,23 @@ const router = new Router({
       props: true,
       component: login,
       beforeEnter: requireNotAuth
+    },
+    {
+      path: '/preferencias',
+      component: () => import(/* webpackChunkName: "user_preferences" */ '@/views/UserPreferences'),
+      beforeEnter: requireAuth,
+      children: [
+        {
+          path: '',
+          name: 'preferences',
+          component: () => import(/* webpackChunkName: "user_preferences" */ '@/views/preferences/account')
+        },
+        {
+          path: 'password',
+          name: 'preferences_password',
+          component: () => import(/* webpackChunkName: "user_preferences" */ '@/views/preferences/PasswordPreferences')
+        }
+      ]
     },
     {
       path: '/registro',

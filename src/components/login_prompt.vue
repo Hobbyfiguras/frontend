@@ -28,7 +28,7 @@
 
                       <p class="has-text-grey login-buttons">
                           <a href="../">Registrarse</a> &nbsp;·&nbsp;
-                          <a href="../">Contraseña olvidada</a>
+                          <router-link :to="{name: 'password_change'}">Contraseña olvidada</router-link>
                       </p>
                 </div>
             </div>

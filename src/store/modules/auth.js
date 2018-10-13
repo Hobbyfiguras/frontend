@@ -5,6 +5,7 @@ const state = {
   jwtAccess: localStorage.getItem('jwtAccess'),
   jwtRefresh: localStorage.getItem('jwtRefresh'),
   currentUser: null,
+  userLoadingPromise: null,
   refreshingToken: false,
   refreshTokenPromise: null
 }
@@ -91,13 +92,19 @@ const actions = {
 
     return state.refreshTokenPromise
   },
-  getCurrentUser ({ commit }) {
-    return new Promise((resolve, reject) => {
-      figuresite.getUser('current').then((user) => {
-        commit('setCurrentUser', user)
-        resolve()
+  getCurrentUser ({ commit, state }) {
+    if (state.userLoadingPromise) {
+      return state.userLoadingPromise
+    } else {
+      var promise = new Promise((resolve, reject) => {
+        figuresite.getUser('current').then((user) => {
+          commit('setCurrentUser', user)
+          resolve()
+        })
       })
-    })
+      commit('setUserLoadingPromise', promise)
+      return state.userLoadingPromise
+    }
   }
 }
 
@@ -128,6 +135,9 @@ const mutations = {
   },
   setRefreshingToken (state, refreshing) {
     state.refreshingToken = refreshing
+  },
+  setUserLoadingPromise (state, promise) {
+    state.userLoadingPromise = promise
   }
 }
 
