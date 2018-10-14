@@ -3,7 +3,6 @@
       <Menu ref="navItem" :noOverlay="true" right>
         <div class="level is-marginless bm-top" v-if="user">
           <div class="level-left">
-
           </div>
           <Notifications v-if="user">
             <div class="level-right bm-level-item" slot="trigger">
@@ -12,6 +11,19 @@
           </Notifications>
 
         </div>
+        <template v-else>
+        <div class="level is-marginless bm-top">
+          <div class="level-left bm-level-item">
+            <router-link :to="{name: 'login', query: {from: $route.path}}">
+              <b-icon class="badge" icon="login"></b-icon>
+            </router-link>
+          </div>
+          <div class="level-right bm-level-item" slot="trigger">
+          </div>
+        </div>
+        <div class="level mobile-navbar-item bm-top-loggedoff is-top"></div>
+        </template>
+
         <router-link class="level mobile-navbar-item bm-top is-top" v-if="user" :to="{'name': 'profile', 'params': {'username': user.username}}">
             <div class="level-left">
               <div class="level-item">
@@ -24,10 +36,9 @@
             <div class="level-right">
             </div>
         </router-link>
-
-        <router-link v-if="!user" :to="{name: 'login', query: {from: $route.path}}" class="mobile-navbar-item is-vertical-center"><b-icon icon="login"></b-icon> Entrar</router-link>
         <router-link class="mobile-navbar-item is-vertical-center" :to="{'name': 'index'}"><b-icon icon="home"></b-icon> Inicio</router-link>
         <router-link class="mobile-navbar-item is-vertical-center" :to="{'name': 'ForumIndex'}"><b-icon icon="forum"></b-icon> Foro</router-link>
+        <a class="mobile-navbar-item is-vertical-center" v-if="user" @click="logOff()"><b-icon icon="logout"></b-icon> Salir</a>
       </Menu>
       <div class="navbar-brand">
         <router-link :to="{name: 'index'}" class="navbar-item">
@@ -65,7 +76,9 @@
                   <span class="badge" :data-badge="unreadNotificationCount"><b-icon class="is-vertical-center" icon="bell"></b-icon></span>
                 </a>
               </Notifications>
-              <router-link v-else class="navbar-item" :to="{'name': 'login', query: {from: $route.path}}">Entrar</router-link>
+              <template v-else>
+                <router-link class="navbar-item" :to="{'name': 'login', query: {from: $route.path}}"><b-icon icon="login"></b-icon></router-link>
+              </template>
             </div>
         </div>
         </div>

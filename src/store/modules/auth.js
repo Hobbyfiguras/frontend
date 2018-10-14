@@ -19,7 +19,8 @@ const getters = {
 const actions = {
   logOff ({ commit }) {
     commit('removeToken')
-    commit('setCurrentUser', null)
+    commit('deleteCurrentUser')
+    commit('setUserLoadingPromise', null)
     console.log('user log off')
   },
   logIn ({ commit, dispatch }, payload) {
@@ -128,7 +129,14 @@ const mutations = {
     state.jwtAccess = null
   },
   setCurrentUser (state, user) {
-    state.currentUser = user
+    if (state.currentUser) {
+      state.currentUser = { ...state.currentUser, ...user }
+    } else {
+      state.currentUser = user
+    }
+  },
+  deleteCurrentUser (state) {
+    state.currentUser = null
   },
   setRefreshTokenPromise (state, promise) {
     state.refreshTokenPromise = promise

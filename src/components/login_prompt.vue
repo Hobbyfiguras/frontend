@@ -56,6 +56,8 @@ export default {
     doLogIn () {
       this.makePetition(FigureSite.login(this.username, this.password), false).then((response) => {
         this.logIn(response)
+        this.getUnreadNotifications()
+        this.connectToNotificationsService()
         if (this.$route.query.from) {
           this.$router.push(this.$route.query.from)
         } else {
@@ -66,7 +68,8 @@ export default {
           this.setErrors(error.response.data)
         }
       })
-    }
+    },
+    ...mapActions('notifications', ['connectToNotificationsService', 'getUnreadNotifications'])
   }
 }
 </script>
