@@ -52,7 +52,6 @@ export default {
     return API.makePOST(`/api/posts/${postID}/delete/`, { delete_reason: reason })
   },
   async createPost (thread, content) {
-    console.log(thread.id)
     return API.makePOST(`/api/thread/${thread.id}/create_post/`, { content: content })
   },
   async getReports (page = 1) {
@@ -66,5 +65,8 @@ export default {
   },
   async changeThreadSubscription (postID, subscribed) {
     return API.makePOST(`/api/thread/${postID}/change_subscription/`, { subscribed })
+  },
+  async reportPost (reason, postID) {
+    return API.makePOST(`/api/posts/${postID}/report/`, { reason })
   }
 }

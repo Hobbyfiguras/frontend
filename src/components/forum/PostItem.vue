@@ -16,7 +16,7 @@
             <b-dropdown-item v-else ref="cancelEditButton" @click="cancelEditing()"><b-icon icon="pencil"></b-icon> Dejar de editar</b-dropdown-item>
             <b-dropdown-item ref="deleteButton" @click="askDeletePost()"><b-icon icon="delete"></b-icon> Eliminar</b-dropdown-item>
           </template>
-          <b-dropdown-item ref="reportButton" v-if="currentUser.id !== post.creator.id"><b-icon icon="flag"></b-icon> Reportar</b-dropdown-item>
+          <b-dropdown-item ref="reportButton" @click="askReportPost()" v-if="currentUser.id !== post.creator.id"><b-icon icon="flag"></b-icon> Reportar</b-dropdown-item>
         </b-dropdown>
       </div>
       <div class="columns" v-if="!post.deleted">
@@ -233,6 +233,26 @@ export default {
         this.error = error.response.data.error
       })
     },
+    askReportPost () {
+      this.$dialog.prompt({
+        title: 'Reportar post',
+        message: 'Antes de reportar un post asegurate que los motivos sean los correctos, de lo contrario tu cuenta podria resultar sancionada.',
+        inputAttrs: {
+          placeholder: 'Motivo'
+        },
+        confirmText: 'Reportar',
+        cancelText: 'No, volver atrás',
+        type: 'is-danger',
+        hasIcon: true,
+        onConfirm: (reason) => this.reportPost(reason)
+      })
+    },
+    reportPost (reason) {
+      this.$awn.async(
+        this.makePetition(
+          Forum.reportPost(reason, this.post.id)
+        ))
+    },
     askDeletePost () {
       this.$dialog.prompt({
         title: 'Borrar post',
@@ -249,16 +269,12 @@ export default {
       var post = JSON.parse(JSON.stringify(this.post))
       post.delete_reason = reason
       this.$awn.async(
-        this.makePetition(
-          Forum.deletePost(this.post.id, reason),
-          'Post eliminado con exito',
-          'Error eliminando post',
-          'Eliminando post'
-        ).then(resultingPost => {
-          this.$awn.success('Post eliminado con exito')
+        this.makePetition(Forum.deletePost(this.post.id, reason)).then(() => {
           this.$emit('deletePost', post)
-        })
-      )
+        }),
+        'Post eliminado con exito',
+        'Error eliminando post',
+        'Eliminando post')
     },
     // Injects image into meta info for OpenGraph and Twitter Cards
     getMeta () {

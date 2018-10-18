@@ -39,7 +39,6 @@ export default {
   methods: {
     createPost () {
       this.$awn.async(this.makePetition(Forum.createPost(this.thread, this.post.content)).then((post) => {
-        this.$awn.success('Post creado con exito')
         this.post.creator = this.currentUser
         this.post.created = Date.now()
         this.post.id = post.id
