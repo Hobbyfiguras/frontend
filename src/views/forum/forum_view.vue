@@ -93,17 +93,6 @@ export default {
         this.forum = forum
       })
     },
-    getThreadLinkData (thread) {
-      console.log(thread.id)
-      return {
-        name: 'thread',
-        params: {
-          id: thread.id,
-          slug: thread.slug,
-          forum: thread.forum.slug
-        }
-      }
-    },
     changePage: debounce(function (page = 1) {
       if (page === 1) {
         this.$router.push({ name: 'forum', params: { slug: this.forum.slug } })

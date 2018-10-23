@@ -150,6 +150,8 @@ export default {
       console.log(newpost)
       var i = this.thread.posts.results.findIndex(post => post.id === newpost.id)
       this.thread.posts.results[i].content = newpost.content
+      this.thread.posts.results[i].ban_reason = newpost.ban_reason
+      this.thread.posts.results[i].creator.ban_expiry_date = newpost.creator.ban_expiry_date
       if (newpost.votes) {
         this.thread.posts.results[i].votes = newpost.votes
       }
@@ -187,16 +189,6 @@ export default {
         data.hash = '#' + String(post.id)
         data.params.page = 'ultima'
         this.$router.push(data)
-      }
-    },
-    getThreadLinkData (thread) {
-      return {
-        name: 'thread',
-        params: {
-          id: String(thread.id),
-          slug: thread.slug,
-          forum: thread.forum.slug
-        }
       }
     },
     changePage: debounce(function (page = 1) {

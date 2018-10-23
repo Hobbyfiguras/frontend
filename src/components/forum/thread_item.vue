@@ -29,19 +29,7 @@
 
 <script>
 export default {
-  props: ['thread'],
-  methods: {
-    getThreadLinkData (thread) {
-      return {
-        name: 'thread',
-        params: {
-          id: thread.id,
-          slug: thread.slug,
-          forum: thread.forum.slug
-        }
-      }
-    }
-  }
+  props: ['thread']
 }
 </script>
 

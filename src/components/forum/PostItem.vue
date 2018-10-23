@@ -1,8 +1,37 @@
 <template>
   <div>
+    <b-modal :active.sync="isBanModalActive" :width="640">
+        <div class="modal-card">
+          <div class="modal-card-head">
+            <p class="modal-card-title">Banear usuario</p>
+          </div>
+          <div class="modal-card-body">
+
+            <b-field label="Fecha de fin de baneo">
+              <b-datepicker
+                placeholder="Fecha de fin de baneo"
+                v-model="banData.ban_expiry_date"
+                inline
+                icon="calendar-today">
+              </b-datepicker>
+            </b-field>
+            <b-field label="Motivo de baneo">
+              <b-input
+                placeholder="Motivo de baneo"
+                v-model="banData.ban_reason">
+              </b-input>
+            </b-field>
+          </div>
+          <footer class="modal-card-foot">
+            <button class="button" type="button" @click="$parent.close()">Cancelar</button>
+            <button class="button is-danger" type="button" @click="banUser()">Banear</button>
+          </footer>
+        </div>
+    </b-modal>
+
     <div class="tile is-child notification is-info post-time is-size-7">
       <div class="level">
-        <div class="level-left">{{post.created | timeDiff("from")}}</div>
+        <div class="level-left"><router-link :to="getPostLinkData(post, post.thread)">{{post.created | timeDiff("from")}}</router-link></div>
       </div>
     </div>
     <article class="tile is-child notification is-white thread-content" :class="{'is-warning': post.deleted}">
@@ -17,6 +46,7 @@
             <b-dropdown-item ref="deleteButton" @click="askDeletePost()"><b-icon icon="delete"></b-icon> Eliminar</b-dropdown-item>
           </template>
           <b-dropdown-item ref="reportButton" @click="askReportPost()" v-if="currentUser.id !== post.creator.id"><b-icon icon="flag"></b-icon> Reportar</b-dropdown-item>
+          <b-dropdown-item ref="banButton" @click="isBanModalActive = true" v-if="currentUser.id !== post.creator.id && currentUser.is_staff"><b-icon icon="gavel"></b-icon>Banear usuario</b-dropdown-item>
         </b-dropdown>
       </div>
       <div class="columns" v-if="!post.deleted">
@@ -68,7 +98,7 @@
               <div class="column is-12 content">
               <template v-if="!editing">
                 <Markdown :source="post.content" ref="content"></Markdown>
-                <div v-if="post.ban_reason" class="user-banned">(Este usuario fue baneado por este post ("{{post.ban_reason}}") - {{post.banner.username}})</div>
+                <div v-if="post.ban_reason" class="card notification is-danger">(Este usuario fue baneado por este post ("{{post.ban_reason}}") - {{post.banner.username}})</div>
                 <div v-if="post.modified && post.modified_by" class="is-size-7"><b-icon icon="pencil" size="is-small"></b-icon> Editado por {{post.modified_by.username}} {{post.modified | timeDiff("from")}}</div>
               </template>
               <template v-else>
@@ -157,7 +187,13 @@ export default {
       prettyDesc: this.post.content,
       hasVoted: false,
       hasError: false,
-      error: 'Cosas'
+      error: 'Cosas',
+      isBanModalActive: false,
+      banData: {
+        ban_reason: '',
+        post: '',
+        ban_expiry_date: null
+      }
     }
   },
   computed: {
@@ -182,6 +218,23 @@ export default {
     startEditing () {
       this.editing = true
       this.oldPost = JSON.parse(JSON.stringify(this.post))
+    },
+    banUser () {
+      this.banData.post = this.post.id
+      this.$awn.async(
+        this.makePetition(
+          Forum.banUserForPost(this.post.creator, this.banData),
+          'Usuario baneado con exito',
+          'Error baneando usuario',
+          'Baneando usuario'
+        ).then(() => {
+          var tempPost = JSON.parse(JSON.stringify(this.post))
+          tempPost.ban_reason = this.banData.ban_reason
+          tempPost.creator.ban_expiry_date = this.banData.ban_expiry_date
+          this.$emit('changePost', tempPost)
+        })
+      )
+      this.isBanModalActive = false
     },
     saveEditing () {
       this.$awn.async(

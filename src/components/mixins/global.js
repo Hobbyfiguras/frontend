@@ -13,6 +13,22 @@ export default {
         reader.readAsDataURL(file)
       })
     },
+    getThreadLinkData (thread) {
+      return {
+        name: 'thread',
+        params: {
+          id: thread.id,
+          slug: thread.slug,
+          forum: thread.forum.slug
+        }
+      }
+    },
+    getPostLinkData (post, thread) {
+      let threadLink = this.getThreadLinkData(thread)
+      threadLink.params.page = post.page
+      threadLink.hash = '#' + post.id
+      return threadLink
+    },
     isUserBanned (user) {
       if (user.ban_expiry_date) {
         console.log('user is banned', user.username)

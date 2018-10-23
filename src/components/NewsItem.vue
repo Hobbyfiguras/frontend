@@ -39,18 +39,6 @@ export default {
   name: 'news_item',
   props: ['newsItem'],
   components: { Markdown },
-  methods: {
-    getThreadLinkData (thread) {
-      return {
-        name: 'thread',
-        params: {
-          id: thread.id,
-          slug: thread.slug,
-          forum: thread.forum.slug
-        }
-      }
-    }
-  },
   eq: {
     breakpoints: {
       contentSmall: {

@@ -57,16 +57,6 @@ export default {
       this.makePetition(Forum.getThreads()).then((threads) => {
         this.threads = threads.results
       })
-    },
-    getThreadLinkData (thread) {
-      return {
-        name: 'thread',
-        params: {
-          id: thread.id,
-          slug: thread.slug,
-          forum: thread.forum.slug
-        }
-      }
     }
   }
 }
