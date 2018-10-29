@@ -150,8 +150,8 @@ export default {
       console.log(newpost)
       var i = this.thread.posts.results.findIndex(post => post.id === newpost.id)
       this.thread.posts.results[i].content = newpost.content
-      this.thread.posts.results[i].ban_reason = newpost.ban_reason
-      this.thread.posts.results[i].creator.ban_expiry_date = newpost.creator.ban_expiry_date
+      this.thread.posts.results[i].bans = newpost.bans
+      this.thread.posts.results[i].creator.bans = newpost.creator.bans
       if (newpost.votes) {
         this.thread.posts.results[i].votes = newpost.votes
       }
@@ -180,6 +180,7 @@ export default {
       this.thread.posts.results[index].deleted = true
     },
     onCreatePost (post) {
+      post.thread = this.thread
       var totalPages = Math.ceil(this.thread.posts.count / this.postsPerPage)
       if ((totalPages === this.currentPage) && this.thread.posts.results.length < this.postsPerPage) {
         this.transitonName = 'post'

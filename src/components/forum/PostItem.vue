@@ -98,7 +98,7 @@
               <div class="column is-12 content">
               <template v-if="!editing">
                 <Markdown :source="post.content" ref="content"></Markdown>
-                <div v-if="post.ban_reason" class="card notification is-danger">(Este usuario fue baneado por este post ("{{post.ban_reason}}") - {{post.banner.username}})</div>
+                <div v-for="ban in post.bans" :key="ban.id" class="card notification is-danger">(Este usuario fue baneado por este post ("{{ban.ban_reason}}") - {{ban.banner.username}})</div>
                 <div v-if="post.modified && post.modified_by" class="is-size-7"><b-icon icon="pencil" size="is-small"></b-icon> Editado por {{post.modified_by.username}} {{post.modified | timeDiff("from")}}</div>
               </template>
               <template v-else>
@@ -192,6 +192,7 @@ export default {
       banData: {
         ban_reason: '',
         post: '',
+        banner: this.currentUser,
         ban_expiry_date: null
       }
     }
@@ -227,10 +228,10 @@ export default {
           'Usuario baneado con exito',
           'Error baneando usuario',
           'Baneando usuario'
-        ).then(() => {
+        ).then((banData) => {
           var tempPost = JSON.parse(JSON.stringify(this.post))
-          tempPost.ban_reason = this.banData.ban_reason
-          tempPost.creator.ban_expiry_date = this.banData.ban_expiry_date
+          tempPost.bans.push(banData)
+          tempPost.creator.bans.push(banData)
           this.$emit('changePost', tempPost)
         })
       )
@@ -405,6 +406,7 @@ $forum-header-transition: all 0.25s ease-in-out;
   top: 1.25rem;
   transform: scale(0);
   transition: transform 0.1s ease-in-out;
+  z-index: 10000000;
 }
 
 .has-vertically-aligned-content {

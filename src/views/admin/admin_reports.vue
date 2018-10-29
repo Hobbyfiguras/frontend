@@ -20,10 +20,7 @@
         @change="changePage">
       </b-pagination>
     </div>
-
-
   </div>
-
 </template>
 
 <script>

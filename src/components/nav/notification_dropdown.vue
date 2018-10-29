@@ -3,38 +3,38 @@
   <slot name="trigger" slot="trigger">
   </slot>
   <b-dropdown-item v-for="notification in unreadNotifications.slice(0, 4)" :key="notification.id">
-    <router-link :to="getNotificationLink(notification)">
-      <article class="media">
-        <figure class="media-left">
-          <p class="image is-64x64">
-            <img  class="is-rounded" :src="notification.actor.avatar">
-          </p>
-        </figure>
-        <div class="media-content">
+    <article class="media">
+      <figure class="media-left">
+        <p class="image is-64x64">
+          <img  class="is-rounded" :src="notification.actor.avatar">
+        </p>
+      </figure>
+      <div class="media-content">
+        <router-link :to="getNotificationLink(notification)">
           <div class="content is-text">
             {{ notification.actor.username }} ha comentado en {{notification.notification_object.thread.title}}
             <p v-if="notification.notification_type === 'notification_post_sub'">
             </p>
           </div>
-          <nav class="level is-mobile">
-            <div class="level-left">
-              <a class="level-item">
-                <span class="icon is-small"><i class="fas fa-reply"></i></span>
-              </a>
-              <a class="level-item">
-                <span class="icon is-small"><i class="fas fa-retweet"></i></span>
-              </a>
-              <a class="level-item">
-                <span class="icon is-small"><i class="fas fa-heart"></i></span>
-              </a>
-            </div>
-          </nav>
-        </div>
-        <div class="media-right">
-          <button class="delete" @click="setNotificationUnread(JSON.parse(JSON.stringify(notification)))"></button>
-        </div>
-      </article>
-    </router-link>
+        </router-link>
+        <nav class="level is-mobile">
+          <div class="level-left">
+            <a class="level-item">
+              <span class="icon is-small"><i class="fas fa-reply"></i></span>
+            </a>
+            <a class="level-item">
+              <span class="icon is-small"><i class="fas fa-retweet"></i></span>
+            </a>
+            <a class="level-item">
+              <span class="icon is-small"><i class="fas fa-heart"></i></span>
+            </a>
+          </div>
+        </nav>
+      </div>
+      <div class="media-right">
+        <button class="delete" @click="setNotificationRead(JSON.parse(JSON.stringify(notification)))"></button>
+      </div>
+    </article>
   </b-dropdown-item>
   <b-dropdown-item class="has-text-centered" has-link>
     <router-link :to="{name: 'index'}">Leer más</router-link>
@@ -53,7 +53,7 @@ export default {
     })
   },
   methods: {
-    ...mapActions('notifications', ['setNotificationUnread']),
+    ...mapActions('notifications', ['setNotificationRead']),
     getNotificationLink (notification) {
       if (notification.notification_type === 'notification_post_sub') {
         return {

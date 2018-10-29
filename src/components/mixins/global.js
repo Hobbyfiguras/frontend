@@ -30,10 +30,8 @@ export default {
       return threadLink
     },
     isUserBanned (user) {
-      if (user.ban_expiry_date) {
-        console.log('user is banned', user.username)
-        console.log(user.ban_expiry_date)
-        return Date.parse(user.ban_expiry_date) > Date.now()
+      if (user.bans.length > 0) {
+        return Date.parse(user.bans[user.bans.length - 1].ban_expiry_date) > Date.now()
       } else {
         return false
       }

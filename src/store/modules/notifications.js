@@ -46,7 +46,7 @@ const actions = {
       commit('setUnreadNotifications', { count: response.count, page, notifications: response.results })
     })
   },
-  setNotificationUnread ({ commit, dispatch, state }, notification) {
+  setNotificationRead ({ commit, dispatch, state }, notification) {
     notification.read = true
     return FigureSite.updateNotification(notification).then(() => {
       commit('deleteNotification', notification)

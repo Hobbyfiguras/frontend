@@ -69,7 +69,7 @@ export default {
   async reportPost (reason, postID) {
     return API.makePOST(`/api/posts/${postID}/report/`, { reason })
   },
-  async banUserForPost(user, payload) {
+  async banUserForPost (user, payload) {
     return API.makePOST(`/api/users/${user.username}/ban_user/`, payload)
   }
 }
