@@ -476,6 +476,12 @@ export default {
             this.selectTextBack(action.content.suffix ? action.content.suffix.length : 0, value.length)
           }
         })
+      } else {
+        this.insertText(
+          (action.content.prefix || '') +
+                desiredContent +
+                (action.content.suffix || '')
+        )
       }
     }
   }

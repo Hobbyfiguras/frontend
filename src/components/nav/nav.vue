@@ -16,11 +16,13 @@
         <template v-else>
         <div class="level is-marginless bm-top">
           <div class="level-left bm-level-item">
+            <a href="https://discord.gg/zbprQ9t"><b-icon icon="discord"></b-icon></a>
+            <a href="https://twitter.com/Hobbyfiguras"><b-icon icon="twitter"></b-icon></a>
+          </div>
+          <div class="level-right bm-level-item" slot="trigger">
             <router-link :to="{name: 'login', query: {from: $route.path}}">
               <b-icon class="badge" icon="login"></b-icon>
             </router-link>
-          </div>
-          <div class="level-right bm-level-item" slot="trigger">
           </div>
         </div>
         <div class="level mobile-navbar-item bm-top-loggedoff is-top"></div>
@@ -56,6 +58,19 @@
             <div class="navbar-start">
               <router-link :to="{name: 'index'}" class="navbar-item" exact-active-class="is-active"><b-icon icon="home"></b-icon></router-link>
               <router-link :to="{name: 'ForumIndex'}" class="navbar-item" active-class="is-active"><b-icon icon="forum"></b-icon></router-link>
+              <b-dropdown hoverable>
+                <a class="navbar-item" active-class="is-active"  slot="trigger"><b-icon icon="forum"></b-icon></a>
+                <b-dropdown-item>
+                  <b-field>
+                    <b-select placeholder="Select a name">
+                    </b-select>
+                    <b-input placeholder="Search..."
+                        type="search"
+                        icon="magnify">
+                    </b-input>
+                </b-field>
+              </b-dropdown-item>
+            </b-dropdown>
             </div>
             <div class="navbar-end">
               <a class="navbar-item" href="https://discord.gg/zbprQ9t"><b-icon icon="discord"></b-icon></a>
