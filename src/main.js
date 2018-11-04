@@ -26,7 +26,8 @@ Vue.use(Buefy)
 // Axios stuff
 Vue.use(VueAxios, axios)
 Vue.axios.defaults.baseURL = process.env.VUE_APP_API_URL
-
+Vue.axios.defaults.xsrfHeaderName = 'X-CSRFToken'
+Vue.axios.defaults.xsrfCookieName = 'csrftoken'
 // vue-progressbar
 const progressbarOptions = {
   color: '#bffaf3',
