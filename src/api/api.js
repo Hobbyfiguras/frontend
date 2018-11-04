@@ -1,5 +1,9 @@
 import Vue from 'vue'
 import axios from 'axios'
+
+axios.defaults.xsrfHeaderName = 'X-CSRFToken'
+axios.defaults.xsrfCookieName = 'csrftoken'
+
 const noRequestAxios = axios.create()
 
 export default {
