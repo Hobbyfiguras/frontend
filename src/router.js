@@ -14,6 +14,7 @@ import threadCreate from '@/views/forum/ThreadCreate'
 import markdownGuide from '@/views/markdown_guide'
 import PasswordResetVerify from '@/views/PasswordResetVerify'
 import PasswordReset from '@/views/PasswordReset'
+import Notifications from '@/views/Notifications'
 
 import store from '@/store'
 
@@ -87,6 +88,13 @@ const router = new Router({
       name: 'thread_new',
       props: true,
       component: threadCreate,
+      beforeEnter: requireAuth
+    },
+    {
+      path: '/notificaciones',
+      name: 'notifications',
+      props: true,
+      component: Notifications,
       beforeEnter: requireAuth
     },
     {

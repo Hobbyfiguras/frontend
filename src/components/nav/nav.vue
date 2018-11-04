@@ -2,7 +2,9 @@
       <div class="container">
       <Menu ref="navItem" :noOverlay="true" right>
         <div class="level is-marginless bm-top" v-if="user">
-          <div class="level-left">
+          <div class="level-left bm-level-item">
+            <a href="https://discord.gg/zbprQ9t"><b-icon icon="discord"></b-icon></a>
+            <a href="https://twitter.com/Hobbyfiguras"><b-icon icon="twitter"></b-icon></a>
           </div>
           <Notifications v-if="user">
             <div class="level-right bm-level-item" slot="trigger">
@@ -56,6 +58,9 @@
               <router-link :to="{name: 'ForumIndex'}" class="navbar-item" active-class="is-active"><b-icon icon="forum"></b-icon></router-link>
             </div>
             <div class="navbar-end">
+              <a class="navbar-item" href="https://discord.gg/zbprQ9t"><b-icon icon="discord"></b-icon></a>
+              <a class="navbar-item" href="https://twitter.com/Hobbyfiguras"><b-icon icon="twitter"></b-icon></a>
+              <div class="navbar-item"></div>
               <b-dropdown hoverable v-if="user">
                 <a class="navbar-item" slot="trigger">
                   <figure class="image">

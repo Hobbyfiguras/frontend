@@ -106,7 +106,7 @@
                 <b-input v-model="tempUser.location"></b-input>
               </b-field>
             </div>
-            <div class="column">
+            <div class="column  is-three-quarters ">
               <b-field label="Bio">
                 <MarkdownEditor v-model="tempUser.bio"></MarkdownEditor>
               </b-field>

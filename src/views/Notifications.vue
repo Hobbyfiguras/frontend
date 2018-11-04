@@ -1,9 +1,7 @@
 <template>
-<b-dropdown>
-  <slot name="trigger" slot="trigger">
-  </slot>
-  <b-dropdown-item v-for="notification in unreadNotifications.slice(0, 4)" :key="notification.id">
-    <article class="media">
+  <div class="container">
+    <p class="title">Notificaciones</p>
+    <article class="media" v-for="notification in unreadNotifications" :key="notification.id">
       <figure class="media-left">
         <p class="image is-64x64">
           <img  class="is-rounded" :src="notification.actor.avatar">
@@ -35,11 +33,7 @@
         <button class="delete" @click="setNotificationRead(JSON.parse(JSON.stringify(notification)))"></button>
       </div>
     </article>
-  </b-dropdown-item>
-  <b-dropdown-item class="has-text-centered" has-link>
-    <router-link :to="{name: 'notifications'}">Leer más</router-link>
-  </b-dropdown-item>
-</b-dropdown>
+  </div>
 </template>
 
 <script>
@@ -73,7 +67,6 @@ export default {
 </script>
 
 <style scoped>
-
 .dropdown-content {
   padding-bottom: 0;
 }
