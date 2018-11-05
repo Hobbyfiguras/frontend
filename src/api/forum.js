@@ -71,5 +71,8 @@ export default {
   },
   async banUserForPost (user, payload) {
     return API.makePOST(`/api/users/${user.username}/ban_user/`, payload)
+  },
+  async threadSearch (text = '', username = '', forum = '', page = 1) {
+    return API.makeGET(`/api/search/threads/?text=${text}&username=${username}&forum=${forum}`)
   }
 }

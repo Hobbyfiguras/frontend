@@ -78,6 +78,12 @@ const router = new Router({
       component: markdownGuide
     },
     {
+      path: '/foro/:slug/buscar/:searchQuery',
+      name: 'forum_search',
+      props: true,
+      component: () => import(/* webpackChunkName: "forum" */ '@/views/forum/Search')
+    },
+    {
       path: '/foro/:slug',
       name: 'forum',
       props: true,
