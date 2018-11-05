@@ -3,8 +3,8 @@
     <div v-for="item in items.item" :key="item.id" class="column is-one-fifth-tablet is-half-mobile">
       <div class="card">
         <div class="card-image">
-          <figure class="image">
-            <img :src="getFigurePreview(item)"/>
+          <figure class="image figure">
+            <img class="figurepreview" :src="getFigurePreview(item)"/>
           </figure>
         </div>
         <div class="card-content">
@@ -93,5 +93,14 @@ export default {
 
 .dropdown-item {
   white-space: normal !important;
+}
+
+.figure {
+  height: 15rem;
+  overflow: hidden;
+}
+
+.figurepreview {
+  height: 100%;
 }
 </style>

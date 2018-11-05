@@ -522,6 +522,7 @@ export default {
                 /*overflow: hidden !important;*/
                 border: none;
                 outline: none;
+                background-color: #F1F1F1;
             }
         }
         .editor-field, .editor-preview {

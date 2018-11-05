@@ -346,7 +346,8 @@ export default {
             { name: 'twitter:image:src', content: image.src },
             { property: 'og:image', content: image.src },
             { itemprop: 'image', content: image.src },
-            { property: 'og:description', content: this.prettyDesc }
+            { property: 'og:description', content: this.prettyDesc },
+            { property: 'description', content: this.prettyDesc }
           ]
         }
       }
