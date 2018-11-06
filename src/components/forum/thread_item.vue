@@ -8,7 +8,7 @@
       </div>
       <div class="is-divider-vertical"></div>
       <div class="column has-text-centered">
-        <p class="subtitle">{{thread.post_count - 1}}</p>
+        <p class="subtitle">{{Math.max(thread.post_count - 1, 0)}}</p>
         <template v-if="thread.post_count - 1 === 1">
           Respuesta
         </template>

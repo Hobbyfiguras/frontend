@@ -74,7 +74,8 @@ export default {
     meta: [
       { property: 'og:site_name', content: 'Hobbyfiguras' },
       { property: 'og:type', content: 'website' },
-      { property: 'description', content: 'Comunidad de coleccionistas de figuras, aquí podrás encontrar tutoriales, guías, novedades, comparativa de figuras falsas, dudas, tiendas, y las ultimas noticias.' }
+      { vmid: 'ogdesc', property: 'og:description', content: 'Comunidad de coleccionistas de figuras, aquí podrás encontrar tutoriales, guías, novedades, comparativa de figuras falsas, dudas, tiendas, y las ultimas noticias.' },
+      { vmid: 'description', name: 'description', content: 'Comunidad de coleccionistas de figuras, aquí podrás encontrar tutoriales, guías, novedades, comparativa de figuras falsas, dudas, tiendas, y las ultimas noticias.' }
     ]
   }
 }

@@ -1,49 +1,26 @@
 <template>
-  <div class="container">
-<nav class="breadcrumb" aria-label="breadcrumbs">
-  <ul>
-    <li>
-      <router-link :to="{name: 'ForumIndex'}">
-          <span></span>
-          <b-icon icon="home"></b-icon>
-      </router-link>
-    </li>
-    <li>
-      <router-link v-if="forum.slug" :to="{name: 'forum', params: {slug: forum.slug}}"><span>{{forum.name}}</span></router-link>
-    </li>
-  </ul>
-</nav>
+<div class="container">
+<div class="container">
+  <b-field>
+    <b-input placeholder="Buscar en este foro..."
+        type="search"
+        icon="magnify">
+    </b-input>
+  </b-field>
+</div>
 <div class="tile is-ancestor">
   <div class="tile is-vertical is-12">
     <div class="tile">
       <div class="tile is-parent is-vertical">
-        <article class="tile is-child notification is-primary">
-          <div class="level is-mobile">
-            <div class="level-left">
-              <div class="level-item">
-                <figure class="image is-64x64">
-                  <img :src="forum.icon" class="is-rounded" alt="">
-                </figure>
-              </div>
-              <div class="level-item">
-                <p class="title">{{forum.name}}</p>
-              </div>
-            </div>
-            <div class="level-right" v-if="currentUser">
-              <router-link :to="{name: 'thread_new', props: {slug: forum.slug}}">
-                <button class="button is-info">Nuevo tema</button>
-              </router-link>
-            </div>
-          </div>
-        </article>
-        <thread v-for="thread in forum.threads.results" :key="thread.id" :thread="thread"></thread>
+
+        <thread v-for="thread in results.results" :key="thread.id" :thread="thread"></thread>
 
       </div>
     </div>
   </div>
 </div>
       <b-pagination
-      :total="forum.threads.count"
+      :total="results.count"
       :current.sync="currentPage"
       :per-page="itemsPerPage"
       order="is-centered"
@@ -58,46 +35,79 @@ import PetitionsMixin from '@/components/mixins/petitions'
 import thread from '@/components/forum/thread_item'
 import debounce from 'debounce'
 import { mapState } from 'vuex'
+import ForumSearch from '@/components/forum/ForumSearch'
 export default {
   name: 'forum_view',
   mixins: [PetitionsMixin],
   data () {
     return {
       currentPage: 1,
-      itemsPerPage: 15,
-      forum: {
-        threads: {
-          count: 0,
-          results: []
-        }
+      itemsPerPage: 20,
+      results: {
+        results: []
       }
     }
   },
   mounted () {
-    this.fetchData()
+    if (this.text) {
+      this.performSearch()
+    }
   },
-  props: ['slug'],
-  components: { thread },
+  props: ['text'],
+  components: { thread, ForumSearch },
   watch: {
     // call again the method if the route changes
     '$route': 'fetchData'
   },
   methods: {
-    fetchData () {
+    result2Thread (result) {
+      var additives = {
+        creator: {
+          username: result.username
+        },
+        forum: {
+          slug: result.forum
+        },
+        title: result.text,
+        id: result.thread_id,
+        last_post: {
+          creator: {
+            username: result.last_post_creator
+          }
+        }
+      }
+      return { ...result, ...additives }
+    },
+    performSearch () {
       if (this.$route.query.page) {
         console.log(this.$route.query.page)
         var page = parseInt(this.$route.query.page)
         this.currentPage = page
       }
-      this.makePetition(Forum.getForumThreads(this.slug, this.currentPage)).then((forum) => {
-        this.forum = forum
+      var forum = this.$route.query.foro || ''
+      var username = this.$route.query.usuario || ''
+
+      this.makePetition(Forum.threadSearch(this.text, username, forum, this.currentPage)).then((results) => {
+        for (var i of results.results.keys()) {
+          results.results[i] = this.result2Thread(results.results[i])
+        }
+        this.results = results
       })
     },
     changePage: debounce(function (page = 1) {
+      var forum = this.$route.query.foro
+      var username = this.$route.query.usuario
+      var newQuery = {}
+      if (forum) {
+        newQuery = { ...newQuery, ...{ foro: forum } }
+      }
+      if (username) {
+        newQuery = { ...newQuery, ...{ usuario: username } }
+      }
       if (page === 1) {
-        this.$router.push({ name: 'forum', params: { slug: this.forum.slug } })
+        this.$router.push({ name: 'search', query: newQuery, params: { text: this.text } })
       } else {
-        this.$router.push({ name: 'forum', query: { page: this.currentPage }, params: { slug: this.forum.slug } })
+        this.$router.push({ name: 'search', query: { ...newQuery, page: this.currentPage }, params: { text: this.text } })
       }
       this.currentPage = page
     }, 500)
