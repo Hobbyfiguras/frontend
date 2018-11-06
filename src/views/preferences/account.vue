@@ -7,7 +7,7 @@
           <div class="columns">
             <div class="column">
               <p class="title">Datos de cuenta</p>
-              <b-field label="Correo electronico">
+              <b-field label="Correo electrónico">
                 <b-input v-model="userData.email"></b-input>
               </b-field>
             </div>

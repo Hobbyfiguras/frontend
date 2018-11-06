@@ -87,7 +87,7 @@
               <b-field label="Nombre">
                 <b-input v-model="tempUser.first_name"></b-input>
               </b-field>
-              <b-field label="Apellido">
+              <b-field label="Apellidos">
                 <b-input v-model="tempUser.second_name"></b-input>
               </b-field>
               <b-field label="Usuario de MyFigureCollection">
@@ -233,7 +233,7 @@ export default {
             }
           }
           console.log('return')
-          this.$awn.async(this.makePetition(FigureSite.updateUserAvatar(this.username, data, options)), 'Avatar actualizado correctamente',
+          this.$awn.async(this.makePetition(FigureSite.updateUserAvatar(this.username, data, options)), 'Avatar actualizado correctamente.',
             'Error actualizando avatar', 'Actualizando avatar').then(() => {
             resolve()
           }).catch((error) => {
@@ -244,7 +244,7 @@ export default {
     },
     updateProfile () {
       this.profileUser = JSON.parse(JSON.stringify(this.tempUser))
-      this.$awn.async(this.makePetition(FigureSite.updateUser(this.username, this.profileUser)), 'Perfil actualizado correctamente',
+      this.$awn.async(this.makePetition(FigureSite.updateUser(this.username, this.profileUser)), 'Perfil actualizado corractualizado correctamente.',
         'Error actualizando perfil', 'Actualizando perfil')
     },
     imageSelected () {

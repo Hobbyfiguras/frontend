@@ -135,11 +135,11 @@ export default {
         underline: {
           content: {
             prefix: '++',
-            dummy: 'Subrayar',
+            dummy: 'Subrayado',
             suffix: '++'
           },
           icon: 'format-underline',
-          name: 'Subrayar',
+          name: 'Subrayado',
           newLineRequired: false,
           selectable: true
         },
@@ -157,11 +157,11 @@ export default {
         mark: {
           content: {
             prefix: '==',
-            dummy: 'Marcar',
+            dummy: 'Resaltado',
             suffix: '=='
           },
           icon: 'marker',
-          name: 'Marcar',
+          name: 'Resaltado',
           newLineRequired: false,
           selectable: true
         },
@@ -236,9 +236,9 @@ export default {
             suffix: ')'
           },
           exampleInput: 'http://google.com',
-          inputText: 'Introduce un link',
+          inputText: 'Introduce un enlace',
           icon: 'link',
-          name: 'Link',
+          name: 'Enlace',
           newLineRequired: false,
           selectable: true,
           usesPrompt: true
@@ -296,7 +296,7 @@ export default {
             dummy: '---'
           },
           icon: 'minus',
-          name: 'Linea horizontal',
+          name: 'Línea horizontal',
           newLineRequired: true,
           selectable: false
         },
@@ -312,7 +312,7 @@ export default {
             suffix: '\n'
           },
           icon: 'table',
-          name: 'Table',
+          name: 'Tabla',
           newLineRequired: true,
           selectable: false
         },

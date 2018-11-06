@@ -16,7 +16,7 @@
           <p class="read-more"></p>
         </div>
         <div class="has-text-centered read-more-button">
-          <router-link :to="getThreadLinkData(newsItem)" class="button is-primary" v-if="!$eq.contentSmall">Leer más</router-link>
+          <router-link :to="getThreadLinkData(newsItem)" class="button is-primary" v-if="!$eq.contentSmall">Seguir leyendo</router-link>
         </div>
         <div class="level">
           <div class="level-left"></div>

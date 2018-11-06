@@ -49,6 +49,10 @@ export default {
 
 $forum-header-transition: all .25s ease-in-out;
 
+.column.is-2, .column.is-2-tablet {
+  width: 20% !important;
+}
+
 .forum-header {
   cursor: pointer;
   transition: $forum-header-transition;

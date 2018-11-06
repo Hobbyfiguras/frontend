@@ -37,7 +37,7 @@
     </article>
   </b-dropdown-item>
   <b-dropdown-item class="has-text-centered" has-link>
-    <router-link :to="{name: 'notifications'}">Leer más</router-link>
+    <router-link :to="{name: 'notifications'}">Ver todas</router-link>
   </b-dropdown-item>
 </b-dropdown>
 </template>

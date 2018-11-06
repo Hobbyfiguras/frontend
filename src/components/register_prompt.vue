@@ -42,7 +42,8 @@
                         <button @click="register()" class="button is-block is-primary is-large is-fullwidth">Registrarse</button>
                 </div>
                 <div class="box" v-else>
-                  Tu cuenta ha sido registrada con exito, te hemos enviado un correo de verificación.
+                  Cuenta registrada correctamente. Hemos enviado un mensaje de verificación a tu correo electrónico.
+                  Si no aparece, comprueba tu carpeta de Spam.
                 </div>
             </div>
 </template>

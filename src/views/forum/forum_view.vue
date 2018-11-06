@@ -13,6 +13,10 @@
     </li>
   </ul>
 </nav>
+<div class="container">
+  <ForumSearch :forum="forum"></ForumSearch>
+</div>
+
 <div class="tile is-ancestor">
   <div class="tile is-vertical is-12">
     <div class="tile">
@@ -57,6 +61,7 @@ import Forum from '@/api/forum'
 import PetitionsMixin from '@/components/mixins/petitions'
 import thread from '@/components/forum/thread_item'
 import debounce from 'debounce'
+import ForumSearch from '@/components/forum/ForumSearch'
 import { mapState } from 'vuex'
 export default {
   name: 'forum_view',
@@ -77,7 +82,7 @@ export default {
     this.fetchData()
   },
   props: ['slug'],
-  components: { thread },
+  components: { thread, ForumSearch },
   watch: {
     // call again the method if the route changes
     '$route': 'fetchData'

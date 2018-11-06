@@ -3,7 +3,7 @@
   <div class="hero-body">
     <div class="container has-text-centered">
       <div class="box" v-if="emailVerified">
-        Tu correo ha sido verificado con exito, ya puedes entrar a tu cuenta
+        Correo verificado correctamente. Ya puedes iniciar sesión con tu cuenta.
       </div>
     </div>
   </div>

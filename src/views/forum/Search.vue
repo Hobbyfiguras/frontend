@@ -2,13 +2,27 @@
 <div class="container">
 <div class="container">
   <b-field>
-    <b-input placeholder="Buscar en este foro..."
+    <div class="control">
+      <b-select placeholder="Foro" v-model="forum">
+        <option value="">Todos</option>
+        <optgroup v-if="categories" v-for="category in categories" :key="category.id" :label="category.name">
+          <option v-for="forum in category.forums" :key="forum.id" :value="forum.slug">{{forum.name}}</option>
+        </optgroup>
+      </b-select>
+    </div>
+    <div class="control">
+      <b-input placeholder="Buscar..."
         type="search"
-        icon="magnify">
-    </b-input>
+        icon="magnify"
+        v-model="searchText">
+      </b-input>
+    </div>
+    <div class="control">
+      <div class="button is-primary" @click="onSearch()"><b-icon icon="magnify"></b-icon></div>
+    </div>
   </b-field>
 </div>
-<div class="tile is-ancestor">
+<div class="tile is-ancestor" v-if="results">
   <div class="tile is-vertical is-12">
     <div class="tile">
       <div class="tile is-parent is-vertical">
@@ -19,7 +33,8 @@
     </div>
   </div>
 </div>
-      <b-pagination
+<div v-if="results && results.count <= 0" class="has-text-centered title">Nada por aquí...</div>
+      <b-pagination v-if="results"
       :total="results.count"
       :current.sync="currentPage"
       :per-page="itemsPerPage"
@@ -37,21 +52,20 @@ import debounce from 'debounce'
 import { mapState } from 'vuex'
 import ForumSearch from '@/components/forum/ForumSearch'
 export default {
-  name: 'forum_view',
+  name: 'Search',
   mixins: [PetitionsMixin],
   data () {
     return {
       currentPage: 1,
       itemsPerPage: 20,
-      results: {
-        results: []
-      }
+      forum: this.$route.query.foro || '',
+      categories: {},
+      searchText: this.text,
+      results: undefined
     }
   },
   mounted () {
-    if (this.text) {
-      this.performSearch()
-    }
+    this.fetchData()
   },
   props: ['text'],
   components: { thread, ForumSearch },
@@ -60,6 +74,14 @@ export default {
     '$route': 'fetchData'
   },
   methods: {
+    fetchData () {
+      this.makePetition(Forum.getForumCategories()).then((categories) => {
+        this.categories = categories
+      })
+      if (this.searchText) {
+        this.performSearch()
+      }
+    },
     result2Thread (result) {
       var additives = {
         creator: {
@@ -84,15 +106,23 @@ export default {
         var page = parseInt(this.$route.query.page)
         this.currentPage = page
       }
-      var forum = this.$route.query.foro || ''
       var username = this.$route.query.usuario || ''
 
-      this.makePetition(Forum.threadSearch(this.text, username, forum, this.currentPage)).then((results) => {
+      this.makePetition(Forum.threadSearch(this.searchText, username, this.forum, this.currentPage)).then((results) => {
         for (var i of results.results.keys()) {
           results.results[i] = this.result2Thread(results.results[i])
         }
         this.results = results
       })
+    },
+    onSearch () {
+      var newQuery
+      console.log(this.forum)
+      if (this.forum !== '') {
+        newQuery = { ...newQuery, ...{ foro: this.forum } }
+      }
+      this.currentPage = 1
+      this.$router.push({ name: 'search', query: newQuery, params: { text: this.searchText } })
     },
     changePage: debounce(function (page = 1) {
       var forum = this.$route.query.foro
@@ -105,11 +135,10 @@ export default {
         newQuery = { ...newQuery, ...{ usuario: username } }
       }
       if (page === 1) {
-        this.$router.push({ name: 'search', query: newQuery, params: { text: this.text } })
-      } else {
-        this.$router.push({ name: 'search', query: { ...newQuery, page: this.currentPage }, params: { text: this.text } })
+        this.$router.push({ name: 'search', query: newQuery, params: { text: this.searchText } })
+      } else if (page !== 0) {
+        this.$router.push({ name: 'search', query: { ...newQuery, page: this.currentPage }, params: { text: this.searchText } })
       }
-      this.currentPage = page
     }, 500)
   },
   computed: {

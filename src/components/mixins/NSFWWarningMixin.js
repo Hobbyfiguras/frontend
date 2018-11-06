@@ -9,7 +9,7 @@ export default {
     askNSFW () {
       this.$dialog.confirm({
         title: 'Contenido NSFW',
-        message: 'La pagina a la que intentas entrar contiene contenido sensible no apto para menores de 18 años. ¿Quieres habilitar este tipo de contenido de ahora en adelante?',
+        message: 'La página a la que intentas entrar contiene material sensible no apto para menores de 18 años. ¿Quieres habilitar este tipo de contenido de ahora en adelante?',
         confirmText: 'Habilitar contenido NSFW',
         cancelText: 'No, volver atrás',
         type: 'is-danger',

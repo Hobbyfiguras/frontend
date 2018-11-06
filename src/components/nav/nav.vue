@@ -42,7 +42,7 @@
         </router-link>
         <router-link class="mobile-navbar-item is-vertical-center" :to="{'name': 'index'}"><b-icon icon="home"></b-icon> Inicio</router-link>
         <router-link class="mobile-navbar-item is-vertical-center" :to="{'name': 'ForumIndex'}"><b-icon icon="forum"></b-icon> Foro</router-link>
-        <a class="mobile-navbar-item is-vertical-center" v-if="user" @click="logOff()"><b-icon icon="logout"></b-icon> Salir</a>
+        <a class="mobile-navbar-item is-vertical-center" v-if="user" @click="logOff()"><b-icon icon="logout"></b-icon> Cerrar sesión</a>
       </Menu>
       <div class="navbar-brand">
         <router-link :to="{name: 'index'}" class="navbar-item">
@@ -58,19 +58,7 @@
             <div class="navbar-start">
               <router-link :to="{name: 'index'}" class="navbar-item" exact-active-class="is-active"><b-icon icon="home"></b-icon></router-link>
               <router-link :to="{name: 'ForumIndex'}" class="navbar-item" active-class="is-active"><b-icon icon="forum"></b-icon></router-link>
-              <b-dropdown hoverable>
-                <a class="navbar-item" active-class="is-active"  slot="trigger"><b-icon icon="forum"></b-icon></a>
-                <b-dropdown-item>
-                  <b-field>
-                    <b-select placeholder="Select a name">
-                    </b-select>
-                    <b-input placeholder="Search..."
-                        type="search"
-                        icon="magnify">
-                    </b-input>
-                </b-field>
-              </b-dropdown-item>
-            </b-dropdown>
+              <router-link :to="{name: 'search'}" class="navbar-item" active-class="is-active"  slot="trigger"><b-icon icon="magnify"></b-icon></router-link>
             </div>
             <div class="navbar-end">
               <a class="navbar-item" href="https://discord.gg/zbprQ9t"><b-icon icon="discord"></b-icon></a>
@@ -85,11 +73,11 @@
                 </a>
                 <b-dropdown-item has-link>
                   <router-link :to="{'name': 'profile', 'params': {'username': user.username}}">
-                    <b-icon icon="account"></b-icon><span style="vertical-align: middle;">Ver Perfil</span>
+                    <b-icon icon="account"></b-icon><span style="vertical-align: middle;">Perfil</span>
                   </router-link>
                 </b-dropdown-item>
                 <b-dropdown-item has-link><router-link :to="{name: 'preferences'}"><b-icon icon="settings"></b-icon> <span style="vertical-align: middle;">Preferencias</span></router-link></b-dropdown-item>
-                <b-dropdown-item  @click="logOff()"><b-icon icon="logout"></b-icon> <span style="vertical-align: middle;">Salir</span></b-dropdown-item>
+                <b-dropdown-item  @click="logOff()"><b-icon icon="logout"></b-icon> <span style="vertical-align: middle;">Cerrar sesión</span></b-dropdown-item>
               </b-dropdown>
               <Notifications v-if="user">
                 <a class="navbar-item badge" slot="trigger">

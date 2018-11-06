@@ -17,7 +17,7 @@
     </div>
     <div class="content has-text-centered">
       <p>
-        Pagina web programada por Álex Román Nuñez con ayuda de Alberto Serrano
+        Página web programada por Álex Román Núñez, con ayuda de Alberto Serrano.
       </p>
     </div>
   </footer>

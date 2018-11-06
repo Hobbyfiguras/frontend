@@ -2,14 +2,14 @@
 
             <div class="column is-4 is-offset-4">
                 <div class="box">
-                  <h1 class="title">Entrar</h1>
+                  <h1 class="title">Iniciar sesión</h1>
                   <p class="subtitle is-size-7 help is-danger">{{errors.non_field_errors}}</p>
-                        <b-field label="Nombre de usuario / Correo electronico" :message="errors['username']" :type="!!errors['username'] ? 'is-danger' : ''">
+                        <b-field label="Nombre de usuario o correo electrónico" :message="errors['username']" :type="!!errors['username'] ? 'is-danger' : ''">
                             <div class="control">
                               <b-input
                                   value=""
                                   v-model="username"
-                                  placeholder="Correo electronico o nombre de usuario"
+                                  placeholder="Nombre de usuario o correo electrónico"
                                   size="is-large">
                               </b-input>
                             </div>

@@ -46,7 +46,7 @@ export default {
         this.post = {
           content: ''
         }
-      }), 'Post creado con exito', 'Error creando post', 'Creando post')
+      }), 'Mensaje publicado correctamente.', 'Error creando post', 'Creando post')
     }
   }
 }

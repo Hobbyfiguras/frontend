@@ -50,7 +50,8 @@ var AWNOptions = {
   labels: {
     success: '',
     warning: '',
-    error: ''
+    error: '',
+    async: 'Cargando'
   }
 }
 

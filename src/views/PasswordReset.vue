@@ -6,11 +6,11 @@
           <div class="box" v-if="!postReset">
             <h1 class="title">Cambio de contraseña</h1>
               <p class="help is-danger">{{errors.non_field_errors}}</p>
-                  <b-field label="Correo electronico" :message="errors['email']" :type="!!errors['email'] ? 'is-danger' : ''">
+                  <b-field label="Correo electrónico" :message="errors['email']" :type="!!errors['email'] ? 'is-danger' : ''">
                         <b-input
                             value=""
                             v-model="payload.email"
-                            placeholder="Correo electronico"
+                            placeholder="Correo electrónico"
                             size="is-large">
                         </b-input>
                   </b-field>
