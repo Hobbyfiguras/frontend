@@ -39,7 +39,7 @@
               <div class="level-item" v-if="currentUser">
                 <div class="buttons">
                   <a class="button" @click="toggleSubscription"><b-icon v-if="thread.subscribed" icon="eye-off"></b-icon> <b-icon v-else icon="eye"></b-icon></a>
-                  <template v-if="thread.creator.username === currentUser.username">
+                  <template v-if="thread.creator.username === currentUser.username || currentUser.is_staff">
                     <a class="button" @click="toggleEditing" v-if="!editing"><b-icon icon="pencil"></b-icon></a>
                     <template v-else>
                       <a class="button is-success" @click="saveEditing"><b-icon icon="content-save"></b-icon></a>
