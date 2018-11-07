@@ -27,12 +27,26 @@
           <div v class="level">
             <div class="level-left">
               <div class="level-item">
-                <p class="title">{{thread.title}}</p>
+                <p class="title" v-if="!editing">{{thread.title}}</p>
+                <template v-else>
+                  <b-field> <b-input v-model="tempTitle"></b-input></b-field>
+                  
+                </template>
+                
               </div>
             </div>
             <div class="level-right">
               <div class="level-item" v-if="currentUser">
-                <a class="button" @click="toggleSubscription"><b-icon v-if="thread.subscribed" icon="eye-off"></b-icon> <b-icon v-else icon="eye"></b-icon></a>
+                <div class="buttons">
+                  <a class="button" @click="toggleSubscription"><b-icon v-if="thread.subscribed" icon="eye-off"></b-icon> <b-icon v-else icon="eye"></b-icon></a>
+                  <template v-if="thread.creator.username === currentUser.username">
+                    <a class="button" @click="toggleEditing" v-if="!editing"><b-icon icon="pencil"></b-icon></a>
+                    <template v-else>
+                      <a class="button is-success" @click="saveEditing"><b-icon icon="content-save"></b-icon></a>
+                      <a class="button is-danger" @click="cancelEditing"><b-icon icon="close"></b-icon></a>
+                    </template>
+                  </template>
+                </div>
               </div>
             </div>
           </div>
@@ -85,6 +99,7 @@ export default {
   data () {
     return {
       thread: null,
+      editing: false,
       postsPerPage: 20,
       currentPage: 1,
       transitonName: 'asdasd'
@@ -126,6 +141,20 @@ export default {
     })
   }, 500), // increase to ur needs
   methods: {
+    toggleEditing () {
+      this.editing = true
+      this.tempTitle = this.thread.title
+    },
+    saveEditing () {
+      let payload = { title: this.tempTitle }
+      this.makePetition(Forum.updateThread(this.id, payload)).then((thread) => {
+        this.thread.title = this.tempTitle
+        this.editing = false
+      })
+    },
+    cancelEditing () {
+      this.editing = false
+    },
     fetchData () {
       var page = this.page
       if (page === 'ultima') {

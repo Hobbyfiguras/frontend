@@ -149,3 +149,15 @@ a.navbar-item:hover {
 hr {
   background-color: $grey-lighter;
 }
+
+.spoiler {
+  & > p {
+    display: inline;
+    color: black;
+    background-color: black;
+    &:hover, &:active {
+      color: inherit;
+      background-color: transparent;
+    }
+  }
+}

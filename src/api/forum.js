@@ -42,6 +42,9 @@ export default {
   async getThread (id, page = 1) {
     return API.makeGET(`/api/thread/${id}/?page=${page}`)
   },
+  async updateThread (id, payload) {
+    return API.makePATCH(`/api/thread/${id}/`, payload)
+  },
   async createThread (forumSlug, payload) {
     return API.makePOST(`/api/forum/${forumSlug}/create_thread/`, payload)
   },

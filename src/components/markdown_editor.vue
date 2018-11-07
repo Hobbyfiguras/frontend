@@ -75,7 +75,7 @@ export default {
         ['ol', 'ul'],
         ['superscript', 'subscript'],
         ['image', 'link', 'video_youtube', 'mfc'],
-        ['code', 'hr', 'table', 'quote']
+        ['code', 'spoiler', 'hr', 'table', 'quote']
       ],
       validator: value => {
         let toolbars = [
@@ -288,6 +288,17 @@ export default {
           },
           icon: 'code-braces',
           name: 'Codigo',
+          newLineRequired: true,
+          selectable: true
+        },
+        spoiler: {
+          content: {
+            prefix: '::: spoiler\n',
+            dummy: 'Spoiler',
+            suffix: '\n:::'
+          },
+          icon: 'eye',
+          name: 'Spoiler',
           newLineRequired: true,
           selectable: true
         },
