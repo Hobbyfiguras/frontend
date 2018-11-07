@@ -29,7 +29,7 @@ import PostCreate from '@/views/forum/post_create'
 import { mapGetters, mapState } from 'vuex'
 
 export default {
-  name: 'thread_view',
+  name: 'PostView',
   mixins: [PetitionsMixin, NSFWWarningMixin],
   components: { PostItem, PostCreate },
   data () {

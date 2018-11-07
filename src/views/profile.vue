@@ -193,7 +193,7 @@ export default {
     fetchData () {
       this.loading = true
       console.log(this.username)
-      this.makePetition(FigureSite.getUser(this.username)).then((username) => {
+      this.makePetition(FigureSite.getUser(this.username), true, true).then((username) => {
         this.profileUser = username
         this.avatar = this.profileUser.avatar
         // We separate the profile avatar from the profile user data because

@@ -189,7 +189,7 @@ export default {
         page = parseInt(page)
       }
 
-      this.makePetition(Forum.getThread(this.id, page)).then((thread) => {
+      this.makePetition(Forum.getThread(this.id, page), true, true).then((thread) => {
         this.thread = thread
         if (page === 'last') {
           this.currentPage = Math.ceil(this.thread.posts.count / this.postsPerPage)

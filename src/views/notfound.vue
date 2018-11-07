@@ -1,13 +1,9 @@
 <template>
-  <div class="container">
-    <div class="card">
-      <div class="card-content">
-        <h1 class="title has-text-centered">OOPSIE WOOPSIE!! Uwu We made a fucky wucky!! A wittle fucko boingo! The code monkeys at our headquarters are working VEWY HAWD to fix this!</h1>
-        <p class="subtitle has-text-centered">Seriously though if you found this message it probably means you stumbled upon a dead link (error 404), this shouldn't happen, but if it does we are sorry, maybe try returning to
-          the home page through the links at the top.
-        </p>
+  <div class="container has-text-centered">
+      <img src="@/assets/images/gordoven.png" alt="">
+      <div class="content">
+        <h1>Está feo que hayas llegado hasta aquí, podria ser que has seguido un link muerto o que el contenido que buscas haya sido robado por la mafia de las figuras.</h1>
       </div>
-    </div>
   </div>
 </template>
 

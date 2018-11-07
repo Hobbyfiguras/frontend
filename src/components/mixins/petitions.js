@@ -8,7 +8,7 @@ export default {
         this.errors[key] = errors[key][0]
       })
     },
-    makePetition (promise, errorMessage = true) {
+    makePetition (promise, errorMessage = true, goTo404OnError = false) {
       this.$Progress.start()
       return promise.then((r) => {
         this.$Progress.finish()
@@ -21,6 +21,9 @@ export default {
           this.$Progress.fail()
           if (errorMessage) {
             this.$awn.alert(this.parseError(error))
+          }
+          if (error.response.status === 404 && goTo404OnError) {
+            this.$router.push('/404')
           }
         }
         throw error
