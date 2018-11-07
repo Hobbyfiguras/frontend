@@ -47,6 +47,7 @@
           </template>
           <b-dropdown-item ref="reportButton" @click="askReportPost()" v-if="currentUser.id !== post.creator.id"><b-icon icon="flag"></b-icon> Reportar</b-dropdown-item>
           <b-dropdown-item ref="banButton" @click="isBanModalActive = true" v-if="currentUser.id !== post.creator.id && currentUser.is_staff"><b-icon icon="gavel"></b-icon>Banear usuario</b-dropdown-item>
+          <b-dropdown-item ref="banButton" @click="$emit('onQuote', post)" v-if="allowQuote"><b-icon icon="share"></b-icon>Citar post</b-dropdown-item>
         </b-dropdown>
       </div>
       <div class="columns" v-if="!post.deleted">
@@ -179,7 +180,7 @@ export default {
   name: 'PostItem',
   mixins: [petitionsMixin],
   components: { MarkdownEditor, UserSocial, Markdown },
-  props: ['post', 'isOP'],
+  props: ['post', 'isOP', 'allowQuote'],
   data () {
     return {
       editing: false,

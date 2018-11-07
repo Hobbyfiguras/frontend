@@ -72,6 +72,7 @@ export default {
       default: () => [
         ['bold', 'italic', 'underline', 'strikethrough', 'mark'],
         ['header'],
+        ['center'],
         ['ol', 'ul'],
         ['superscript', 'subscript'],
         ['image', 'link', 'video_youtube', 'mfc'],
@@ -129,6 +130,17 @@ export default {
           },
           icon: 'format-italic',
           name: 'Cursiva',
+          newLineRequired: false,
+          selectable: true
+        },
+        center: {
+          content: {
+            prefix: '->',
+            dummy: 'Centrar',
+            suffix: '<-'
+          },
+          icon: 'format-align-center',
+          name: 'Centrar',
           newLineRequired: false,
           selectable: true
         },

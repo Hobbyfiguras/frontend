@@ -30,9 +30,7 @@
                 <p class="title" v-if="!editing">{{thread.title}}</p>
                 <template v-else>
                   <b-field> <b-input v-model="tempTitle"></b-input></b-field>
-                  
                 </template>
-                
               </div>
             </div>
             <div class="level-right">
@@ -52,7 +50,7 @@
           </div>
         </article>
         <transition-group :name="transitonName">
-          <PostItem class="PostItem" v-for="(post, index) in thread.posts.results" :isOP="index === 0 && currentPage === 1" :post="post" @changePost="changePost" :key="post.id" @deletePost="deletePost" :ref="'#' + post.id">
+          <PostItem class="PostItem" allowQuote="true" @onQuote="onUserQuote" v-for="(post, index) in thread.posts.results" :isOP="index === 0 && currentPage === 1" :post="post" @changePost="changePost" :key="post.id" @deletePost="deletePost" :ref="'#' + post.id">
           </PostItem>
         </transition-group>
         <article class="container">
@@ -72,7 +70,7 @@
                 </div>
               </div>
               <article class="tile is-child notification is-white thread-content">
-                <PostCreate :thread="thread" @createPost="onCreatePost"></PostCreate>
+                <PostCreate ref="postCreate" :thread="thread" @createPost="onCreatePost"></PostCreate>
               </article>
         </template>
 
@@ -102,7 +100,8 @@ export default {
       editing: false,
       postsPerPage: 20,
       currentPage: 1,
-      transitonName: 'asdasd'
+      transitonName: 'asdasd',
+      scrollDisabled: false
     }
   },
   metaInfo () {
@@ -137,10 +136,37 @@ export default {
   },
   updated: debounce(function () {
     this.$nextTick(() => {
-      this.scrollToHash()
+      if (!this.scrollDisabled) {
+        this.scrollToHash()
+        this.scrollDisabled = true
+      }
     })
   }, 500), // increase to ur needs
   methods: {
+    findHighestQuoteLevel (text) {
+      var highestQuoteLevel = 0
+      var currentQuoteLevel = 0
+      for (var i of text) {
+        var char = i
+        if (char === ':') {
+          currentQuoteLevel++
+        } else {
+          currentQuoteLevel = 0
+        }
+        if (currentQuoteLevel > highestQuoteLevel) {
+          highestQuoteLevel = currentQuoteLevel
+        }
+      }
+      return highestQuoteLevel
+    },
+    onUserQuote (post) {
+      // highest quote level
+      var HQL = Math.max(this.findHighestQuoteLevel(post.content), 2)
+      HQL++
+      var quoteStart = ':'.repeat(HQL)
+      let text = `${quoteStart} cita ${post.creator.username} ${post.id}\n${post.content}\n${quoteStart}`
+      this.$refs.postCreate.addText(text)
+    },
     toggleEditing () {
       this.editing = true
       this.tempTitle = this.thread.title

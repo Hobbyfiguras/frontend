@@ -1,12 +1,13 @@
 <template>
   <div class="content">
-      <vue-markdown :source="source"></vue-markdown>
+      <vue-markdown :source="source" :postrender="postRender"></vue-markdown>
   </div>
 </template>
 
 <script>
 import Vue from 'vue'
-
+import UserQuote from '@/components/forum/UserQuote'
+import GlobalMixin from '@/components/mixins/global'
 export default {
   name: 'markdown',
   props: ['source'],
@@ -15,11 +16,12 @@ export default {
       let el = Vue.compile('<div>' + htmlin + '</div>')
       el = new Vue({
         render: el.render,
-        staticRenderFns: el.staticRenderFns
-      }).$mount()
-
-      console.log(htmlin)
-      console.log(el.$el.innerHTML)
+        staticRenderFns: el.staticRenderFns,
+        components: { UserQuote, Markdown: this },
+        router: this.$router,
+        mixins: [ GlobalMixin ]
+      })
+      el.$mount()
       return el.$el.innerHTML
     }
   }

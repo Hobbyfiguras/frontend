@@ -1,6 +1,6 @@
 <template>
   <div>
-    <MarkdownEditor v-model="post.content"></MarkdownEditor>
+    <MarkdownEditor ref="editor" v-model="post.content"></MarkdownEditor>
     <div class="is-divider"></div>
     <div class="level">
       <div class="level-left">
@@ -47,6 +47,10 @@ export default {
           content: ''
         }
       }), 'Mensaje publicado correctamente.', 'Error creando post', 'Creando post')
+    },
+    addText (text) {
+      this.$refs.editor.insertText(text + '\n')
+      console.log(text + '\n' + this.post.content)
     }
   }
 }

@@ -68,6 +68,12 @@ const router = new Router({
       component: PasswordReset
     },
     {
+      path: '/mensaje/:id',
+      name: 'PostView',
+      component: () => import(/* webpackChunkName: "forum" */ '@/views/forum/PostView'),
+      props: true
+    },
+    {
       path: '/foro',
       name: 'ForumIndex',
       component: forumIndex

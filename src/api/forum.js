@@ -51,6 +51,9 @@ export default {
   async updatePost (postID, newContent) {
     return API.makePATCH(`/api/posts/${postID}/`, { content: newContent })
   },
+  async getPost (postID) {
+    return API.makeGET(`/api/posts/${postID}/`)
+  },
   async deletePost (postID, reason) {
     return API.makePOST(`/api/posts/${postID}/delete/`, { delete_reason: reason })
   },
