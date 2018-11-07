@@ -27,7 +27,7 @@
                         <button @click="doLogIn()" class="button is-block is-primary is-large is-fullwidth">Entrar</button>
 
                       <p class="has-text-grey login-buttons">
-                          <a href="../">Registrarse</a> &nbsp;·&nbsp;
+                        <router-link :to="{name: 'register'}">Registrarse</router-link>&nbsp;·&nbsp;
                           <router-link :to="{name: 'password_change'}">Contraseña olvidada</router-link>
                       </p>
                 </div>

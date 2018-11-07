@@ -443,7 +443,7 @@ $forum-header-transition: all 0.25s ease-in-out;
 }
 
 .level-vote {
-  margin-right: 1.0rem !important;
+  margin-right: 0.5rem !important;
 }
 
 .vote-list-item {
