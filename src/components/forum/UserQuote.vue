@@ -29,7 +29,6 @@ export default {
   margin-bottom: 0.5rem;
 }
 .quote-content {
-  background-color: #F5F5F5;
   padding-left: 1.5rem;
   padding-top: 0.75rem;
   padding-bottom: 0.75rem;

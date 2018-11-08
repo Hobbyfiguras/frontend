@@ -350,6 +350,11 @@ export default {
             { vmid: 'ogdesc', property: 'og:description', content: this.prettyDesc },
             { vmid: 'description', name: 'description', content: this.prettyDesc }
           ]
+        } else {
+          return [
+            { vmid: 'ogdesc', property: 'og:description', content: this.prettyDesc },
+            { vmid: 'description', name: 'description', content: this.prettyDesc }
+          ]
         }
       }
       return []
