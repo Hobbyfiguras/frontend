@@ -7,6 +7,12 @@
     </nav>
 
     <main class="app-content">
+      <div class="container" v-if="user && isUserBanned(user)">
+        <div class="notification is-danger">
+          <p class="title">La has liado parda, figura.</p>
+          <p>Si ves esto es porque has sido baneado del foro por algún motivo, piensate bien lo que has hecho y reflexiona.</p>
+        </div>
+      </div>
       <router-view v-if="hasForumSettings"/>
     </main>
   <footer class="footer">
@@ -55,7 +61,8 @@ export default {
   },
   computed: {
     ...mapState({
-      darkTheme: state => state.settings.darkTheme
+      darkTheme: state => state.settings.darkTheme,
+      user: state => state.auth.currentUser
     }),
     ...mapGetters('auth', [
       'hasAuthData',

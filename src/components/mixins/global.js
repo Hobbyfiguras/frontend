@@ -31,7 +31,7 @@ export default {
     },
     isUserBanned (user) {
       if (user.bans.length > 0) {
-        return Date.parse(user.bans[user.bans.length - 1].ban_expiry_date) > Date.now()
+        return Date.parse(user.bans[0].ban_expiry_date) > Date.now()
       } else {
         return false
       }

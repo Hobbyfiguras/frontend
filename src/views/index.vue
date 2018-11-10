@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <div class="columns">
-      <div class="column">
+      <div class="column is-hidden-mobile">
         <div class="tile is-vertical is-ancestor">
           <div class="tile is-parent is-vertical">
 
