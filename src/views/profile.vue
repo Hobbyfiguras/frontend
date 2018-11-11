@@ -35,7 +35,7 @@
         </div>
         <div class="column is-4-tablet is-6-mobile name" v-if="!editing">
           <p>
-            <span class="title is-bold">{{profileUser.username}}</span>
+            <span class="title is-bold">{{profileUser.username}} <div v-if="currentUser && currentUser.username !== profileUser.username" class="button is-primary" @click="openMessageModal"><b-icon icon="email"></b-icon></div> </span>
           </p>
             <div v-if="currentUser">
               <template v-if="currentUser.id == profileUser.id">
@@ -157,7 +157,7 @@ import UserSocial from '@/components/profile/user_social'
 import { mapGetters, mapState } from 'vuex'
 import MarkdownEditor from '@/components/markdown_editor'
 import Markdown from '@/components/markdown'
-
+import SendMessageModal from '@/components/profile/SendMessageModal'
 export default {
   name: 'profile',
   components: { UserFigures, UserPics, UserThreads, UserSocial, MarkdownEditor, Markdown },
@@ -190,6 +190,14 @@ export default {
     })
   },
   methods: {
+    openMessageModal () {
+      this.$modal.open({
+        parent: this,
+        component: SendMessageModal,
+        props: { receiver: this.profileUser.username },
+        hasModalCard: true
+      })
+    },
     fetchData () {
       this.loading = true
       console.log(this.username)

@@ -64,6 +64,7 @@ export default {
     if (this.hasRefreshToken) {
       console.log('get')
       this.getCurrentUser()
+      this.getMessages()
       this.getUnreadNotifications()
       this.connectToNotificationsService()
     }
@@ -72,7 +73,8 @@ export default {
   methods: {
     ...mapActions('auth', ['getCurrentUser']),
     ...mapActions('forum', ['getForumSettings']),
-    ...mapActions('notifications', ['connectToNotificationsService', 'getUnreadNotifications'])
+    ...mapActions('notifications', ['connectToNotificationsService', 'getUnreadNotifications']),
+    ...mapActions('privateMessages', ['getMessages'])
   },
   computed: {
     ...mapState({

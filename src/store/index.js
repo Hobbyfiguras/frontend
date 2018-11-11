@@ -4,6 +4,7 @@ import settings from './modules/settings'
 import auth from './modules/auth'
 import forum from './modules/forum'
 import notifications from './modules/notifications'
+import privateMessages from './modules/privateMessages'
 
 Vue.use(Vuex)
 
@@ -14,7 +15,8 @@ export default new Vuex.Store({
     settings,
     auth,
     forum,
-    notifications
+    notifications,
+    privateMessages
   },
   strict: debug
 })

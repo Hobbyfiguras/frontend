@@ -73,6 +73,18 @@ const router = new Router({
       props: true
     },
     {
+      path: '/mensajes',
+      name: 'PrivateMessages',
+      component: () => import(/* webpackChunkName: "forum" */ '@/views/PrivateMessages'),
+      props: true
+    },
+    {
+      path: '/mensajes/:id',
+      name: 'PrivateMessage',
+      component: () => import(/* webpackChunkName: "forum" */ '@/views/PrivateMessage'),
+      props: true
+    },
+    {
       path: '/confirmar_cambio_pass',
       name: 'password_change_confirm',
       component: PasswordResetVerify

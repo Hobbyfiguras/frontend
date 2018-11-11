@@ -3,7 +3,7 @@
       <Menu ref="navItem" :noOverlay="true" right>
         <div class="level is-marginless bm-top" v-if="user">
           <div class="level-left bm-level-item">
-            <a href="https://discord.gg/zbprQ9t"><b-icon icon="discord"></b-icon></a>
+            <a href="https://discord.gg/R7X78fy"><b-icon icon="discord"></b-icon></a>
             <a href="https://twitter.com/Hobbyfiguras"><b-icon icon="twitter"></b-icon></a>
           </div>
           <Notifications v-if="user">
@@ -11,12 +11,16 @@
               <b-icon class="badge" :data-badge="unreadNotificationCount" icon="bell"></b-icon>
             </div>
           </Notifications>
-
+          <PrivateMessages v-if="user">
+            <div class="level-right bm-level-item" slot="trigger">
+              <b-icon class="badge" :data-badge="unreadMessageCount" icon="bell"></b-icon>
+            </div>
+          </PrivateMessages>
         </div>
         <template v-else>
         <div class="level is-marginless bm-top">
           <div class="level-left bm-level-item">
-            <a href="https://discord.gg/zbprQ9t"><b-icon icon="discord"></b-icon></a>
+            <a href="https://discord.gg/R7X78fy"><b-icon icon="discord"></b-icon></a>
             <a href="https://twitter.com/Hobbyfiguras"><b-icon icon="twitter"></b-icon></a>
           </div>
           <div class="level-right bm-level-item" slot="trigger">
@@ -42,6 +46,7 @@
         </router-link>
         <router-link class="mobile-navbar-item is-vertical-center" :to="{'name': 'index'}"><b-icon icon="home"></b-icon> Inicio</router-link>
         <router-link class="mobile-navbar-item is-vertical-center" :to="{'name': 'ForumIndex'}"><b-icon icon="forum"></b-icon> Foro</router-link>
+        <router-link class="mobile-navbar-item is-vertical-center" :to="{'name': 'search'}"><b-icon icon="magnify"></b-icon> Buscar</router-link>
         <a class="mobile-navbar-item is-vertical-center" v-if="user" @click="logOff()"><b-icon icon="logout"></b-icon> Cerrar sesión</a>
       </Menu>
       <div class="navbar-brand">
@@ -61,7 +66,7 @@
               <router-link :to="{name: 'search'}" class="navbar-item" active-class="is-active"  slot="trigger"><b-icon icon="magnify"></b-icon></router-link>
             </div>
             <div class="navbar-end">
-              <a class="navbar-item" href="https://discord.gg/zbprQ9t"><b-icon icon="discord"></b-icon></a>
+              <a class="navbar-item" href="https://discord.gg/R7X78fy"><b-icon icon="discord"></b-icon></a>
               <a class="navbar-item" href="https://twitter.com/Hobbyfiguras"><b-icon icon="twitter"></b-icon></a>
               <div class="navbar-item"></div>
               <b-dropdown hoverable v-if="user">
@@ -79,11 +84,18 @@
                 <b-dropdown-item has-link><router-link :to="{name: 'preferences'}"><b-icon icon="settings"></b-icon> <span style="vertical-align: middle;">Preferencias</span></router-link></b-dropdown-item>
                 <b-dropdown-item  @click="logOff()"><b-icon icon="logout"></b-icon> <span style="vertical-align: middle;">Cerrar sesión</span></b-dropdown-item>
               </b-dropdown>
-              <Notifications v-if="user">
-                <a class="navbar-item badge" slot="trigger">
-                  <span class="badge" :data-badge="unreadNotificationCount"><b-icon class="is-vertical-center" icon="bell"></b-icon></span>
-                </a>
-              </Notifications>
+              <template v-if="user">
+                <PrivateMessages>
+                  <a class="navbar-item badge" slot="trigger">
+                    <span class="badge" :data-badge="unreadMessageCount"><b-icon class="is-vertical-center" icon="email"></b-icon></span>
+                  </a>
+                </PrivateMessages>
+                <Notifications>
+                  <a class="navbar-item badge" slot="trigger">
+                    <span class="badge" :data-badge="unreadNotificationCount"><b-icon class="is-vertical-center" icon="bell"></b-icon></span>
+                  </a>
+                </Notifications>
+              </template>
               <template v-else>
                 <router-link class="navbar-item" :to="{'name': 'login', query: {from: $route.path}}"><b-icon icon="login"></b-icon></router-link>
               </template>
@@ -96,11 +108,13 @@
 import { mapActions, mapGetters, mapState } from 'vuex'
 import LoginPrompt from '@/components/login_prompt'
 import Notifications from '@/components/nav/notification_dropdown'
+import PrivateMessages from '@/components/nav/private_message_dropdown'
+
 import { Menu } from 'vue-burger-menu'
 
 export default {
   name: 'AppNav',
-  components: { LoginPrompt, Menu, Notifications },
+  components: { LoginPrompt, Menu, Notifications, PrivateMessages },
   data () {
     return {
       navIsActive: false,
@@ -122,7 +136,8 @@ export default {
     ]),
     ...mapState({
       user: state => state.auth.currentUser,
-      unreadNotificationCount: state => state.notifications.unreadNotificationCount
+      unreadNotificationCount: state => state.notifications.unreadNotificationCount,
+      unreadMessageCount: state => state.privateMessages.unreadMessageCount
     })
   }
 }
