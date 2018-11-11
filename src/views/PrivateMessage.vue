@@ -68,6 +68,7 @@ export default {
     fetchData () {
       this.makePetition(FigureSite.getPrivateMessage(this.id)).then((message) => {
         this.message = message
+        this.setMessageRead(message)
       })
     },
     sendMessage () {
@@ -79,7 +80,7 @@ export default {
       }
       this.$awn.async(this.makePetition(FigureSite.sendMessage(this.message.creator.username, subject, this.newMessage)), 'Mensaje enviado correctamente.', 'Error enviando mensaje', 'Enviando mensaje')
     },
-    ...mapActions('notifications', ['setNotificationRead'])
+    ...mapActions('privateMessages', ['setMessageRead'])
   }
 }
 </script>

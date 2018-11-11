@@ -15,13 +15,11 @@ const actions = {
       commit('setMessages', { count: response.count, page, messages: response.results })
     })
   },
-  setMessageread ({ commit, dispatch, state }, message) {
-    message.read = true
-    return FigureSite.updatePrivateMessage(message).then(() => {
-      if ((state.messages.length) < 4) {
-        dispatch('getMessages', state.currentPage)
-      }
-    })
+  setMessageRead ({ commit, dispatch, state }, message) {
+    if (!message.read) {
+      commit('setUnreadMessageCount', state.unreadMessageCount - 1)
+      return FigureSite.updatePrivateMessage(message.id, { read: true })
+    }
   }
 }
 

@@ -57,6 +57,9 @@ export default {
   async getPrivateMessages (page = 1, read = null) {
     return API.makeGET(`/api/private_messages/?page=${page}&read=${read}`)
   },
+  async updatePrivateMessage (id, payload) {
+    return API.makePATCH(`/api/private_messages/${id}/`, payload)
+  },
   async getPrivateMessage (id = 1) {
     return API.makeGET(`/api/private_messages/${id}/`)
   },
