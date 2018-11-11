@@ -24,11 +24,19 @@
       </div>
       <div class="column is-four-fifths">
         <div class="tile is-vertical is-ancestor">
-          <NewsItem v-for="newsItem in news" :key="newsItem.id" :newsItem="newsItem" class="tile is-parent is-vertical">
+          <NewsItem v-for="newsItem in news.results" :key="newsItem.id" :newsItem="newsItem" class="tile is-parent is-vertical">
           </NewsItem>
         </div>
+        <b-pagination v-if="news"
+        :total="news.count"
+        :current.sync="currentPage"
+        :per-page="itemsPerPage"
+        order="is-centered"
+        @change="changePage">
+      </b-pagination>
       </div>
     </div>
+
   </div>
 </template>
 
@@ -36,6 +44,8 @@
 import PetitionsMixin from '@/components/mixins/petitions'
 import Forum from '@/api/forum'
 import NewsItem from '@/components/NewsItem'
+import debounce from 'debounce'
+
 export default {
   name: 'index',
   mixins: [PetitionsMixin],
@@ -43,21 +53,39 @@ export default {
   data () {
     return {
       news: [],
-      threads: []
+      threads: [],
+      itemsPerPage: 10,
+      currentPage: 1
     }
   },
   mounted () {
     this.fetchData()
   },
+  watch: {
+    // call again the method if the route changes
+    '$route': 'fetchData'
+  },
   methods: {
     fetchData () {
-      this.makePetition(Forum.getForumThreads('noticias', 1, 5)).then((news) => {
-        this.news = news.threads.results
+      if (this.$route.query.page) {
+        var page = parseInt(this.$route.query.page)
+        this.currentPage = page
+      }
+      this.makePetition(Forum.getForumThreads('noticias', this.currentPage, 10)).then((news) => {
+        this.news = news.threads
+        console.log('news', this.news)
       })
       this.makePetition(Forum.getThreads()).then((threads) => {
         this.threads = threads.results
       })
-    }
+    },
+    changePage: debounce(function (page = 1) {
+      if (page === 1) {
+        this.$router.push({ name: 'index' })
+      } else if (page !== 0) {
+        this.$router.push({ name: 'index', query: { page: page } })
+      }
+    }, 500)
   }
 }
 </script>

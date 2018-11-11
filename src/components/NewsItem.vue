@@ -11,7 +11,7 @@
         </div>
     </div>
     <article class="tile is-child notification is-white thread-content">
-        <div :class="{'readmore-box': !$eq.contentSmall}">
+        <div :class="{'readmore-box': !$eq.contentSmall}" v-if="newsItem.first_post">
           <Markdown :source="newsItem.first_post.content"></Markdown>
           <p class="read-more"></p>
         </div>
@@ -57,7 +57,7 @@ export default {
   margin-bottom: 0.25rem !important;
 }
 .readmore-box {
-  max-height: 520px;
+  max-height: 300px;
   position: relative;
   overflow: hidden;
   .read-more {

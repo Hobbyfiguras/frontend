@@ -30,6 +30,21 @@ function requireAuth (to, from, next) {
   }
 }
 
+function requireUserAdmin (to, from, next) {
+  if (store.getters['auth/hasAuthData']) {
+    store.dispatch('auth/getCurrentUser').then(() => {
+      console.log('state', store.state.auth.currentUser)
+      if (store.state.auth.currentUser.is_staff) {
+        next()
+      } else {
+        next('/')
+      }
+    })
+  } else {
+    next('/')
+  }
+}
+
 function requireNotAuth (to, from, next) {
   if (store.getters['auth/hasAuthData']) {
     next('/')
@@ -155,6 +170,7 @@ const router = new Router({
     {
       path: '/admin',
       component: () => import(/* webpackChunkName: "admin" */ '@/views/admin/admin_base'),
+      beforeEnter: requireUserAdmin,
       children: [
         {
           path: '',

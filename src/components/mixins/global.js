@@ -59,6 +59,9 @@ export default {
   filters: {
     timeDiff (value) {
       return 'hace ' + distanceInWordsToNow(value, { locale: esLocale })
+    },
+    timeDiffFuture (value) {
+      return 'en de ' + distanceInWordsToNow(value, { locale: esLocale })
     }
   }
 }

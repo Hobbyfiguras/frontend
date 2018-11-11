@@ -11,6 +11,9 @@
         <div class="notification is-danger">
           <p class="title">La has liado parda, figura.</p>
           <p>Si ves esto es porque has sido baneado del foro por algún motivo, piensate bien lo que has hecho y reflexiona.</p>
+          <p>Has sido baneado por {{user.bans[0].banner.username}} con el motivo: "{{user.bans[0].ban_reason}}"</p>
+          <br/>
+          <p>Serás desbaneado {{user.bans[0].ban_expiry_date | timeDiffFuture("to")}}</p>
         </div>
       </div>
       <router-view v-if="hasForumSettings"/>

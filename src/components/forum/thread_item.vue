@@ -2,7 +2,23 @@
   <router-link :to="getThreadLinkData(thread)">
   <article class="tile is-child notification forum-header is-info" :class="{'is-sticky': thread.is_sticky}">
     <div class="columns is-multiline is-mobile">
-      <div class="column is-7-tablet is-12-mobile">
+<<<<<<< HEAD
+      <div class="column is-1-tablet is-1-mobile">
+        <figure class="image is-48x48">
+          <div class="is-paddingless">
+            <img class="is-rounded" :src="thread.creator.avatar"/>
+          </div>
+        </figure>
+      </div>
+      <div class="column is-5-tablet is-10-mobile">
+=======
+      <div class="column is-1 is-flex is-horizontal-center">
+        <figure class="image is-64x64">
+          <img :src="thread.creator.avatar" class="is-rounded" alt="">
+        </figure>
+      </div>
+      <div class="column is-6-tablet is-11-mobile">
+>>>>>>> e243ba5867aafc54261db8182127e6e480cc7bb4
         <p class="subtitle">{{thread.title}} <b-tag v-if="thread.nsfw" type="is-danger">NSFW</b-tag> <b-icon icon="pin" v-if="thread.is_sticky"></b-icon> </p>
         por {{thread.creator.username}}, {{thread.created | timeDiff("from")}}
       </div>
