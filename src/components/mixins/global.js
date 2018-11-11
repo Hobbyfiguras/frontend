@@ -61,7 +61,7 @@ export default {
       return 'hace ' + distanceInWordsToNow(value, { locale: esLocale })
     },
     timeDiffFuture (value) {
-      return 'en de ' + distanceInWordsToNow(value, { locale: esLocale })
+      return 'en  ' + distanceInWordsToNow(value, { locale: esLocale })
     }
   }
 }

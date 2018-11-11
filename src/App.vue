@@ -5,12 +5,23 @@
     <nav class="navbar is-primary is-fixed-top" role="navigation" aria-label="main navigation">
       <AppNav/>
     </nav>
-
+    <Snowf
+      :amount="50"
+      :size="5"
+      :speed="1.5"
+      :wind="0"
+      :opacity="0.8"
+      :swing="1"
+      :image="null"
+      :zIndex="1000"
+      :resize="true"
+      color="#AAA"
+    />
     <main class="app-content">
       <div class="container" v-if="user && isUserBanned(user)">
         <div class="notification is-danger">
           <p class="title">La has liado parda, figura.</p>
-          <p>Si ves esto es porque has sido baneado del foro por algún motivo, piensate bien lo que has hecho y reflexiona.</p>
+          <p>Si ves esto es porque has sido baneado del foro por algún motivo, piensa en lo que has hecho y reflexiona, principalmente deberias leerte las normas..</p>
           <p>Has sido baneado por {{user.bans[0].banner.username}} con el motivo: "{{user.bans[0].ban_reason}}"</p>
           <br/>
           <p>Serás desbaneado {{user.bans[0].ban_expiry_date | timeDiffFuture("to")}}</p>
@@ -26,7 +37,7 @@
     </div>
     <div class="content has-text-centered">
       <p>
-        Página web programada por Álex Román Núñez, con ayuda de Alberto Serrano.
+        Built by Álex Román Núñez with design input from Alberto Serrano.
       </p>
     </div>
   </footer>
@@ -39,10 +50,11 @@ import AppNav from './components/nav/nav.vue'
 import GDPRNoti from './components/gdprnoti.vue'
 import { mapState, mapGetters, mapActions } from 'vuex'
 import petitionsMixin from './components/mixins/petitions'
+import Snowf from 'vue-snowf'
 export default {
   name: 'app',
   mixins: [petitionsMixin],
-  components: { AppNav, GDPRNoti },
+  components: { AppNav, GDPRNoti, Snowf },
   data () {
     return {
       currentUser: null
