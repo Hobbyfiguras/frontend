@@ -5,18 +5,6 @@
     <nav class="navbar is-primary is-fixed-top" role="navigation" aria-label="main navigation">
       <AppNav/>
     </nav>
-    <Snowf
-      :amount="50"
-      :size="5"
-      :speed="1.5"
-      :wind="0"
-      :opacity="0.8"
-      :swing="1"
-      :image="null"
-      :zIndex="1000"
-      :resize="true"
-      color="#AAA"
-    />
     <main class="app-content">
       <div class="container" v-if="user && isUserBanned(user)">
         <div class="notification is-danger">
@@ -29,6 +17,18 @@
       </div>
       <router-view v-if="hasForumSettings"/>
     </main>
+    <Snowf
+      :amount="50"
+      :size="5"
+      :speed="1.5"
+      :wind="0"
+      :opacity="0.8"
+      :swing="1"
+      :image="null"
+      :zIndex="-1000"
+      :resize="true"
+      color="#AAA"
+    />
   <footer class="footer">
     <div class="content has-text-centered">
       <p>
