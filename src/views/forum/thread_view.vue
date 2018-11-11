@@ -38,8 +38,8 @@
                 <div class="buttons">
                   <a class="button" @click="toggleSubscription"><b-icon v-if="thread.subscribed" icon="eye-off"></b-icon> <b-icon v-else icon="eye"></b-icon></a>
                   <template v-if="thread.creator.username === currentUser.username || currentUser.is_staff">
-                    <a class="button" @click="toggleSticky" v-if="!thread.is_sticky"><b-icon icon="pin"></b-icon></a>
-                    <a class="button" @click="toggleSticky" v-if="thread.is_sticky"><b-icon icon="pin-off"></b-icon></a>
+                    <a class="button" @click="toggleSticky" v-if="!thread.is_sticky && currentUser.is_staff"><b-icon icon="pin"></b-icon></a>
+                    <a class="button" @click="toggleSticky" v-if="thread.is_sticky && currentUser.is_staff"><b-icon icon="pin-off"></b-icon></a>
                     <a class="button" @click="toggleEditing" v-if="!editing"><b-icon icon="pencil"></b-icon></a>
                     <template v-else>
                       <a class="button is-success" @click="saveEditing"><b-icon icon="content-save"></b-icon></a>

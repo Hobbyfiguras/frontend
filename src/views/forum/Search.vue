@@ -85,7 +85,8 @@ export default {
     result2Thread (result) {
       var additives = {
         creator: {
-          username: result.username
+          username: result.username,
+          avatar: result.avatar
         },
         forum: {
           slug: result.forum
