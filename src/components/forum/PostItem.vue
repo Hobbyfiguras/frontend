@@ -386,9 +386,6 @@ $forum-header-transition: all 0.25s ease-in-out;
       transform: scale(1.01);
     }
   }
-  &.is-sticky {
-    background-color: #7255c3;
-  }
 }
 
 .tile.is-vertical > .tile.is-child:not(:last-child) {
