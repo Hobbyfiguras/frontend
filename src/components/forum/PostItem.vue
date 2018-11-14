@@ -387,7 +387,7 @@ $forum-header-transition: all 0.25s ease-in-out;
     }
   }
   &.is-sticky {
-    background-color: #58b958;
+    background-color: #7255c3;
   }
 }
 

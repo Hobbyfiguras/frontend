@@ -73,9 +73,9 @@ $forum-header-transition: all .25s ease-in-out;
     }
   }
   &.is-sticky {
-    background-color: #58b958;
+    background-color: #7255c3;
     &:hover {
-      background-color: darken(#58b958, 5%);
+      background-color: darken(#7255c3, 5%);
     }
   }
 }
