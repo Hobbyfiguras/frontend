@@ -18,7 +18,7 @@
             </div>
             <div class="column is-9">
               <p class="subtitle">{{forum.name}}</p>
-              {{forum.description}}
+              <p class="is-hidden-mobile">{{forum.description}}</p>
             </div>
             <div class="is-divider-vertical"></div>
             <div class="column has-text-centered is-1">

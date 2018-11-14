@@ -80,5 +80,8 @@ export default {
   },
   async threadSearch (text = '', username = '', forum = '', page = 1) {
     return API.makeGET(`/api/search/threads/?text=${text}&username=${username}&forum=${forum}&page=${page}`)
+  },
+  async userSearch (text = '', page = 1) {
+    return API.makeGET(`/api/search/users/?text=${text}&page=${page}`)
   }
 }

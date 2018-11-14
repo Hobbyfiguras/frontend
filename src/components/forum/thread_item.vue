@@ -2,7 +2,7 @@
   <router-link :to="getThreadLinkData(thread)">
   <article class="tile is-child notification forum-header is-info" :class="{'is-sticky': thread.is_sticky}">
     <div class="columns is-multiline is-mobile">
-      <div class="column is-1-tablet is-1-mobile">
+      <div class="column is-1-tablet is-2-mobile">
         <figure class="image is-48x48">
           <div class="is-paddingless">
             <img class="is-rounded" :src="thread.creator.avatar"/>
