@@ -82,6 +82,6 @@ export default {
     return API.makeGET(`/api/search/threads/?text=${text}&username=${username}&forum=${forum}&page=${page}`)
   },
   async userSearch (text = '', page = 1) {
-    return API.makeGET(`/api/search/users/?text=${text}&page=${page}`)
+    return API.makeGET(`/api/search/users/?text__contains=${text}&page=${page}`)
   }
 }
