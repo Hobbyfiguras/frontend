@@ -4,7 +4,7 @@
     <form @submit.prevent="onSearch()">
       <b-field grouped>
         <b-field label="Buscar">
-          <b-select v-model="searchType">
+          <b-select v-model="searchType" @input="results = undefined">
             <option value="thread">Hilos</option>
             <option value="user">Usuarios</option>
           </b-select>
@@ -45,15 +45,20 @@
             <div v-if="searchType === 'user'">
               <article v-for="user in results.results" :key="user.username" class="tile is-child notification forum-header is-info">
                 <div class="columns is-centered">
-                  <div class="column">
-                    <figure class="image is-128x128">
+                  <div class="column is-1">
+                    <figure class="image is-64x64">
                       <div class="is-paddingless">
                         <img class="is-rounded" :src="user.avatar"/>
                       </div>
                     </figure>
                   </div>
                   <div class="column">
-                    <p class="subtitle">{{user.text}}</p>
+                    <p class="title">{{user.text}}</p>
+                    <p class="subtitle">Usuario desde el {{user.date_joined | dateFormat}}</p>
+                  </div>
+                  <div class="column">
+                    <p class="title">{{user.post_count}} <template v-if="user.post_count === 1">mensaje</template> <template v-else>Mensajes</template></p>
+                    <p class="subtitle" v-if="user.is_staff">Moderador</p>
                   </div>
                 </div>
               </article>

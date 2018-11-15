@@ -1,6 +1,7 @@
 import stripMarkdown from 'strip-markdown'
 import remark from 'remark'
 import distanceInWordsToNow from 'date-fns/distance_in_words_to_now'
+import formatDate from 'date-fns/format'
 import esLocale from 'date-fns/locale/es'
 
 export default {
@@ -62,6 +63,9 @@ export default {
     },
     timeDiffFuture (value) {
       return 'en  ' + distanceInWordsToNow(value, { locale: esLocale })
+    },
+    dateFormat (value) {
+      return formatDate(value, 'D [de] MMMM [del] YYYY', { locale: esLocale })
     }
   }
 }
