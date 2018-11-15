@@ -30,7 +30,7 @@
         </nav>
       </div>
       <div class="media-right">
-        <button class="delete" @click="setNotificationRead(JSON.parse(JSON.stringify(notification)))"></button>
+        <button class="delete" @click.stop="setNotificationRead(JSON.parse(JSON.stringify(notification)))"></button>
       </div>
     </article>
   </div>

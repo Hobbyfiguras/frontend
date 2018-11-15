@@ -38,6 +38,11 @@ const actions = {
         console.log('received notification', JSON.parse(event.data))
         commit('addUnreadNotification', JSON.parse(event.data))
       }
+      client.onclose(() => {
+        dispatch('getUnreadNotifications').then(() => {
+          dispatch('connectToNotificationsService')
+        })
+      })
       commit('setWebsocketClient', client)
     })
   },
