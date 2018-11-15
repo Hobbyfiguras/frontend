@@ -13,7 +13,7 @@
           </Notifications>
           <PrivateMessages v-if="user">
             <div class="level-right bm-level-item" slot="trigger">
-              <b-icon class="badge" :data-badge="unreadMessageCount" icon="bell"></b-icon>
+              <b-icon class="badge" :data-badge="unreadMessageCount" icon="email"></b-icon>
             </div>
           </PrivateMessages>
         </div>
