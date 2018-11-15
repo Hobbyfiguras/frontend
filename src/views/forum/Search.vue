@@ -43,25 +43,27 @@
 
             <thread v-if="searchType === 'thread'" v-for="thread in results.results" :key="thread.id" :thread="thread"></thread>
             <div v-if="searchType === 'user'">
-              <article v-for="user in results.results" :key="user.username" class="tile is-child notification forum-header is-info">
-                <div class="columns is-centered">
-                  <div class="column is-1">
-                    <figure class="image is-64x64">
-                      <div class="is-paddingless">
-                        <img class="is-rounded" :src="user.avatar"/>
-                      </div>
-                    </figure>
+              <router-link v-for="user in results.results" :key="user.text" :to="{ name: 'profile', params: {username: user.text} }">
+                <article class="tile is-child notification forum-header is-info">
+                  <div class="columns is-centered">
+                    <div class="column is-1">
+                      <figure class="image is-64x64">
+                        <div class="is-paddingless">
+                          <img class="is-rounded" :src="user.avatar"/>
+                        </div>
+                      </figure>
+                    </div>
+                    <div class="column">
+                      <p class="title">{{user.text}}</p>
+                      <p class="subtitle">Usuario desde el {{user.date_joined | dateFormat}}</p>
+                    </div>
+                    <div class="column">
+                      <p class="title">{{user.post_count}} <template v-if="user.post_count === 1">mensaje</template> <template v-else>Mensajes</template></p>
+                      <p class="subtitle" v-if="user.is_staff">Moderador</p>
+                    </div>
                   </div>
-                  <div class="column">
-                    <p class="title">{{user.text}}</p>
-                    <p class="subtitle">Usuario desde el {{user.date_joined | dateFormat}}</p>
-                  </div>
-                  <div class="column">
-                    <p class="title">{{user.post_count}} <template v-if="user.post_count === 1">mensaje</template> <template v-else>Mensajes</template></p>
-                    <p class="subtitle" v-if="user.is_staff">Moderador</p>
-                  </div>
-                </div>
-              </article>
+                </article>
+              </router-link>
             </div>
           </div>
         </div>
