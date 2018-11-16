@@ -17,7 +17,7 @@
               </figure>
             </div>
             <div class="column is-9">
-              <p class="subtitle">{{forum.name}}</p>
+              <p class="subtitle forum-name">{{forum.name}}</p>
               <span class="is-hidden-mobile">{{forum.description}}</span>
             </div>
             <div class="is-divider-vertical"></div>
@@ -86,6 +86,10 @@ $forum-header-transition: all .25s ease-in-out;
 
 .tile.is-vertical > .tile.is-child:not(:last-child) {
   margin-bottom: 0.25rem !important;
+}
+
+.forum-name {
+  margin-bottom: 0;
 }
 
 </style>
