@@ -31,13 +31,17 @@
     />
   <footer class="footer">
     <div class="content has-text-centered">
+      <div class="columns is-centered">
+        <div class="column is-2">
+          <p><router-link :to="{name: 'privacy'}">Politica de privacidad</router-link></p>
+        </div>
+        <div class="column is-2">
+          <p>Powered by <a href="http://bulma.io/">Bulma</a> and <a href="https://vuejs.org/">Vue.js</a></p>
+          <p><a href="https://github.com/Hobbyfiguras/Hobbyfiguras">Código fuente</a></p>
+        </div>
+      </div>
       <p>
-        <router-link :to="{name: 'privacy'}">Politica de privacidad</router-link>
-      </p>
-    </div>
-    <div class="content has-text-centered">
-      <p>
-        Built by Álex Román Núñez with design input from Alberto Serrano.
+        Hobbyfiguras, un proyecto libre (Affero GPLv3) , programado por <a href="https://twitter.com/CkEIREXE">Álex Román</a> con apoyo de <a href="https://twitter.com/PikaDemigrante">Alberto Serrano</a>.
       </p>
     </div>
   </footer>
