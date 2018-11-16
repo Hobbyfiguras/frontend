@@ -7,7 +7,7 @@
 
             <div class="tile is-child  notification is-primary post-time is-size-7">
               <div class="level is-mobile">
-                <div class="level-left">Ultimos mensajes</div>
+                <div class="level-left">Ultimos temas</div>
                 <div class="level-right">
                 </div>
               </div>
