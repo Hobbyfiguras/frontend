@@ -33,7 +33,7 @@
                 <p class="title">{{forum.name}}</p>
               </div>
             </div>
-            <div class="level-right" v-if="currentUser">
+            <div class="level-right" v-if="currentUser && (forum.only_staff_can_post === currentUser.is_staff)">
               <router-link :to="{name: 'thread_new', props: {slug: forum.slug}}">
                 <button class="button is-info">Nuevo tema</button>
               </router-link>

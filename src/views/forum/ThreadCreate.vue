@@ -48,6 +48,7 @@
 import Forum from '@/api/forum'
 import PetitionsMixin from '@/components/mixins/petitions'
 import MarkdownEditor from '@/components/markdown_editor'
+
 export default {
   name: 'thread_create',
   mixins: [PetitionsMixin],
