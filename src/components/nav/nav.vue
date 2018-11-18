@@ -51,7 +51,7 @@
       </Menu>
       <div class="navbar-brand">
         <router-link :to="{name: 'index'}" class="navbar-item">
-          <img src="@/assets/images/logo.svg" alt="">
+          <img src="@/assets/images/logo.png" alt="">
         </router-link>
         <a role="button" class="navbar-burger" @click="toggleMenu" :class="{'is-active': navIsActive}" aria-label="menu" aria-expanded="false">
           <span aria-hidden="true"></span>
