@@ -25,14 +25,14 @@
       <div class="tile is-parent is-vertical">
         <article class="tile thread-title is-child notification is-primary">
           <div v class="columns">
-            <div class="column is-11">
+            <div class="column">
               <p class="title" v-if="!editing">{{thread.title}}</p>
               <template v-else>
                 <b-field> <b-input v-model="tempTitle"></b-input></b-field>
               </template>
             </div>
-            <div class="column is-1">
-              <div class="buttons" v-if="currentUser">
+            <div class="column" v-if="currentUser" :class="[currentUser.is_staff ? 'is-2' : 'is-1' ]">
+              <div class="buttons">
                 <a class="button" @click="toggleSubscription"><b-icon v-if="thread.subscribed" icon="eye-off"></b-icon> <b-icon v-else icon="eye"></b-icon></a>
                 <template v-if="thread.creator.username === currentUser.username || currentUser.is_staff">
                   <a class="button" @click="toggleSticky" v-if="!thread.is_sticky && currentUser.is_staff"><b-icon icon="pin"></b-icon></a>
