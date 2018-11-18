@@ -24,29 +24,25 @@
   <div v-if="!thread.nsfw || isNSFWEnabled" class="tile is-vertical">
       <div class="tile is-parent is-vertical">
         <article class="tile thread-title is-child notification is-primary">
-          <div v class="level">
-            <div class="level-left">
-              <div class="level-item">
-                <p class="title" v-if="!editing">{{thread.title}}</p>
-                <template v-else>
-                  <b-field> <b-input v-model="tempTitle"></b-input></b-field>
-                </template>
-              </div>
+          <div v class="columns">
+            <div class="column is-11">
+              <p class="title" v-if="!editing">{{thread.title}}</p>
+              <template v-else>
+                <b-field> <b-input v-model="tempTitle"></b-input></b-field>
+              </template>
             </div>
-            <div class="level-right">
-              <div class="level-item" v-if="currentUser">
-                <div class="buttons">
-                  <a class="button" @click="toggleSubscription"><b-icon v-if="thread.subscribed" icon="eye-off"></b-icon> <b-icon v-else icon="eye"></b-icon></a>
-                  <template v-if="thread.creator.username === currentUser.username || currentUser.is_staff">
-                    <a class="button" @click="toggleSticky" v-if="!thread.is_sticky && currentUser.is_staff"><b-icon icon="pin"></b-icon></a>
-                    <a class="button" @click="toggleSticky" v-if="thread.is_sticky && currentUser.is_staff"><b-icon icon="pin-off"></b-icon></a>
-                    <a class="button" @click="toggleEditing" v-if="!editing"><b-icon icon="pencil"></b-icon></a>
-                    <template v-else>
-                      <a class="button is-success" @click="saveEditing"><b-icon icon="content-save"></b-icon></a>
-                      <a class="button is-danger" @click="cancelEditing"><b-icon icon="close"></b-icon></a>
-                    </template>
+            <div class="column is-1">
+              <div class="buttons" v-if="currentUser">
+                <a class="button" @click="toggleSubscription"><b-icon v-if="thread.subscribed" icon="eye-off"></b-icon> <b-icon v-else icon="eye"></b-icon></a>
+                <template v-if="thread.creator.username === currentUser.username || currentUser.is_staff">
+                  <a class="button" @click="toggleSticky" v-if="!thread.is_sticky && currentUser.is_staff"><b-icon icon="pin"></b-icon></a>
+                  <a class="button" @click="toggleSticky" v-if="thread.is_sticky && currentUser.is_staff"><b-icon icon="pin-off"></b-icon></a>
+                  <a class="button" @click="toggleEditing" v-if="!editing"><b-icon icon="pencil"></b-icon></a>
+                  <template v-else>
+                    <a class="button is-success" @click="saveEditing"><b-icon icon="content-save"></b-icon></a>
+                    <a class="button is-danger" @click="cancelEditing"><b-icon icon="close"></b-icon></a>
                   </template>
-                </div>
+                </template>
               </div>
             </div>
           </div>

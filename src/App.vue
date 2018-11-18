@@ -36,8 +36,10 @@
           <p><router-link :to="{name: 'privacy'}">Politica de privacidad</router-link></p>
         </div>
         <div class="column is-2">
-          <p>Powered by <a href="http://bulma.io/">Bulma</a> and <a href="https://vuejs.org/">Vue.js</a></p>
           <p><a href="https://github.com/Hobbyfiguras/Hobbyfiguras">Código fuente</a></p>
+        </div>
+        <div class="column is-2">
+          <p>Powered by <a href="http://bulma.io/">Bulma</a> and <a href="https://vuejs.org/">Vue.js</a></p>
         </div>
       </div>
       <p>
