@@ -42,7 +42,7 @@ export default {
   eq: {
     breakpoints: {
       contentSmall: {
-        maxHeight: 300
+        maxHeight: 500
       }
     }
   }
@@ -57,7 +57,7 @@ export default {
   margin-bottom: 0.25rem !important;
 }
 .readmore-box {
-  max-height: 300px;
+  max-height: 500px;
   position: relative;
   overflow: hidden;
   .read-more {
