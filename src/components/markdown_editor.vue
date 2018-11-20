@@ -17,7 +17,7 @@
         <hr>
         <div class="columns is-gapless">
             <div class="column is-half editor-field">
-                <textarea class="scrollable" spellcheck=true :style="'height:' + height + 'px'" ref="textarea" v-model="content_markdown" rows="7" spellcheck="false"></textarea>
+                <textarea class="scrollable" spellcheck="true" :style="'height:' + height + 'px'" ref="textarea" v-model="content_markdown" rows="7"></textarea>
                 <span v-if="showMarkdownCounter" :class="counterClass('md')">
                     {{ content_markdown.length }} {{ markdownLimit > 0 ? ' / ' + markdownLimit : ''}}
                 </span>
