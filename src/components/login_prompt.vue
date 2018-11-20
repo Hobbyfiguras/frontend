@@ -24,7 +24,7 @@
                 password-reveal>
             </b-input>
           </b-field>
-          <button @click="doLogIn()" class="button is-block is-primary is-large is-fullwidth">Entrar</button>
+          <button @click.prevent="doLogIn()" class="button is-block is-primary is-large is-fullwidth">Entrar</button>
 
           <p class="has-text-grey login-buttons">
             <router-link :to="{name: 'register'}">Registrarse</router-link>&nbsp;·&nbsp;
@@ -60,8 +60,9 @@ export default {
         this.getUnreadNotifications()
         this.getMessages()
         this.connectToNotificationsService()
+        console.log('query: ', this.$route.query)
         if (this.$route.query.from) {
-          this.$router.push(this.$route.query.from)
+          this.$router.push({ path: this.$route.query.from })
         } else {
           this.$router.push({ name: 'index' })
         }
