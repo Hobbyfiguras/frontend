@@ -15,13 +15,16 @@ export default {
 }
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 .quote-top {
   background-color: #4827A2;
   padding-left: 1.5rem;
   padding-top: 0.25rem;
   padding-bottom: 0.25rem;
-  color: white;
+  color: white !important;
+  a {
+    color: white !important;
+  }
 }
 
 .quote {
