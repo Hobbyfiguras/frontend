@@ -28,7 +28,7 @@
 
 .content {
   a {
-    color: $link;
+    color: $link !important;
   }
 }
 
@@ -106,7 +106,7 @@
 }
 
 .notification a:not(.button) {
-  color: $link;
+  color: currentColor;
   text-decoration: none;
 }
 
