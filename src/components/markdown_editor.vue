@@ -513,6 +513,9 @@ export default {
 <style lang="scss">
     .vue-bulma-text-editor {
         .editor-nav-bar {
+          a {
+            color: currentColor;
+          }
             padding: 0.5rem 0.5rem 0;
             width: 100%;
             display: flex;
