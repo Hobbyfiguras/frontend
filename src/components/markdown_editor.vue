@@ -77,24 +77,7 @@ export default {
         ['superscript', 'subscript'],
         ['image', 'link', 'video_youtube', 'mfc'],
         ['code', 'spoiler', 'hr', 'table', 'quote']
-      ],
-      validator: value => {
-        let toolbars = [
-          'undo', 'redo', 'bold', 'italic', 'underline', 'strikethrough', 'mark', 'header',
-          'ol', 'ul', 'superscript', 'subscript', 'image', 'link', 'video_youtube', 'video_vimeo',
-          'code', 'hr', 'table', 'quote'
-        ]
-
-        for (let group = 0; group < value.length; group++) {
-          for (let toolbar = 0; toolbar < value[group].length; toolbar++) {
-            if (toolbars.includes(value[group][toolbar]) === false) {
-              return false
-            }
-          }
-        }
-
-        return true
-      }
+      ]
     }
   },
   data () {
@@ -517,6 +500,9 @@ export default {
             width: 100%;
             display: flex;
             flex-wrap: wrap;
+            a {
+              color: currentColor !important;
+            }
             .group {
                 margin-bottom: 0.5rem;
                 &:not(:last-child) {
