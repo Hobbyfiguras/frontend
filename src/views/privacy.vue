@@ -14,7 +14,7 @@
           </ul>
           <p>Esta Politica de Privacidad aplica a los sitios web y otros servicios relacionados de Hobbyfiguras, a los cuales nos referimos colectivamente como el Servicio. Podemos actualizar esta Politica de Privacidad de vez en cuando en respuesta a cambios en desarrollos legales, técnicos o comerciales. Cuando actualizamos nuestro Aviso de Privacidad, tomaremos las medidas adecuadas para informarle, de acuerdo con la importancia de los cambios que realicemos. Recibiremos su consentimiento para cualquier material de aviso de privacidad que usted modifique, siempre y cuando lo exija la legislación de protección de datos aplicable.</p>
           <p>Si tiene alguna pregunta o inquietud sobre el uso que hacemos de su información personal, comuníquese con nosotros utilizando los datos de contacto que se encuentran al final de esta Politica de Privacidad.</p>
-          <h2 class="">THE DATA WE RECOPILAMOS</h2>
+          <h2 class="">LOS DATOS QUE RECOPILAMOS</h2>
           <h3 class="">Que proporciona usted </h3>
           <ul>
             <li> Información de perfil, como fotos de perfil, nombres de usuario o enlaces de redes sociales </li>
