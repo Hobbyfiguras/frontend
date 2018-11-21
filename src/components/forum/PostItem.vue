@@ -124,7 +124,7 @@
                 <div class="has-vertically-aligned-content">
                   <div class="level is-mobile">
                     <div class="level-left is-vertical">
-                      <div class="level-item" v-for="vote in post.votes" :key="vote.id">
+                      <div class="level-item vote-level-item" v-for="vote in post.votes" :key="vote.id">
                         <div class="tile is-vertical is-ancestor">
                           <div class="tile">
                             <b-tooltip :label="vote.name">
@@ -419,8 +419,6 @@ $forum-header-transition: all 0.25s ease-in-out;
   justify-content: end;
 }
 
-.level-item
-
 .vote-icon {
   transition: transform 0.1s ease-in-out;
   transform: scale(0);
@@ -445,7 +443,11 @@ $forum-header-transition: all 0.25s ease-in-out;
 }
 
 .level-vote {
-  margin-right: 1.0rem !important;
+  margin-right: 0.5rem !important;
+}
+
+.vote-level-item:not(:last-child) {
+  margin-left: 1rem;
 }
 
 .vote-list-item {
