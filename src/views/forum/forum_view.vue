@@ -94,7 +94,7 @@ export default {
         var page = parseInt(this.$route.query.page)
         this.currentPage = page
       }
-      this.makePetition(Forum.getForumThreads(this.slug, this.currentPage), true, true).then((forum) => {
+      this.makePetition(Forum.getForumThreads(this.slug, this.currentPage, this.itemsPerPage), true, true).then((forum) => {
         this.forum = forum
       })
     },

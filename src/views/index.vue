@@ -71,7 +71,7 @@ export default {
         var page = parseInt(this.$route.query.page)
         this.currentPage = page
       }
-      this.makePetition(Forum.getForumThreads('noticias-y-novedades', this.currentPage, 10)).then((news) => {
+      this.makePetition(Forum.getNews(this.currentPage, 10)).then((news) => {
         this.news = news.threads
         console.log('news', this.news)
       })
