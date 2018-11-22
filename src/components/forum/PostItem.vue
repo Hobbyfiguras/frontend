@@ -69,8 +69,8 @@
                 </router-link>
               </p>
             </div>
-            <div class="column is-12-tablet is-hidden-mobile">
-              <figure class="image is-256x256">
+            <div class="column is-12-tablet is-hidden-mobile is-flex is-horizontal-center">
+              <figure class="image is-128x128">
                 <div class="is-paddingless">
                   <router-link class="user-link" :to="{name: 'profile', params: {username: post.creator.username}}">
                     <img v-if="!isUserBanned(post.creator)" class="is-rounded" :src="post.creator.avatar"/>
@@ -432,6 +432,7 @@ $forum-header-transition: all 0.25s ease-in-out;
     opacity: 1;
   }
 }
+
 .thread-content:hover,
 .thread-content:active {
   .vote-icon {

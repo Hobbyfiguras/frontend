@@ -97,7 +97,7 @@
                 </Notifications>
               </template>
               <template v-else>
-                <router-link class="navbar-item" :to="{'name': 'login', query: {from: $route.path}}"><b-icon icon="login"></b-icon></router-link>
+                <router-link class="navbar-item" :to="{'name': 'login', query: {from: $route.path}}"><b-icon icon="login"></b-icon> <span>Entrar</span></router-link>
               </template>
             </div>
         </div>
