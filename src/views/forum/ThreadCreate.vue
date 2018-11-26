@@ -19,7 +19,7 @@
   <div class="card">
     <div class="card-content">
           <b-field label="Titulo">
-            <b-input v-model="post.title" maxlength="100"></b-input>
+            <b-input v-model="post.title" maxlength="300"></b-input>
           </b-field>
           <b-field label="Contenido">
             <MarkdownEditor v-model="post.content"></MarkdownEditor>
