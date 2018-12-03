@@ -169,3 +169,7 @@ hr {
     }
   }
 }
+
+.tooltip::after {
+  z-index: 10000;
+}

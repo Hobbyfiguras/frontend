@@ -32,15 +32,39 @@
               </template>
             </div>
             <div class="column" v-if="currentUser" :class="[currentUser.is_staff ? 'is-2' : 'is-1' ]">
-              <div class="buttons">
-                <a class="button" @click="toggleSubscription"><b-icon v-if="thread.subscribed" icon="eye-off"></b-icon> <b-icon v-else icon="eye"></b-icon></a>
+              <div class="columns is-multiline">
+                <div class="column">
+                  <b-tooltip :label="thread.subscribed ? 'Desuscribirse' : 'Suscribirse'" size="is-small" type="is-white">
+                    <a class="button is-small" @click="toggleSubscription"><b-icon v-if="thread.subscribed" icon="eye-off"></b-icon> <b-icon v-else icon="eye"></b-icon></a>
+                  </b-tooltip>
+                </div>
                 <template v-if="thread.creator.username === currentUser.username || currentUser.is_staff">
-                  <a class="button" @click="toggleSticky" v-if="!thread.is_sticky && currentUser.is_staff"><b-icon icon="pin"></b-icon></a>
-                  <a class="button" @click="toggleSticky" v-if="thread.is_sticky && currentUser.is_staff"><b-icon icon="pin-off"></b-icon></a>
-                  <a class="button" @click="toggleEditing" v-if="!editing"><b-icon icon="pencil"></b-icon></a>
+                  <div class="column" v-if="currentUser.is_staff">
+                    <b-tooltip :label="thread.is_sticky ? 'Anclar' : 'Desanclar'" size="is-small" type="is-white">
+                      <a class="button is-small" @click="toggleSticky"><b-icon v-if="thread.is_sticky" icon="pin-off"></b-icon> <b-icon v-else icon="pin"></b-icon></a>
+                    </b-tooltip>
+                  </div>
+                  <div class="column" v-if="!thread.nsfw">
+                    <b-tooltip label="Hacer NSFW" type="is-white">
+                      <a class="button is-small" @click="makeNSFW"><b-icon icon="eye-settings"></b-icon></a>
+                    </b-tooltip>
+                  </div>
+                  <div class="column" v-if="!editing">
+                    <b-tooltip label="Editar" type="is-white">
+                      <a class="button is-small" @click="toggleEditing"><b-icon icon="pencil"></b-icon></a>
+                    </b-tooltip>
+                  </div>
                   <template v-else>
-                    <a class="button is-success" @click="saveEditing"><b-icon icon="content-save"></b-icon></a>
-                    <a class="button is-danger" @click="cancelEditing"><b-icon icon="close"></b-icon></a>
+                    <div class="column">
+                      <b-tooltip label="Guardar edición" type="is-success">
+                        <a class="button is-small is-success" @click="saveEditing"><b-icon icon="content-save"></b-icon></a>
+                      </b-tooltip>
+                    </div>
+                    <div class="column">
+                      <b-tooltip label="Cancel edición" type="is-success">
+                        <a class="button is-small is-danger" @click="cancelEditing"><b-icon icon="close"></b-icon></a>
+                      </b-tooltip>
+                    </div>
                   </template>
                 </template>
               </div>
@@ -164,6 +188,22 @@ export default {
       var quoteStart = ':'.repeat(HQL)
       let text = `${quoteStart} cita ${post.creator.username} ${post.id}\n${post.content}\n${quoteStart}`
       this.$refs.postCreate.addText(text)
+    },
+    makeNSFW () {
+      this.$dialog.confirm({
+        title: 'Hacer el hilo NSFW',
+        message: 'Esta acción no se puede revertir, ¿estás seguro?.',
+        confirmText: 'Aceptar',
+        cancelText: 'No, volver atrás',
+        type: 'is-danger',
+        hasIcon: true,
+        onConfirm: () => {
+          return Forum.makeThreadNSFW(this.id).then(() => {
+            this.$toast.open('El hilo es ahora NSFW!')
+            this.thread.nsfw = true
+          })
+        }
+      })
     },
     toggleEditing () {
       this.editing = true

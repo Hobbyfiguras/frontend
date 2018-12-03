@@ -86,5 +86,8 @@ export default {
   },
   async userSearch (text = '', page = 1) {
     return API.makeGET(`/api/search/users/?text__fuzzy=${text}&page=${page}`)
+  },
+  async makeThreadNSFW (thread) {
+    return API.makePOST(`/api/thread/${thread}/make_nsfw/`)
   }
 }
