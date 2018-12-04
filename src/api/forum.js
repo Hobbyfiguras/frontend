@@ -89,5 +89,8 @@ export default {
   },
   async makeThreadNSFW (thread) {
     return API.makePOST(`/api/thread/${thread}/make_nsfw/`)
+  },
+  async moveThread (thread, forum) {
+    return API.makePOST(`/api/thread/${thread}/move_thread/`, { forum: forum })
   }
 }

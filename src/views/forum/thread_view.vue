@@ -44,6 +44,11 @@
                       <a class="button is-small" @click="toggleSticky"><b-icon v-if="thread.is_sticky" icon="pin-off"></b-icon> <b-icon v-else icon="pin"></b-icon></a>
                     </b-tooltip>
                   </div>
+                  <div class="column" v-if="currentUser.is_staff">
+                    <b-tooltip label="Mover hilo" type="is-white">
+                      <a class="button is-small" @click="openMoveThreadModal"><b-icon icon="folder-move"></b-icon></a>
+                    </b-tooltip>
+                  </div>
                   <div class="column" v-if="!thread.nsfw">
                     <b-tooltip label="Hacer NSFW" type="is-white">
                       <a class="button is-small" @click="makeNSFW"><b-icon icon="eye-settings"></b-icon></a>
@@ -110,6 +115,7 @@ import PostItem from '@/components/forum/PostItem'
 import NSFWWarningMixin from '@/components/mixins/NSFWWarningMixin'
 import PostCreate from '@/views/forum/post_create'
 import { mapGetters, mapState } from 'vuex'
+import MoveThreadModal from '@/components/forum/MoveThreadModal'
 import debounce from 'debounce'
 
 export default {
@@ -165,6 +171,14 @@ export default {
     })
   }, 500), // increase to ur needs
   methods: {
+    openMoveThreadModal () {
+      this.$modal.open({
+        parent: this,
+        component: MoveThreadModal,
+        props: { thread: this.thread },
+        hasModalCard: true
+      })
+    },
     findHighestQuoteLevel (text) {
       var highestQuoteLevel = 0
       var currentQuoteLevel = 0
