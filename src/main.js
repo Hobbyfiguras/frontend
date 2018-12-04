@@ -106,7 +106,7 @@ Vue.axios.interceptors.request.use((config) => {
   })
 })
 
-new Vue({
+window.App = new Vue({
   router,
   store,
   render: h => h(App)

@@ -13,8 +13,21 @@ if (process.env.NODE_ENV === 'production') {
     cached () {
       console.log('Content has been cached for offline use.')
     },
-    updated () {
+    updated (registration) {
       console.log('New content is available; please refresh.')
+      window.App.$snackbar.open({
+        message: 'Nueva versión disponible.',
+        position: 'is-top',
+        actionText: 'Actualizar',
+        indefinite: true,
+        onAction: () => {
+          this.$toast.open({
+            message: 'Actualizando...',
+            queue: false
+          })
+          registration.update()
+        }
+      })
     },
     offline () {
       console.log('No internet connection found. App is running in offline mode.')
