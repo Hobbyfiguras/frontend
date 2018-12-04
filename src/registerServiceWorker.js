@@ -21,11 +21,11 @@ if (process.env.NODE_ENV === 'production') {
         actionText: 'Actualizar',
         indefinite: true,
         onAction: () => {
-          this.$toast.open({
+          window.App.$toast.open({
             message: 'Actualizando...',
             queue: false
           })
-          registration.update()
+          window.location.reload(true)
         }
       })
     },
