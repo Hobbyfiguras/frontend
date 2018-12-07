@@ -10,7 +10,7 @@
         </figure>
       </div>
       <div class="column is-5-tablet is-10-mobile">
-        <p class="subtitle thread-title-text">{{thread.title}} <b-tag v-if="thread.nsfw" type="is-danger">NSFW</b-tag> <b-icon icon="pin" v-if="thread.is_sticky"></b-icon> </p>
+        <p class="subtitle thread-title-text"><b-tag v-if="thread.nsfw" type="is-danger">NSFW</b-tag> <b-icon icon="pin" v-if="thread.is_sticky"></b-icon> {{thread.title}} </p>
         por {{thread.creator.username}}, {{thread.created | timeDiff("from")}}
       </div>
       <div class="is-divider-vertical"></div>
@@ -81,8 +81,8 @@ $forum-header-transition: all .25s ease-in-out;
 }
 
 .thread-title-text {
-  text-overflow: ellipsis;
-  overflow: hidden;
   white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 </style>
