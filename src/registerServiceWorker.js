@@ -25,9 +25,7 @@ if (process.env.NODE_ENV === 'production') {
             message: 'Actualizando...',
             queue: false
           })
-          registration.unregister().then(() => {
-            window.location.reload(true)
-          })
+          window.location.reload(true)
         }
       })
     },
