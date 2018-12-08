@@ -447,7 +447,7 @@ $forum-header-transition: all 0.25s ease-in-out;
   margin-right: 0.5rem !important;
 }
 
-.vote-level-item:not(:last-child) {
+.vote-level-item {
   margin-left: 1rem;
 }
 
