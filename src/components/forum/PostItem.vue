@@ -271,7 +271,6 @@ export default {
         this.hasVoted = true
         this.error = message.success
         this.oldPost = JSON.parse(JSON.stringify(this.post))
-        this.oldPost.votes = []
         var voteIDX = this.oldPost.votes.findIndex((vote) => vote.id === voteType.id)
         if (voteIDX === -1) {
           voteType.vote_count = 0
