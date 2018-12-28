@@ -12,10 +12,10 @@
                 </div>
               </div>
             </div>
-            <router-link class="tile is-child notification is-white" v-for="thread in threads" :key="thread.id" :to="getThreadLinkData(thread)">
+            <router-link class="tile is-child notification is-white" v-for="post in posts" :key="post.id" :to="getThreadLinkData(post.thread)">
               <article>
-                {{thread.title}} <br/>
-                <p class="is-size-7">por <a>{{thread.creator.username}}</a> en {{thread.forum.name}}</p>
+                {{post.thread.title}} <br/>
+                <p class="is-size-7">por <a>{{post.creator.username}}</a> en {{post.thread.forum.name}}</p>
               </article>
             </router-link>
 
@@ -53,7 +53,7 @@ export default {
   data () {
     return {
       news: [],
-      threads: [],
+      posts: [],
       itemsPerPage: 10,
       currentPage: 1
     }
@@ -75,8 +75,8 @@ export default {
         this.news = news.threads
         console.log('news', this.news)
       })
-      this.makePetition(Forum.getThreads()).then((threads) => {
-        this.threads = threads.results
+      this.makePetition(Forum.getPosts()).then((posts) => {
+        this.posts = posts.results
       })
     },
     changePage: debounce(function (page = 1) {

@@ -36,6 +36,9 @@ export default {
   async getThreads (page = 1, pageSize = 5) {
     return API.makeGET(`/api/thread/?page=${page}&page_size=${pageSize}`)
   },
+  async getPosts (page = 1, pageSize = 5) {
+    return API.makeGET(`/api/posts/?page=${page}&page_size=${pageSize}`)
+  },
   async getForumThreads (slug, page = 1, pageSize = 20) {
     return API.makeGET(`/api/forum/${slug}/threads/?page=${page}&page_size=${pageSize}`)
   },
