@@ -7,5 +7,8 @@ module.exports = {
       clientsClaim: true
     }
   },
-  runtimeCompiler: true
+  runtimeCompiler: true,
+  configureWebpack: {
+    devtool: 'source-map'
+  }
 }
