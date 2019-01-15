@@ -17,6 +17,7 @@
       </div>
       <router-view v-if="hasForumSettings"/>
     </main>
+    <!--
     <Snowf
       :amount="50"
       :size="5"
@@ -28,7 +29,7 @@
       :zIndex="-1000"
       :resize="true"
       color="#AAA"
-    />
+    /> -->
   <footer class="footer">
     <div class="content has-text-centered">
       <div class="columns is-centered">
