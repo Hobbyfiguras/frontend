@@ -12,7 +12,7 @@
     </div>
     <article class="tile is-child notification is-white thread-content">
         <div :class="{'readmore-box': !$eq.contentSmall}" v-if="newsItem.first_post">
-          <Markdown :source="newsItem.first_post.content"></Markdown>
+          <Markdown :source="truncateMarkdown(newsItem.first_post.content)"></Markdown>
           <p class="read-more"></p>
         </div>
         <div class="has-text-centered read-more-button">
@@ -39,6 +39,19 @@ export default {
   name: 'news_item',
   props: ['newsItem'],
   components: { Markdown },
+  methods: {
+    truncateMarkdown (markdown) {
+      var lines = markdown.split('\n')
+      var result = ''
+      for (var line of lines) {
+        result = result.concat(line + '\n')
+        if (line.match(/!\[.*\]\(.*\)/)) {
+          break
+        }
+      }
+      return result
+    }
+  },
   eq: {
     breakpoints: {
       contentSmall: {
@@ -48,7 +61,7 @@ export default {
   }
 }
 </script>
-+
+
 <style lang="scss">
 .thread-title {
   padding: 1.0rem 2.5rem 1.0rem 1.5rem

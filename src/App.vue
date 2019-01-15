@@ -96,7 +96,6 @@ export default {
     ])
   },
   metaInfo: {
-    name: 'Hobbyfiguras',
     titleTemplate: (titleChunk) => {
       // If undefined or blank then we don't need the hyphen
       return titleChunk ? `${titleChunk} - Hobbyfiguras` : 'Hobbyfiguras'
