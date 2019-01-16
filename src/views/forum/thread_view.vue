@@ -34,12 +34,12 @@
                 creado por {{thread.creator.username}}, {{thread.posts.count - 1}} respuestas
               </template>
             </div>
-            <div class="column is-1 has-text-right" v-if="currentUser && !editing">
+            <div class="column is-1 has-text-right" v-if="currentUser.id === thread.creator.id || currentUser.is_staff">
               <b-dropdown>
                 <a slot="trigger">
                     <p><b-icon icon="dots-vertical"></b-icon></p>
                 </a>
-                <template v-if="(currentUser.id === thread.creator.id || currentUser.is_staff)">
+                <template>
                   <div class="has-text-left">
                     <b-dropdown-item @click="toggleSubscription()"> <template v-if="thread.subscribed"><b-icon icon="eye-off"></b-icon> Desuscribirse</template><template v-else><b-icon icon="eye"></b-icon> Suscribirse</template></b-dropdown-item>
                     <b-dropdown-item @click="makeNSFW()"><b-icon icon="eye-settings"></b-icon> Hacer NSFW</b-dropdown-item>
