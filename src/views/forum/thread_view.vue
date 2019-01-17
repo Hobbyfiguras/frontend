@@ -76,6 +76,11 @@
             </div>
           </div>
         </article>
+        <article class="tile thread-content is-child notification is-white">
+          <p class="subtitle">Articulos relacionados</p>
+          <ItemList v-model="thread.related_items">
+          </ItemList>
+        </article>
         <transition-group :name="transitonName">
           <PostItem class="PostItem" allowQuote="true" @onQuote="onUserQuote" v-for="(post, index) in thread.posts.results" :isOP="index === 0 && currentPage === 1" :post="post" @changePost="changePost" :key="post.id" @deletePost="deletePost" :ref="'#' + post.id">
           </PostItem>
@@ -117,11 +122,12 @@ import PostCreate from '@/views/forum/post_create'
 import { mapGetters, mapState } from 'vuex'
 import MoveThreadModal from '@/components/forum/MoveThreadModal'
 import debounce from 'debounce'
+import ItemList from '@/components/forum/ItemList'
 
 export default {
   name: 'thread_view',
   mixins: [PetitionsMixin, NSFWWarningMixin],
-  components: { PostItem, PostCreate },
+  components: { PostItem, PostCreate, ItemList },
   data () {
     return {
       thread: null,
@@ -258,6 +264,7 @@ export default {
           this.askNSFW()
         }
       })
+      
     },
     changePost (newpost) {
       console.log(newpost)

@@ -173,3 +173,9 @@ hr {
 .tooltip::after {
   z-index: 10000;
 }
+
+.modal-card { overflow: visible; .modal-card-body { overflow: visible; } } 
+
+.modal-content {
+  overflow: visible;
+}

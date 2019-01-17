@@ -24,6 +24,9 @@
           <b-field label="Contenido">
             <MarkdownEditor v-model="post.content"></MarkdownEditor>
           </b-field>
+          <b-field label="Articulos relacionados">
+            <ItemList v-model="relatedItems" editable></ItemList>
+          </b-field>
         <div class="is-divider"></div>
         <div class="level">
           <div class="level-left">
@@ -48,7 +51,7 @@
 import Forum from '@/api/forum'
 import PetitionsMixin from '@/components/mixins/petitions'
 import MarkdownEditor from '@/components/markdown_editor'
-
+import ItemList from '@/components/forum/ItemList'
 export default {
   name: 'thread_create',
   mixins: [PetitionsMixin],
@@ -58,16 +61,17 @@ export default {
       post: {
         content: '',
         title: '',
-        nsfw: false
-      }
-
+        nsfw: false,
+        related_items: []
+      },
+      relatedItems: []
     }
   },
   mounted () {
     this.fetchData()
   },
   props: ['slug'],
-  components: { MarkdownEditor },
+  components: { MarkdownEditor, ItemList },
   watch: {
     // call again the method if the route changes
     '$route': 'fetchData'
@@ -79,6 +83,10 @@ export default {
       })
     },
     createThread () {
+      this.post.related_items = []
+      for (let item of this.relatedItems) {
+        this.post.related_items.push(item.id)
+      }
       return this.$awn.async(this.makePetition(Forum.createThread(this.slug, this.post)), 'Tema creado correctamente',
         'Error creando tema', 'Creando tema').then((thread) => {
         this.$router.push({ name: 'thread', params: { forum: this.forum.slug, slug: thread.slug, id: thread.id } })

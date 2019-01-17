@@ -16,7 +16,7 @@ export default {
   async getBackers () {
     return API.makeGET(`/api/backers/`)
   },
-  async searchFigure (keywords, page=1) {
+  async searchFigure (keywords, page = 1) {
     return API.makeGET(`/api/mfc/figures/search/?keywords=${keywords}&page=${page}`)
   },
   async getArticle (slug) {

@@ -1,22 +1,43 @@
 <template>
 <div class="modal-card" style="width: auto">
   <header class="modal-card-head">
-    <p class="modal-card-title">Mover hilo</p>
+    <p class="modal-card-title">Añadir articulos relacionados</p>
   </header>
   <section class="modal-card-body">
-    <b-field label="Nuevo foro">
-      <b-select
-        v-model="newForum"
-        required>
-        <optgroup v-if="categories" v-for="category in categories" :key="category.id" :label="category.name">
-          <option v-for="forum in category.forums" :key="forum.id" :value="forum.id">{{forum.name}}</option>
-        </optgroup>
-      </b-select>
+    <ItemMedia v-for="figure in selected" :key="figure.id" :item="figure" @delete="deleteItem">
+    </ItemMedia>
+    <b-field label="Buscar Articulo">
+        <b-autocomplete
+            v-model="search"
+            :data="results"
+            placeholder="Izumi Sagiri"
+            field="title"
+            :loading="isFetching"
+            open-on-focus
+            :clear-on-select="false"
+            @keyup.native="fetchData"
+            @select="onSelectOption">
+
+            <template slot-scope="props" class="has-background-success">
+                <div class="media">
+                  <div class="media-left" :class="{'has-background-success': isFigureSelected(props.option)}">
+                      <img width="32" :src="`https://static.myfigurecollection.net/pics/figure/${props.option.id}.jpg`">
+                  </div>
+                  <div class="media-content is-primary">
+                    {{ props.option.name }}
+                    <br>
+                    <b-taglist>
+                        <b-tag v-for="category in props.option.categories" :key="category.id" type="is-primary">{{ category["@attributes"].name }}</b-tag>
+                    </b-taglist>
+                  </div>
+                </div>
+            </template>
+        </b-autocomplete>
     </b-field>
   </section>
   <footer class="modal-card-foot">
     <button class="button" type="button" @click="$parent.close()">Cerrar</button>
-    <button class="button is-primary" @click="moveThread">Enviar</button>
+    <button class="button is-primary" @click="onAccept">Aceptar</button>
   </footer>
 </div>
 </template>
@@ -24,13 +45,19 @@
 <script>
 import petitionsMixin from '@/components/mixins/petitions'
 import Forum from '@/api/forum'
-
+import debounce from 'debounce'
+import MFC from '@/api/mfc'
+import ItemMedia from '@/components/forum/ItemMedia'
 export default {
   mixins: [petitionsMixin],
+  props: ['alreadySelectedItems'],
+  components: { ItemMedia },
   data () {
     return {
-      newForum: this.thread.forum.id,
-      categories: {}
+      results: [],
+      isFetching: false,
+      search: '',
+      selected: []
     }
   },
   created () {
@@ -39,20 +66,43 @@ export default {
     })
   },
   methods: {
-    moveThread () {
-      this.categories.forEach(category => {
-        category.forums.forEach((forum) => {
-          if (forum.id === this.newForum) {
-            let threadData = JSON.parse(JSON.stringify(this.thread))
-            threadData.forum = forum
-            this.$parent.close()
-            this.$awn.async(this.makePetition(Forum.moveThread(this.thread.id, this.newForum)), 'Hilo movido.', 'Error moviendo hilo', 'Moviendo hilo')
-            this.$router.push(this.getThreadLinkData(threadData), () => {
-              this.$router.go()
-            })
+    isFigureSelected (figure) {
+      for (let selectedFigure of this.selected) {
+        if (figure.id === selectedFigure.id) {
+          return true
+        }
+      }
+      if (this.alreadySelectedItems) {
+        for (let selectedFigure of this.alreadySelectedItems) {
+          if (figure.id === selectedFigure.id) {
+            return true
           }
-        })
+        }
+      }
+
+      return false
+    },
+    onAccept () {
+      this.$emit('onSelectItems', this.selected)
+      this.$parent.close()
+    },
+    deleteItem (item) {
+      let index = this.selected.findIndex((i) => {
+        return item.id === i.id
       })
+      this.selected.splice(index, 1)
+    },
+    fetchData: debounce(function () {
+      this.isFetching = true
+      this.makePetition(MFC.searchFigure(this.search)).then((data) => {
+        this.results = data.items.item
+        this.isFetching = false
+      })
+    }, 500),
+    onSelectOption (option) {
+      if (!this.isFigureSelected(option)) {
+        this.selected.push(option)
+      }
     }
   }
 }
