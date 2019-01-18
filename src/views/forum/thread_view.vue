@@ -34,27 +34,29 @@
                 creado por {{thread.creator.username}}, {{thread.posts.count - 1}} respuestas
               </template>
             </div>
-            <div class="column is-1 has-text-right" v-if="currentUser && (currentUser.id === thread.creator.id || currentUser.is_staff)">
-              <b-dropdown>
-                <a slot="trigger">
-                    <p><b-icon icon="dots-vertical"></b-icon></p>
-                </a>
-                <template>
-                  <div class="has-text-left">
-                    <b-dropdown-item @click="toggleSubscription()"> <template v-if="thread.subscribed"><b-icon icon="eye-off"></b-icon> Desuscribirse</template><template v-else><b-icon icon="eye"></b-icon> Suscribirse</template></b-dropdown-item>
-                    <b-dropdown-item @click="makeNSFW()"><b-icon icon="eye-settings"></b-icon> Hacer NSFW</b-dropdown-item>
-                    <b-dropdown-item @click="toggleEditing()"><b-icon icon="pencil"></b-icon> Editar</b-dropdown-item>
-                    <template v-if="currentUser.is_staff">
-                      <hr class="dropdown-divider">
-                      <b-dropdown-item @click="openMoveThreadModal()"><b-icon icon="folder-move"></b-icon> Mover Hilo</b-dropdown-item>
-                      <b-dropdown-item @click="toggleSticky()"> <template v-if="thread.is_sticky"><b-icon icon="pin-off"></b-icon> Despinear</template><template v-else><b-icon icon="pin"></b-icon> Pinear</template></b-dropdown-item>
-                      <b-dropdown-item @click="toggleLock()"> <template v-if="thread.is_closed"><b-icon icon="lock-open"></b-icon> Abrir hilo</template><template v-else><b-icon icon="lock"></b-icon> Cerrar hilo</template></b-dropdown-item>
+            <template v-if="currentUser">
+              <div class="column is-1 has-text-right" v-if="(currentUser.id === thread.creator.id || currentUser.is_staff)">
+                <b-dropdown>
+                  <a slot="trigger">
+                      <p><b-icon icon="dots-vertical"></b-icon></p>
+                  </a>
+                  <template>
+                    <div class="has-text-left">
+                      <b-dropdown-item @click="toggleSubscription()"> <template v-if="thread.subscribed"><b-icon icon="eye-off"></b-icon> Desuscribirse</template><template v-else><b-icon icon="eye"></b-icon> Suscribirse</template></b-dropdown-item>
+                      <b-dropdown-item @click="makeNSFW()"><b-icon icon="eye-settings"></b-icon> Hacer NSFW</b-dropdown-item>
+                      <b-dropdown-item @click="toggleEditing()"><b-icon icon="pencil"></b-icon> Editar</b-dropdown-item>
+                      <template v-if="currentUser.is_staff">
+                        <hr class="dropdown-divider">
+                        <b-dropdown-item @click="openMoveThreadModal()"><b-icon icon="folder-move"></b-icon> Mover Hilo</b-dropdown-item>
+                        <b-dropdown-item @click="toggleSticky()"> <template v-if="thread.is_sticky"><b-icon icon="pin-off"></b-icon> Despinear</template><template v-else><b-icon icon="pin"></b-icon> Pinear</template></b-dropdown-item>
+                        <b-dropdown-item @click="toggleLock()"> <template v-if="thread.is_closed"><b-icon icon="lock-open"></b-icon> Abrir hilo</template><template v-else><b-icon icon="lock"></b-icon> Cerrar hilo</template></b-dropdown-item>
 
-                    </template>
-                  </div>
-                </template>
-              </b-dropdown>
-            </div>
+                      </template>
+                    </div>
+                  </template>
+                </b-dropdown>
+              </div>
+            </template>
             <div v-if="editing" class="column is-1">
               <div class="buttons">
                 <span class="button is-success" @click="saveEditing"><b-icon icon="content-save"></b-icon></span>
