@@ -78,7 +78,9 @@
         </article>
         <article class="tile thread-content is-child notification is-white">
           <p class="subtitle">Articulos relacionados</p>
-          <ItemList v-model="thread.related_items">
+          <ItemList v-if="currentUser" v-model="thread.related_items" :editable="currentUser.id === thread.creator.id" @updateList="updateRelatedItems">
+          </ItemList>
+          <ItemList v-else v-model="thread.related_items">
           </ItemList>
         </article>
         <transition-group :name="transitonName">
@@ -201,6 +203,14 @@ export default {
       }
       return highestQuoteLevel
     },
+    updateRelatedItems () {
+      let payload = { related_items: [] }
+      for (let item of this.thread.related_items) {
+        payload.related_items.push(item.id)
+      }
+      this.makePetition(Forum.updateThread(this.thread.id, payload)).then(() => {
+      })
+    },
     onUserQuote (post) {
       // highest quote level
       var HQL = Math.max(this.findHighestQuoteLevel(post.content), 2)
@@ -264,7 +274,6 @@ export default {
           this.askNSFW()
         }
       })
-      
     },
     changePost (newpost) {
       console.log(newpost)

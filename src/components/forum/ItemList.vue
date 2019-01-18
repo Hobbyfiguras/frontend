@@ -39,11 +39,13 @@ export default {
       let index = newValue.findIndex((i) => i.id === item.id)
       newValue.splice(index, 1)
       this.$emit('input', newValue)
+      this.$emit('updateList', newValue)
     },
     onSelectItems (newItems) {
       let newValue = JSON.parse(JSON.stringify(this.value))
       newValue = [...newValue, ...newItems]
       this.$emit('input', newValue)
+      this.$emit('updateList', newValue)
     }
   }
 }
