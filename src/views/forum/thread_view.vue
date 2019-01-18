@@ -34,7 +34,7 @@
                 creado por {{thread.creator.username}}, {{thread.posts.count - 1}} respuestas
               </template>
             </div>
-            <div class="column is-1 has-text-right" v-if="currentUser.id === thread.creator.id || currentUser.is_staff">
+            <div class="column is-1 has-text-right" v-if="currentUser && (currentUser.id === thread.creator.id || currentUser.is_staff)">
               <b-dropdown>
                 <a slot="trigger">
                     <p><b-icon icon="dots-vertical"></b-icon></p>
