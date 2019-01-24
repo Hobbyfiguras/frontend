@@ -26,52 +26,41 @@
         <article class="tile thread-title is-child notification is-primary">
           <div v class="columns">
             <div class="column">
-              <p class="title" v-if="!editing">{{thread.title}}</p>
+              <p class="title is-size-4" v-if="!editing">{{thread.title}} <br/> </p>
               <template v-else>
                 <b-field> <b-input v-model="tempTitle"></b-input></b-field>
               </template>
+              <template v-if="!editing">
+                creado por {{thread.creator.username}}, {{thread.posts.count - 1}} respuestas
+              </template>
             </div>
-            <div class="column" v-if="currentUser" :class="[currentUser.is_staff ? 'is-2' : 'is-1' ]">
-              <div class="columns is-multiline">
-                <div class="column">
-                  <b-tooltip :label="thread.subscribed ? 'Desuscribirse' : 'Suscribirse'" size="is-small" type="is-white">
-                    <a class="button is-small" @click="toggleSubscription"><b-icon v-if="thread.subscribed" icon="eye-off"></b-icon> <b-icon v-else icon="eye"></b-icon></a>
-                  </b-tooltip>
-                </div>
-                <template v-if="thread.creator.username === currentUser.username || currentUser.is_staff">
-                  <div class="column" v-if="currentUser.is_staff">
-                    <b-tooltip :label="thread.is_sticky ? 'Anclar' : 'Desanclar'" size="is-small" type="is-white">
-                      <a class="button is-small" @click="toggleSticky"><b-icon v-if="thread.is_sticky" icon="pin-off"></b-icon> <b-icon v-else icon="pin"></b-icon></a>
-                    </b-tooltip>
-                  </div>
-                  <div class="column" v-if="currentUser.is_staff">
-                    <b-tooltip label="Mover hilo" type="is-white">
-                      <a class="button is-small" @click="openMoveThreadModal"><b-icon icon="folder-move"></b-icon></a>
-                    </b-tooltip>
-                  </div>
-                  <div class="column" v-if="!thread.nsfw">
-                    <b-tooltip label="Hacer NSFW" type="is-white">
-                      <a class="button is-small" @click="makeNSFW"><b-icon icon="eye-settings"></b-icon></a>
-                    </b-tooltip>
-                  </div>
-                  <div class="column" v-if="!editing">
-                    <b-tooltip label="Editar" type="is-white">
-                      <a class="button is-small" @click="toggleEditing"><b-icon icon="pencil"></b-icon></a>
-                    </b-tooltip>
-                  </div>
-                  <template v-else>
-                    <div class="column">
-                      <b-tooltip label="Guardar edición" type="is-success">
-                        <a class="button is-small is-success" @click="saveEditing"><b-icon icon="content-save"></b-icon></a>
-                      </b-tooltip>
-                    </div>
-                    <div class="column">
-                      <b-tooltip label="Cancel edición" type="is-success">
-                        <a class="button is-small is-danger" @click="cancelEditing"><b-icon icon="close"></b-icon></a>
-                      </b-tooltip>
+            <template v-if="currentUser">
+              <div class="column is-1 has-text-right" v-if="(currentUser.id === thread.creator.id || currentUser.is_staff)">
+                <b-dropdown>
+                  <a slot="trigger">
+                      <p><b-icon icon="dots-vertical"></b-icon></p>
+                  </a>
+                  <template>
+                    <div class="has-text-left">
+                      <b-dropdown-item @click="toggleSubscription()"> <template v-if="thread.subscribed"><b-icon icon="eye-off"></b-icon> Desuscribirse</template><template v-else><b-icon icon="eye"></b-icon> Suscribirse</template></b-dropdown-item>
+                      <b-dropdown-item @click="makeNSFW()"><b-icon icon="eye-settings"></b-icon> Hacer NSFW</b-dropdown-item>
+                      <b-dropdown-item @click="toggleEditing()"><b-icon icon="pencil"></b-icon> Editar</b-dropdown-item>
+                      <template v-if="currentUser.is_staff">
+                        <hr class="dropdown-divider">
+                        <b-dropdown-item @click="openMoveThreadModal()"><b-icon icon="folder-move"></b-icon> Mover Hilo</b-dropdown-item>
+                        <b-dropdown-item @click="toggleSticky()"> <template v-if="thread.is_sticky"><b-icon icon="pin-off"></b-icon> Despinear</template><template v-else><b-icon icon="pin"></b-icon> Pinear</template></b-dropdown-item>
+                        <b-dropdown-item @click="toggleLock()"> <template v-if="thread.is_closed"><b-icon icon="lock-open"></b-icon> Abrir hilo</template><template v-else><b-icon icon="lock"></b-icon> Cerrar hilo</template></b-dropdown-item>
+
+                      </template>
                     </div>
                   </template>
-                </template>
+                </b-dropdown>
+              </div>
+            </template>
+            <div v-if="editing" class="column is-1">
+              <div class="buttons">
+                <span class="button is-success" @click="saveEditing"><b-icon icon="content-save"></b-icon></span>
+                <span class="button is-danger" @click="cancelEditing"><b-icon icon="close"></b-icon></span>
               </div>
             </div>
           </div>
@@ -104,7 +93,10 @@
                 </div>
               </div>
               <article class="tile is-child notification is-white thread-content">
-                <PostCreate ref="postCreate" :thread="thread" @createPost="onCreatePost"></PostCreate>
+                <PostCreate v-if="!thread.is_closed || currentUser.is_staff" ref="postCreate" :thread="thread" @createPost="onCreatePost"></PostCreate>
+                <div v-else>
+                  Este hilo ha sido cerrado y no admite respuestas.
+                </div>
               </article>
         </template>
 
@@ -250,6 +242,12 @@ export default {
       let payload = { is_sticky: !this.thread.is_sticky }
       this.makePetition(Forum.updateThread(this.id, payload)).then((thread) => {
         this.thread.is_sticky = payload.is_sticky
+      })
+    },
+    toggleLock () {
+      let payload = { is_closed: !this.thread.is_closed }
+      this.makePetition(Forum.updateThread(this.id, payload)).then((thread) => {
+        this.thread.is_closed = payload.is_closed
       })
     },
     cancelEditing () {
