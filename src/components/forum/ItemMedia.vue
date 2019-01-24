@@ -6,7 +6,7 @@
     <div class="media-content content is-primary">
       {{ item.name }}
       <br/>
-      <a target="_blank" rel="noopener noreferrer" href="http://your_url_here.html">Ver en MyFigureCollection <b-icon size="is-small" icon="open-in-new"></b-icon></a>
+      <a target="_blank" :href="`https://es.myfigurecollection.net/item/${item.id}`">Ver en MyFigureCollection <b-icon size="is-small" icon="open-in-new"></b-icon></a>
     </div>
     <div class="media-right" v-if="hasDeleteListener()">
       <button class="delete" @click="$emit('delete', item)"></button>
