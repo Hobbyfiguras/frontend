@@ -10,7 +10,7 @@
         <b-autocomplete
             v-model="search"
             :data="results"
-            placeholder="Izumi Sagiri"
+            placeholder="Nombre del articulo o link de MFC"
             field="title"
             :loading="isFetching"
             open-on-focus
@@ -86,6 +86,11 @@ export default {
       this.$emit('onSelectItems', this.selected)
       this.$parent.close()
     },
+    mfcParser (url) {
+      const mfcRegex = /^http(?:s?):\/\/(?:.*\.)?(?:.\.)?myfigurecollection\.net\/item\/([a-zA-Z0-9]{1,13}).*/
+      const match = url.match(mfcRegex)
+      return match && typeof match[1] === 'string' ? match[1] : false
+    },
     deleteItem (item) {
       let index = this.selected.findIndex((i) => {
         return item.id === i.id
@@ -94,10 +99,19 @@ export default {
     },
     fetchData: debounce(function () {
       this.isFetching = true
-      this.makePetition(MFC.searchFigure(this.search)).then((data) => {
-        this.results = data.items.item
-        this.isFetching = false
-      })
+      var match = this.mfcParser(this.search)
+      if (match) {
+        var pk = parseInt(match)
+        this.makePetition(MFC.getItem(pk)).then((data) => {
+          this.results = [data]
+          this.isFetching = false
+        })
+      } else {
+        this.makePetition(MFC.searchFigure(this.search)).then((data) => {
+          this.results = data.items.item
+          this.isFetching = false
+        })
+      }
     }, 500),
     onSelectOption (option) {
       if (!this.isFigureSelected(option)) {

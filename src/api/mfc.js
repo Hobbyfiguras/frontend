@@ -4,6 +4,9 @@ export default {
   async searchItem (search, page = 1) {
     return API.makeGET(`/api/mfc/figures/search?keywords=${search}&page=${page}`)
   },
+  async getItem (pk) {
+    return API.makeGET(`/api/mfc/items/${pk}/`)
+  },
   async getPictures (username = '', page = 1) {
     return API.makeGET(`/api/mfc/pictures/search/?username=${username}&page=${page}`)
   },
