@@ -65,11 +65,9 @@
             </div>
           </div>
         </article>
-        <article class="tile thread-content is-child notification is-white">
+        <article class="tile thread-content is-child notification is-white" v-if="(currentUser && (currentUser.id === thread.creator.id || currentUser.is_staff)) || thread.related_items.length > 0">
           <p class="subtitle">Articulos relacionados</p>
-          <ItemList v-if="currentUser" v-model="thread.related_items" :editable="currentUser.id === thread.creator.id" @updateList="updateRelatedItems">
-          </ItemList>
-          <ItemList v-else v-model="thread.related_items">
+          <ItemList v-model="thread.related_items" :editable="currentUser && (currentUser.id === thread.creator.id || currentUser.is_staff)" @updateList="updateRelatedItems">
           </ItemList>
         </article>
         <transition-group :name="transitonName">
