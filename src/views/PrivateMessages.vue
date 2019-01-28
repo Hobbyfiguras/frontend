@@ -1,7 +1,8 @@
 <template>
+<div>
   <div class="container">
     <p class="title">Mensajes privados</p>
-    <div class="card" v-for="message in messages" :key="message.id">
+    <div class="card" v-for="message in messages.results" :key="message.id">
       <article class="card-content media" >
         <figure class="media-left">
           <p class="image is-64x64">
@@ -15,38 +16,52 @@
               <p>Enviado por {{message.creator.username}} {{message.created | timeDiff("from")}}</p>
             </div>
           </router-link>
-          <nav class="level is-mobile">
-            <div class="level-left">
-              <a class="level-item">
-                <span class="icon is-small"><i class="fas fa-reply"></i></span>
-              </a>
-              <a class="level-item">
-                <span class="icon is-small"><i class="fas fa-retweet"></i></span>
-              </a>
-              <a class="level-item">
-                <span class="icon is-small"><i class="fas fa-heart"></i></span>
-              </a>
-            </div>
-          </nav>
         </div>
       </article>
     </div>
+    <div>
 
   </div>
+  <div class="container">
+    <b-pagination
+    :total="messages.count"
+    @change="changePage"
+    :current="currentPage"
+    :per-page="itemsPerPage"
+    order="is-centered"/>
+    </div>
+  </div>
+</div>
 </template>
 
 <script>
 import { mapState, mapActions } from 'vuex'
-
+import FigureSite from '@/api/figuresite'
 export default {
+  data () {
+    return {
+      currentPage: 1,
+      messages: {},
+      itemsPerPage: 20
+    }
+  },
+  created () {
+    this.changePage(1)
+  },
   computed: {
     ...mapState({
-      messages: state => state.privateMessages.messages,
-      unreadMessageCount: state => state.privateMessages.unreadMessageCount
+      stateMessages: state => state.privateMessages.messages,
+      stateUnreadMessageCount: state => state.privateMessages.unreadMessageCount
     })
   },
   methods: {
-    ...mapActions('notifications', ['setNotificationRead'])
+    ...mapActions('notifications', ['setNotificationRead']),
+    changePage (pageN) {
+      return FigureSite.getPrivateMessages(pageN).then((response) => {
+        this.messages = response
+        this.currentPage = pageN
+      })
+    }
   }
 }
 </script>

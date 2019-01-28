@@ -7,7 +7,6 @@ const state = {
 
 const actions = {
   getMessages ({ commit }, page = 1) {
-    console.log('GETMESS')
     FigureSite.getPrivateMessages(page, false).then((response) => {
       commit('setUnreadMessageCount', response.count)
     })

@@ -54,7 +54,7 @@ export default {
   async getNotifications (page = 1) {
     return API.makeGET(`/api/notifications/?page=${page}`)
   },
-  async getPrivateMessages (page = 1, read = null) {
+  async getPrivateMessages (page = 1, read = '') {
     return API.makeGET(`/api/private_messages/?page=${page}&read=${read}`)
   },
   async updatePrivateMessage (id, payload) {
