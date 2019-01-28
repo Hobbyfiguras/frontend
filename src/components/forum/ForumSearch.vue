@@ -25,7 +25,7 @@ export default {
   },
   methods: {
     onSearch () {
-      this.$router.push({ name: 'search', query: { forum: this.forum.slug }, params: { text: this.text } })
+      this.$router.push({ name: 'search', query: { foro: this.forum.slug }, params: { text: this.text } })
     }
   }
 }
