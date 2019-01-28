@@ -117,6 +117,11 @@ const router = new Router({
       component: () => import(/* webpackChunkName: "forum" */ '@/views/forum/Search')
     },
     {
+      path: '/foro/recientes',
+      name: 'forum_recent',
+      component: () => import(/* webpackChunkName: "forum" */ '@/views/forum/RecentThreads')
+    },
+    {
       path: '/foro/:slug',
       name: 'forum',
       props: true,

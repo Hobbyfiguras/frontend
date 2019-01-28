@@ -18,7 +18,7 @@
                 <p class="is-size-7">por <a>{{post.creator.username}}</a> en {{post.thread.forum.name}}</p>
               </article>
             </router-link>
-
+            <router-link class="has-text-right has-text-primary" :to="{ name: 'forum_recent' }">Mostrar más</router-link>
           </div>
         </div>
       </div>

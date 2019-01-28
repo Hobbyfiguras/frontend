@@ -25,7 +25,7 @@
       </div>
       <div class="is-divider-vertical"></div>
       <div class="column is-2-tablet  has-text-right">
-        <p>{{thread.last_post.creator.username}}</p>
+        <p v-if="thread.last_post">{{thread.last_post.creator.username}}</p>
         {{thread.modified | timeDiff("from")}}
       </div>
     </div>
