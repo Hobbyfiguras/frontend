@@ -7,10 +7,10 @@ const state = {
 
 const actions = {
   getMessages ({ commit }, page = 1) {
-    FigureSite.getPrivateMessages(page, false).then((response) => {
+    FigureSite.getPrivateMessages({ page: page, read: false }).then((response) => {
       commit('setUnreadMessageCount', response.count)
     })
-    return FigureSite.getPrivateMessages(page).then((response) => {
+    return FigureSite.getPrivateMessages({ page: page }).then((response) => {
       commit('setMessages', { count: response.count, page, messages: response.results })
     })
   },
