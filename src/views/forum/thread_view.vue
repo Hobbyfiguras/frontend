@@ -78,8 +78,8 @@
           <div v-for="(post, index) in thread.posts.results" :key="post.id" @deletePost="deletePost" :ref="'#' + post.id">
             <PostItem class="PostItem" allowQuote="true" @onQuote="onUserQuote"  :isOP="index === 0 && currentPage === 1" :post="post" @changePost="changePost" >
             </PostItem>
-            <article class="tile thread-content is-child notification is-white" v-if="currentPage === 1 && index === 0 && (currentUser && (currentUser.id === thread.creator.id || currentUser.is_staff)) || thread.related_items.length > 0">
-              <p class="subtitle">Articulos relacionados</p>
+            <article class="tile thread-content is-child notification is-white" v-if="((currentUser && (currentUser.id === thread.creator.id || currentUser.is_staff)) || thread.related_items.length > 0) && index === 0 && currentPage === 1">
+              <p class="subtitle">Articulos relacionados {{index}}</p>
               <ItemList v-model="thread.related_items" :editable="currentUser && (currentUser.id === thread.creator.id || currentUser.is_staff)" @updateList="updateRelatedItems">
               </ItemList>
             </article>
