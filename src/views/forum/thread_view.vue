@@ -20,6 +20,15 @@
     </li>
   </ul>
 </nav>
+<article class="container">
+  <b-pagination
+  :total="thread.posts.count"
+  :current.sync="currentPage"
+  :per-page="postsPerPage"
+  order="is-centered"
+  @change="changePage">
+</b-pagination>
+</article>
 <div class="tile is-ancestor is-vertical" v-if="thread">
   <div v-if="!thread.nsfw || isNSFWEnabled" class="tile is-vertical">
       <div class="tile is-parent is-vertical">
@@ -65,14 +74,18 @@
             </div>
           </div>
         </article>
-        <article class="tile thread-content is-child notification is-white" v-if="(currentUser && (currentUser.id === thread.creator.id || currentUser.is_staff)) || thread.related_items.length > 0">
-          <p class="subtitle">Articulos relacionados</p>
-          <ItemList v-model="thread.related_items" :editable="currentUser && (currentUser.id === thread.creator.id || currentUser.is_staff)" @updateList="updateRelatedItems">
-          </ItemList>
-        </article>
+
         <transition-group :name="transitonName">
-          <PostItem class="PostItem" allowQuote="true" @onQuote="onUserQuote" v-for="(post, index) in thread.posts.results" :isOP="index === 0 && currentPage === 1" :post="post" @changePost="changePost" :key="post.id" @deletePost="deletePost" :ref="'#' + post.id">
-          </PostItem>
+          <div v-for="(post, index) in thread.posts.results" :key="post.id" @deletePost="deletePost" :ref="'#' + post.id">
+            <PostItem class="PostItem" allowQuote="true" @onQuote="onUserQuote"  :isOP="index === 0 && currentPage === 1" :post="post" @changePost="changePost" >
+            </PostItem>
+            <article class="tile thread-content is-child notification is-white" v-if="currentPage === 1 && index === 0 && (currentUser && (currentUser.id === thread.creator.id || currentUser.is_staff)) || thread.related_items.length > 0">
+              <p class="subtitle">Articulos relacionados</p>
+              <ItemList v-model="thread.related_items" :editable="currentUser && (currentUser.id === thread.creator.id || currentUser.is_staff)" @updateList="updateRelatedItems">
+              </ItemList>
+            </article>
+          </div>
+
         </transition-group>
         <article class="container">
           <b-pagination
@@ -83,7 +96,6 @@
           @change="changePage">
         </b-pagination>
         </article>
-
         <template v-if="currentUser">
               <div class="tile is-child notification is-info new-post is-size-7">
                 <div class="level">
@@ -97,7 +109,6 @@
                 </div>
               </article>
         </template>
-
       </div>
     </div>
 </div>
