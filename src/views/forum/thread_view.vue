@@ -74,7 +74,6 @@
             </div>
           </div>
         </article>
-
         <transition-group :name="transitonName">
           <div v-for="(post, index) in thread.posts.results" :key="post.id" @deletePost="deletePost" :ref="'#' + post.id">
             <PostItem class="PostItem" allowQuote="true" @onQuote="onUserQuote"  :isOP="index === 0 && currentPage === 1" :post="post" @changePost="changePost" >
@@ -85,7 +84,6 @@
               </ItemList>
             </article>
           </div>
-
         </transition-group>
         <article class="container">
           <b-pagination
