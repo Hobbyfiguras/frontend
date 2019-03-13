@@ -20,7 +20,7 @@
         <Markdown :source="message.content"></Markdown>
       </div>
     </div>
-    <div class="container">
+    <div class="container" v-if="message.creator.username !== currentUser.username">
       <MarkdownEditor v-model="newMessage"></MarkdownEditor>
       <div class="is-divider"></div>
       <div class="level">
@@ -37,7 +37,7 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex'
+import { mapActions, mapState } from 'vuex'
 import PetitionsMixin from '@/components/mixins/petitions'
 import FigureSite from '@/api/figuresite'
 import Markdown from '@/components/markdown'
@@ -53,6 +53,9 @@ export default {
     }
   },
   computed: {
+    ...mapState({
+      currentUser: state => state.auth.currentUser
+    })
   },
   mounted () {
     this.fetchData()
