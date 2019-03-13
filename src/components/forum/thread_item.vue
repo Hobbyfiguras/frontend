@@ -10,7 +10,7 @@
         </figure>
       </div>
       <div class="column is-5-tablet is-10-mobile">
-        <p class="subtitle thread-title-text"><b-tag v-if="thread.nsfw" type="is-danger">NSFW</b-tag> <b-icon icon="pin" v-if="thread.is_sticky"></b-icon> {{thread.title}} </p>
+        <p class="subtitle thread-title-text"><b-tag v-if="thread.nsfw" type="is-danger">NSFW</b-tag> <b-icon icon="pin" v-if="thread.is_sticky"></b-icon> {{thread.title.substring(0, Math.min(thread.title.length, 100))}} </p>
         por {{thread.creator.username}}, {{thread.created | timeDiff("from")}}
       </div>
       <div class="is-divider-vertical"></div>
