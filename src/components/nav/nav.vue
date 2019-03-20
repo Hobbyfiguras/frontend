@@ -3,7 +3,7 @@
       <Menu ref="navItem" :noOverlay="true" right>
         <div class="level is-marginless bm-top" v-if="user">
           <div class="level-left bm-level-item">
-            <a href="https://discord.gg/R7X78fy"><b-icon icon="discord"></b-icon></a>
+            <a href="https://discord.gg/FCTrhaQ"><b-icon icon="discord"></b-icon></a>
             <a href="https://twitter.com/Hobbyfiguras"><b-icon icon="twitter"></b-icon></a>
           </div>
           <Notifications v-if="user">
@@ -20,7 +20,7 @@
         <template v-else>
         <div class="level is-marginless bm-top">
           <div class="level-left bm-level-item">
-            <a href="https://discord.gg/R7X78fy"><b-icon icon="discord"></b-icon></a>
+            <a href="https://discord.gg/FCTrhaQ"><b-icon icon="discord"></b-icon></a>
             <a href="https://twitter.com/Hobbyfiguras"><b-icon icon="twitter"></b-icon></a>
           </div>
           <div class="level-right bm-level-item" slot="trigger">
