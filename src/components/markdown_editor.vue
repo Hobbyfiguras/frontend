@@ -1,577 +1,343 @@
 <template>
-    <div class="vue-bulma-text-editor" v-cloak>
-        <div class="editor-nav-bar">
-            <div v-for="(group, i1) in toolbar" :key="i1" class="group">
-                <div class="field has-addons">
-                    <p v-for="(action, i2) in group" :key="i2" class="control">
-                        <a class="button" @click="doAction(actions[action])" :title="actions[action].name">
-                            <span class="icon is-small">
-                                <b-icon :icon="actions[action].icon"></b-icon>
-                            </span>
-                        </a>
-                    </p>
-                </div>
-            </div>
+  <div class="editor">
+    
+    <editor-menu-bubble :editor="editor" :keep-in-bounds="true" v-slot="{ commands, isActive, menu, getMarkAttrs }">
+      <div
+        class="menububble buttons"
+        :class="{ 'is-active': menu.isActive }"
+        :style="`left: ${menu.left}px; bottom: ${menu.bottom}px;`"
+      >
+      <form class="menububble__form" v-if="linkMenuIsActive" @submit.prevent="setLinkUrl(commands.link, linkUrl)">
+        <b-input v-model="linkUrl" placeholder="https://" ref="linkInput" @keydown.esc="hideLinkMenu"/>
+        <button class="menububble__button" @click="setLinkUrl(commands.link, null)" type="button">
+        </button>
+      </form>
+      <template v-else>
+        <b-button class="bubble-button" @click="showLinkMenu(getMarkAttrs('link'))" :outlined="isActive.link()" type="is-primary" icon-left="link">
+        </b-button>
+        <b-button
+          class="bubble-button"
+          @click="commands.bold"
+          icon-left="format-bold"
+          type="is-primary"
+          :outlined="isActive.bold()"
+        >
+        </b-button>
+        
+        <b-button
+          class="bubble-button"
+          @click="commands.italic"
+          icon-left="format-italic"
+          type="is-primary"
+          :outlined="isActive.italic()"
+          
+        >
+        </b-button>
 
-        </div>
-        <hr>
-        <div class="columns is-gapless">
-            <div class="column is-half editor-field">
-                <textarea class="scrollable" spellcheck="true" :style="'height:' + height + 'px'" ref="textarea" v-model="content_markdown" rows="7"></textarea>
-                <span v-if="showMarkdownCounter" :class="counterClass('md')">
-                    {{ content_markdown.length }} {{ markdownLimit > 0 ? ' / ' + markdownLimit : ''}}
-                </span>
-            </div>
-            <div class="column is-half editor-field editor-preview">
-              <div class="content">
-                <Markdown :source="content_markdown"></Markdown>
-              </div>
-            </div>
-        </div>
 
-        <input type="hidden" :value="content_markdown" :name="field + '_markdown'">
+        <b-button
+          class="bubble-button"
+          @click="commands.code_block"
+          icon-left="code-braces"
+          type="is-primary"
+          :outlined="isActive.code_block()"
+          
+        >
+        </b-button>
+      </template>
+      </div>
+    </editor-menu-bubble>
+    <editor-menu-bar :editor="editor" v-slot="{ commands, isActive }">
+      <div class="buttons">
+
+        <b-button
+          type="is-primary"
+          @click="commands.bold"
+          icon-right="format-bold"
+          :outlined="isActive.bold()"
+        >
+        </b-button>
+        <b-button
+          type="is-primary"
+          @click="commands.italic"
+          icon-right="format-italic"
+          :outlined="isActive.italic()"
+        >
+        </b-button>
+
+        <b-button
+          type="is-primary"
+          @click="commands.strike"
+          icon-right="format-strikethrough"
+          :outlined="isActive.strike()"
+        >
+        </b-button>
+
+
+        <b-button
+          type="is-primary"
+          @click="commands.underline"
+          icon-right="format-underline"
+          :outlined="isActive.underline()"
+        >
+        </b-button>
+
+        <b-button
+          type="is-primary"
+          @click="commands.code_block"
+          icon-right="code-braces"
+          :outlined="isActive.code_block()"
+        >
+        </b-button>
+
+        <b-button
+          type="is-primary"
+          @click="commands.heading({ level: 1 })"
+          icon-right="format-header-1"
+          :outlined="isActive.heading({ level: 1 })"
+        >
+        </b-button>
+
+        <b-button
+          type="is-primary"
+          @click="commands.heading({ level: 2 })"
+          icon-right="format-header-2"
+          :outlined="isActive.heading({ level: 2 })"
+        >
+        </b-button>
+
+        <b-button
+          type="is-primary"
+          @click="commands.heading({ level: 3 })"
+          icon-right="format-header-3"
+          :outlined="isActive.heading({ level: 3 })"
+        >
+        </b-button>
+
+        <b-button
+          type="is-primary"
+          @click="commands.bullet_list"
+          icon-right="format-list-bulleted"
+          :outlined="isActive.bullet_list()"
+        >
+        </b-button>
+        <b-button
+          type="is-primary"
+          @click="commands.ordered_list"
+          icon-right="format-list-numbers"
+          :outlined="isActive.ordered_list()"
+        >
+        </b-button>
+        <b-button
+          type="is-primary"
+          @click="commands.center"
+          icon-right="format-align-center"
+          :outlined="isActive.center()"
+        >
+        </b-button>
+        <b-button
+          type="is-primary"
+          @click="commands.spoiler"
+          icon-right="eye"
+          :outlined="isActive.spoiler()"
+        >
+        </b-button>
+        <b-button @click="test()">test</b-button>
+      </div>
+    </editor-menu-bar>
+    <div class="editor-container">
+      <div class="emoji-invoker">
+      <v-popover
+          placement="bottom-center"
+          offset="16"
+          :disabled="!showEmojiPicker">
+          <b-button type="is-text" @click="showEmojiPicker = true" size="is-medium" icon-left="emoticon-outline"></b-button>
+
+          <template slot="popover">
+            <div class=""><div class="emoji-picker"><EmojiPicker @select="selectEmoji"></EmojiPicker></div></div>
+            
+          </template>
+        </v-popover>
+      </div>
+
+      <editor-content class="content" :editor="editor" />
     </div>
+    <div class="buttons">
+      <b-button
+        icon-left="export"
+        @click="showJSON">Exportar</b-button>
+      <b-button
+        icon-left="export"
+        @click="showDOM">Exportar DOM</b-button>
+    </div>
+  </div>
 </template>
 
 <script>
-import Markdown from '@/components/markdown'
-
+import { createEditor } from '@/components/Editor'
+import { EditorContent, EditorMenuBar, EditorMenuBubble } from 'tiptap'
+import EmojiPicker from '@/components/EmojiPicker'
+import twemoji from 'twemoji'
 export default {
-  components: { Markdown },
-  props: {
-    value: {
-      type: String,
-      default: ''
-    },
-    height: {
-      type: String,
-      default: '500'
-    },
-    field: {
-      type: String,
-      default: 'content'
-    },
-    markdownLimit: {
-      type: Number,
-      default: 0
-    },
-    showMarkdownCounter: {
-      type: Boolean,
-      default: true
-    },
-    htmlLimit: {
-      type: Number,
-      default: 0
-    },
-    showHtmlCounter: {
-      type: Boolean,
-      default: true
-    },
-    toolbar: {
-      type: Array,
-      default: () => [
-        ['bold', 'italic', 'underline', 'strikethrough', 'mark'],
-        ['header'],
-        ['center'],
-        ['ol', 'ul'],
-        ['superscript', 'subscript'],
-        ['image', 'link', 'video_youtube', 'mfc'],
-        ['code', 'spoiler', 'hr', 'table', 'quote']
-      ]
-    }
+  components: {
+    EditorContent,
+    EditorMenuBar,
+    EditorMenuBubble,
+    EmojiPicker
   },
-  data () {
-    return {
-      content_markdown: '',
-      actions: {
-        undo: {
-          icon: 'undo',
-          name: 'Undo',
-          method: 'undo'
-        },
-        redo: {
-          icon: 'redo',
-          name: 'Redo',
-          method: 'redo'
-        },
-        bold: {
-          content: {
-            prefix: '**',
-            dummy: 'Negrita',
-            suffix: '**'
-          },
-          icon: 'format-bold',
-          name: 'Negrita',
-          newLineRequired: false,
-          selectable: true
-        },
-        italic: {
-          content: {
-            prefix: '*',
-            dummy: 'Cursiva',
-            suffix: '*'
-          },
-          icon: 'format-italic',
-          name: 'Cursiva',
-          newLineRequired: false,
-          selectable: true
-        },
-        center: {
-          content: {
-            prefix: '->',
-            dummy: 'Centrar',
-            suffix: '<-'
-          },
-          icon: 'format-align-center',
-          name: 'Centrar',
-          newLineRequired: false,
-          selectable: true
-        },
-        underline: {
-          content: {
-            prefix: '++',
-            dummy: 'Subrayado',
-            suffix: '++'
-          },
-          icon: 'format-underline',
-          name: 'Subrayado',
-          newLineRequired: false,
-          selectable: true
-        },
-        strikethrough: {
-          content: {
-            prefix: '~~',
-            dummy: 'Tachar',
-            suffix: '~~'
-          },
-          icon: 'format-strikethrough-variant',
-          name: 'Tachar',
-          newLineRequired: false,
-          selectable: true
-        },
-        mark: {
-          content: {
-            prefix: '==',
-            dummy: 'Resaltado',
-            suffix: '=='
-          },
-          icon: 'marker',
-          name: 'Resaltado',
-          newLineRequired: false,
-          selectable: true
-        },
-        header: {
-          content: {
-            prefix: '### ',
-            dummy: 'Cabecera'
-          },
-          icon: 'format-header-pound',
-          name: 'Cabecera',
-          newLineRequired: true,
-          selectable: true
-        },
-        ol: {
-          content: {
-            prefix: '1. ',
-            dummy: 'Lista ordenada'
-          },
-          icon: 'format-list-numbers',
-          name: 'Lista ordenada',
-          newLineRequired: true,
-          selectable: true
-        },
-        ul: {
-          content: {
-            prefix: '- ',
-            dummy: 'Lista desordenada'
-          },
-          icon: 'format-list-bulleted',
-          name: 'Lista desordenada',
-          newLineRequired: true,
-          selectable: true
-        },
-        superscript: {
-          content: {
-            prefix: '^',
-            dummy: 'Sobreíndice',
-            suffix: '^'
-          },
-          icon: 'format-superscript',
-          name: 'Sobreíndice',
-          newLineRequired: false,
-          selectable: true
-        },
-        subscript: {
-          content: {
-            prefix: '~',
-            dummy: 'Subíndice',
-            suffix: '~'
-          },
-          icon: 'format-subscript',
-          name: 'Subíndice',
-          newLineRequired: false,
-          selectable: true
-        },
-        image: {
-          content: {
-            prefix: '![](',
-            suffix: ')'
-          },
-          icon: 'image',
-          inputText: 'Escribe el link a una imagen',
-          exampleInput: 'https://i.imgur.com/annBL.jpg',
-          name: 'Imagen',
-          newLineRequired: false,
-          selectable: true,
-          usesPrompt: true
-        },
-        link: {
-          content: {
-            prefix: '[Texto del link](',
-            suffix: ')'
-          },
-          exampleInput: 'http://google.com',
-          inputText: 'Introduce un enlace',
-          icon: 'link',
-          name: 'Enlace',
-          newLineRequired: false,
-          selectable: true,
-          usesPrompt: true
-        },
-        video_youtube: {
-          content: {
-            prefix: '@[youtube](',
-            suffix: ')'
-          },
-          icon: 'youtube',
-          name: 'Video de YouTube',
-          inputText: 'Introduce un link de YouTube',
-          usesPrompt: true,
-          exampleInput: 'https://www.youtube.com/watch?v=cP3B8cOYSdI',
-          newLineRequired: false,
-          selectable: true
-        },
-        mfc: {
-          content: {
-            prefix: '@[mfc](',
-            suffix: ')'
-          },
-          icon: 'mushroom',
-          name: 'Figura de MyFigureCollection',
-          inputText: 'Introduce un link a una figura de MFC',
-          usesPrompt: true,
-          exampleInput: 'https://myfigurecollection.net/item/595937',
-          newLineRequired: false,
-          selectable: true
-        },
-        video_vimeo: {
-          content: {
-            prefix: '@[vimeo](',
-            dummy: '54800225',
-            suffix: ')'
-          },
-          icon: 'fab fa-vimeo-v',
-          name: 'Vimeo video',
-          newLineRequired: false,
-          selectable: true
-        },
-        code: {
-          content: {
-            prefix: '```\n',
-            dummy: 'Codigo',
-            suffix: '\n```'
-          },
-          icon: 'code-braces',
-          name: 'Codigo',
-          newLineRequired: true,
-          selectable: true
-        },
-        spoiler: {
-          content: {
-            prefix: '::: spoiler\n',
-            dummy: 'Spoiler',
-            suffix: '\n:::'
-          },
-          icon: 'eye',
-          name: 'Spoiler',
-          newLineRequired: true,
-          selectable: true
-        },
-        hr: {
-          content: {
-            dummy: '---'
-          },
-          icon: 'minus',
-          name: 'Línea horizontal',
-          newLineRequired: true,
-          selectable: false
-        },
-        table: {
-          content: {
-            prefix: '\n',
-            dummy:
-                        '| Tables        | Are           | Cool  |\n' +
-                        '| ------------- |:-------------:| -----:|\n' +
-                        '| col 2 is      | centered      |   $12 |\n' +
-                        '| col 3 is      | right-aligned | $1600 |\n' +
-                        '| zebra stripes | are neat      |    $1 |',
-            suffix: '\n'
-          },
-          icon: 'table',
-          name: 'Tabla',
-          newLineRequired: true,
-          selectable: false
-        },
-        quote: {
-          content: {
-            prefix: '> ',
-            dummy: 'Cita'
-          },
-          icon: 'format-quote-close',
-          name: 'Cita',
-          newLineRequired: true,
-          selectable: true
-        }
-      }
-    }
-  },
-  watch: {
-    content_markdown (value) {
-      this.$emit('html', this.content_html)
-      this.$emit('input', value)
-      this.updateRows()
-    }
-  },
-  mounted () {
-    this.content_markdown = this.value
-  },
+  props: ["value"],
   methods: {
-    counterClass (type = 'md') {
-      let classes = ['control-counter', 'is-size-7']
-
-      if (type === 'md' && this.markdownLimit > 0 && this.markdownLimit < this.content_markdown.length) {
-        classes.push('is-danger')
-      }
-
-      return classes
+    selectEmoji(emoji) {
+      const node = this.editor.view.state.schema.nodes.emoji.create({
+        'data-emoji': emoji.native
+      })
+      const pos = this.editor.view.state.selection.from
+      const transaction = this.editor.view.state.tr.insert(pos, node)
+      this.editor.view.dispatch(transaction)
     },
-    updateRows () {
-      // autosize(this.$refs.textarea);
+    showJSON() {
+      this.$dialog.alert({
+        title: 'Codigo del post',
+        message: `<textarea class="textarea" readonly>${JSON.stringify(this.editor.getJSON(), null, 2)}</textarea>`,
+        confirmText: 'Aceptar'
+      })
     },
-    doMethod (method) {
-      if (method === 'undo') {
-        this.$refs.textarea.focus()
-        document.execCommand('undo', false)
-      } else if (method === 'redo') {
-        this.$refs.textarea.focus()
-        document.execCommand('redo', false)
-      }
+    test () {
+      this.$dialog.prompt({
+                    message: `What's your name?`,
+                    inputAttrs: {
+                        placeholder: 'e.g. Walter',
+                    },
+                    onConfirm: (value) => this.editor.setContent(JSON.parse(value))
+                })
     },
-    getCurrentSelection () {
-      return this.$refs.textarea.value.substring(
-        this.$refs.textarea.selectionStart,
-        this.$refs.textarea.selectionEnd
-      )
+    insertQuote (id, username, content) {
+      const pos = this.editor.view.state.selection.anchor
+      const { schema } = this.editor.view.state
+      const node = schema.nodes.quote.create({
+        'data-username': username,
+        'data-id': id,
+        'data-content': content
+      })
+      const transaction = this.editor.view.state.tr.insert(pos, node)
+      this.editor.view.dispatch(transaction)
     },
-    deleteSelection () {
-      if (this.getCurrentSelection().length > 0) {
-        this.$refs.textarea.focus()
-        this.content_markdown = this.content_markdown.substring(0, this.$refs.textarea.selectionStart) + this.content_markdown.substring(this.$refs.textarea.selectionEnd, this.content_markdown.length)
-      }
+    showDOM() {
+      this.$dialog.alert({
+        title: 'Codigo del post',
+        message: `<textarea class="textarea" readonly>${this.editor.getHTML()}</textarea>`,
+        confirmText: 'Aceptar'
+      })
     },
-    getLines () {
-      return this.$refs.textarea.value.split(/(?=\r*\n)/)
+      showLinkMenu(attrs) {
+      this.linkUrl = attrs.href
+      this.linkMenuIsActive = true
+      this.$nextTick(() => {
+        this.$refs.linkInput.focus()
+      })
     },
-    getCurrentLineIndex () {
-      let lines = this.getLines()
-      let counter = 0
-      for (let i = 0; i < lines.length; i++) {
-        counter += lines[i].length
-        if (counter >= this.$refs.textarea.selectionEnd) {
-          return i
+    hideLinkMenu() {
+      this.linkUrl = null
+      this.linkMenuIsActive = false
+    },
+    setLinkUrl(command, url) {
+      command({ href: url })
+      this.hideLinkMenu()
+      this.editor.focus()
+    },
+  },
+  data() {
+    return {
+      linkMenuIsActive: false,
+      linkUrl: null,
+      showEmojiPicker: false,
+      editor: createEditor({
+        onUpdate: ({getJSON, getHTML}) => {
+          this.$emit('input', JSON.stringify(getJSON()))
         }
-      }
-    },
-    isLineEmpty (lineIndex) {
-      let string = this.getLines()[lineIndex]
-
-      if (typeof string !== 'string') {
-        return null
-      }
-
-      if (string === '\n' || string === '\r' || string === '\r\n' || string.length === 0) {
-        return true
-      }
-
-      return false
-    },
-    setCaret (position) {
-      this.$refs.textarea.selectionStart = position
-      this.$refs.textarea.selectionEnd = position
-    },
-    getLinePosition (lineIndex) {
-      let lines = this.getLines()
-      let characters = 0
-
-      for (let i = 0; i < lines.length && i < lineIndex; i++) {
-        characters += lines[i].length
-      }
-
-      return characters
-    },
-    insertText (text) {
-      console.log('inserting...', text)
-      this.$refs.textarea.focus()
-      this.deleteSelection()
-      this.content_markdown = this.content_markdown.substring(0, this.$refs.textarea.selectionStart) + text + this.content_markdown.substring(this.$refs.textarea.selectionStart, this.content_markdown.length)
-    },
-    selectText (start, end) {
-      this.$refs.textarea.selectionStart = start
-      this.$refs.textarea.selectionEnd = end
-    },
-    // select text backwards from caret (length left from caret to ignore, length left to select)
-    selectTextBack (aftLength, selectLength) {
-      this.selectText(this.$refs.textarea.selectionEnd - aftLength - selectLength,
-        this.$refs.textarea.selectionEnd - aftLength)
-    },
-    doAction (action) {
-      // if undo, redo
-      if (action.method) {
-        this.doMethod(action.method)
-        return
-      }
-
-      let selectedText = this.getCurrentSelection()
-      let desiredContent = action.content.dummy
-
-      if (action.newLineRequired === true) {
-        if (action.selectable === true) {
-          this.deleteSelection()
-        }
-
-        let currentLine = this.getCurrentLineIndex()
-
-        if (this.isLineEmpty(currentLine) === false) {
-          this.setCaret(this.getLinePosition(currentLine + 1))
-          this.insertText('\n')
-        }
-      }
-
-      if (action.selectable && selectedText.length > 0) {
-        desiredContent = selectedText
-        this.insertText(
-          (action.content.prefix || '') +
-                desiredContent +
-                (action.content.suffix || '')
-        )
-        this.selectTextBack(action.content.suffix ? action.content.suffix.length : 0, desiredContent.length)
-      } else if (action.usesPrompt) {
-        this.$dialog.prompt({
-          message: action.inputText,
-          confirmText: 'Insertar',
-          cancelText: 'Cancelar',
-          inputAttrs: {
-            placeholder: action.exampleInput
-          },
-          onConfirm: (value) => {
-            this.insertText(
-              (action.content.prefix || '') +
-                    value +
-                    (action.content.suffix || '')
-            )
-            this.selectTextBack(action.content.suffix ? action.content.suffix.length : 0, value.length)
-          }
-        })
-      } else {
-        this.insertText(
-          (action.content.prefix || '') +
-                desiredContent +
-                (action.content.suffix || '')
-        )
-      }
+      })
     }
+  },
+  beforeDestroy() {
+    this.editor.destroy()
   }
 }
 </script>
 <style lang="scss">
-    .vue-bulma-text-editor {
-        .editor-nav-bar {
-          a {
-            color: currentColor;
-          }
-            padding: 0.5rem 0.5rem 0;
-            width: 100%;
-            display: flex;
-            flex-wrap: wrap;
-            a {
-              color: currentColor !important;
-            }
-            .group {
-                margin-bottom: 0.5rem;
-                &:not(:last-child) {
-                    margin-right: 0.5rem;
-                }
-            }
-        }
-        .editor-preview {
-            @media screen and (min-width: 768px) {
-                border-left: 1px solid rgba(10, 10, 10, 0.1);
-            }
-            overflow-wrap: break-word;
-            .content {
-                margin-left: 0.5rem;
-                /*word-break: break-word;*/
-            }
-        }
-        .editor-field {
-            textarea {
-                /*height: 100%;*/
-                display: block;
-                width: 100%;
-                padding: 0.5rem;
-                font-size:1rem;
-                resize: none;
-                /*overflow: hidden !important;*/
-                border: none;
-                outline: none;
-                background-color: #F1F1F1;
-            }
-        }
-        .editor-field, .editor-preview {
-            position: relative;
-            .scrollable {
-                overflow-y: scroll;
-                overflow-x: auto;
+$color-black: #000;
+$color-white: #fff;
+$color-grey: #333;
+.menububble {
+  position: absolute;
+  display: flex;
+  z-index: 20;
+  background: #fff;
+  box-shadow: 0 2px 3px rgba(10, 10, 10, 0.1), 0 0 0 1px rgba(10, 10, 10, 0.1);
+  border-radius: 10px;
+  padding: 0.5rem;
+  margin-bottom: 0rem;
+  transform: translateX(-50%);
+  visibility: hidden;
+  opacity: 0;
+  transition: opacity 0.2s, visibility 0.2s;
 
-                &::-webkit-scrollbar {
-                    width: 0.5em;
-                }
+  &.is-active {
+    opacity: 1;
+    visibility: visible;
+  }
 
-                &::-webkit-scrollbar-track {
-                    -webkit-box-shadow: inset 0 0 0 0 rgba(10, 10, 10, 0.1);
-                }
+  &__button {
+    display: inline-flex;
+    background: transparent;
+    border: 0;
+    color: $color-white;
+    padding: 0.2rem 0.5rem;
+    margin-right: 0.2rem;
+    border-radius: 3px;
+    cursor: pointer;
 
-                &::-webkit-scrollbar-thumb {
-                    background-color: hsl(204, 86%, 53%);
-                    outline: 1px solid hsl(204, 86%, 53%);
-                }
-            }
-        }
-        .control-counter {
-            color: white;
-            background-color: hsl(204, 86%, 53%);
-            height: 18px;
-            pointer-events: none;
-            position: absolute;
-            min-width: 18px;
-            padding: 0 1.25em 0 0.75em;
-            z-index: 4;
-            bottom: 0;
-            right: 0;
-            text-align: center;
-            &.is-danger {
-                background-color: hsl(348, 100%, 61%);
-            }
-        }
+    &:last-child {
+      margin-right: 0;
     }
+
+    &:hover {
+      background-color: rgba($color-white, 0.1);
+    }
+
+    &.is-active {
+      background-color: rgba($color-white, 0.2);
+    }
+  }
+
+  &__form {
+    display: flex;
+    align-items: center;
+  }
+
+  &__input {
+    font: inherit;
+    border: none;
+    background: transparent;
+    color: $color-white;
+  }
+}
+.bubble-button {
+  margin-bottom: 0rem !important;
+}
+[contenteditable]:focus {
+    outline: 0px solid transparent;
+}
+
+.editor-container {
+  position: relative;
+}
+
+.emoji-invoker {
+  position: absolute;
+  right: 0;
+  top: 0;
+  z-index: 10000;
+}
+
+
 </style>

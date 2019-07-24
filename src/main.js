@@ -20,6 +20,11 @@ import VueAnalytics from 'vue-analytics'
 import GlobalMixin from '@/components/mixins/global'
 import VueElementQuery from 'vue-element-query'
 
+import VTooltip from 'v-tooltip'
+
+// v-tooltip
+Vue.use(VTooltip)
+
 // buefy
 Vue.use(Buefy)
 

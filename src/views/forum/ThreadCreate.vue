@@ -38,7 +38,7 @@
           </div>
           <div class="level-right">
             <div class="level-item">
-              <button class="button is-primary" :disabled="post.content.trim() == '' || post.title.trim() == ''" @click="createThread">Crear</button>
+              <button class="button is-primary" :disabled="post.title.trim() == ''" @click="createThread">Crear</button>
             </div>
           </div>
         </div>
@@ -84,6 +84,7 @@ export default {
     },
     createThread () {
       this.post.related_items = []
+      this.post.content = JSON.stringify(this.postContent)
       for (let item of this.relatedItems) {
         this.post.related_items.push(item.id)
       }

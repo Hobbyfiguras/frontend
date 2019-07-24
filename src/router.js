@@ -15,7 +15,7 @@ import markdownGuide from '@/views/markdown_guide'
 import PasswordResetVerify from '@/views/PasswordResetVerify'
 import PasswordReset from '@/views/PasswordReset'
 import Notifications from '@/views/Notifications'
-
+import Convert from '@/views/Converter'
 import store from '@/store'
 
 Vue.use(Router)
@@ -77,6 +77,11 @@ const router = new Router({
       name: 'PrivateMessages',
       component: () => import(/* webpackChunkName: "forum" */ '@/views/PrivateMessages'),
       props: true
+    },
+    {
+      path: '/convert',
+      name: 'Convert',
+      component: Convert
     },
     {
       path: '/mensajes/:id',

@@ -111,7 +111,7 @@
 
 .notification a:not(.button) {
   color: currentColor;
-  text-decoration: none;
+  text-decoration: none !important;
 }
 
 .is-vertical-center {
@@ -160,13 +160,10 @@ hr {
 }
 
 .spoiler {
-  & > p, & > h1, & > h2 {
-    color: black;
-    background-color: black;
-    &:hover, &:active {
-      color: inherit;
-      background-color: transparent;
-    }
+  color: black;
+  background-color: black;
+  &:hover, &:active {
+    color: white;
   }
 }
 
@@ -178,4 +175,13 @@ hr {
 
 .modal-content {
   overflow: visible;
+}
+
+.rendered-content > .ProseMirror > p > br {
+  display: block;
+  margin: 10px 0;
+}
+
+.ProseMirror {
+  margin-bottom: 1rem;
 }

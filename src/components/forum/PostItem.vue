@@ -98,7 +98,7 @@
             <div class="columns">
               <div class="column is-12 content">
               <template v-if="!editing">
-                <Markdown :source="post.content" ref="content"></Markdown>
+                <TiptapContent :value="post.content" ref="content"></TiptapContent>
                 <div v-for="ban in post.bans" :key="ban.id" class="card notification is-danger">(Este usuario fue baneado por este post ("{{ban.ban_reason}}") - {{ban.banner.username}})</div>
                 <div v-if="post.modified && post.modified_by" class="is-size-7"><b-icon icon="pencil" size="is-small"></b-icon> Editado por {{post.modified_by.username}} {{post.modified | timeDiff("from")}}</div>
               </template>
@@ -109,7 +109,7 @@
                     <div class="level-left"></div>
                     <div class="level-right">
                       <div class="level-item">
-                        <button class="button is-primary" ref="saveEditButton" :disabled="post.content.trim() == ''" @click="saveEditing">Guardar</button>
+                        <button class="button is-primary" ref="saveEditButton" @click="saveEditing">Guardar</button>
                       </div>
                       <div class="level-item">
                         <button class="button is-danger" @click="cancelEditing">Cancelar</button>
@@ -174,12 +174,12 @@ import MarkdownEditor from '@/components/markdown_editor'
 import Forum from '@/api/forum'
 import petitionsMixin from '@/components/mixins/petitions'
 import UserSocial from '@/components/profile/user_social'
-import Markdown from '@/components/markdown'
+import TiptapContent from '@/components/TiptapContent'
 
 export default {
   name: 'PostItem',
   mixins: [petitionsMixin],
-  components: { MarkdownEditor, UserSocial, Markdown },
+  components: { MarkdownEditor, UserSocial, TiptapContent },
   props: ['post', 'isOP', 'allowQuote'],
   data () {
     return {
