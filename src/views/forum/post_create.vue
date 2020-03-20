@@ -43,11 +43,14 @@ export default {
         this.post.created = Date.now()
         this.post.id = post.id
         this.$emit('createPost', this.post)
-        this.post.content = ''
+        this.post = {
+          content: ''
+        }
       }), 'Mensaje publicado correctamente.', 'Error creando post', 'Creando post')
     },
-    insertQuote (id, username, content) {
-      this.$refs.editor.insertQuote(id, username, content)
+    addText (text) {
+      this.$refs.editor.insertText(text + '\n')
+      console.log(text + '\n' + this.post.content)
     }
   }
 }
