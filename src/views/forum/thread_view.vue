@@ -20,7 +20,7 @@
     </li>
   </ul>
 </nav>
-<article class="container" v-if="thread">
+<article class="container">
   <b-pagination
   :total="thread.posts.count"
   :current.sync="currentPage"
@@ -211,7 +211,12 @@ export default {
       })
     },
     onUserQuote (post) {
-      this.$refs.postCreate.insertQuote(post.id, post.creator.username, post.content)
+      // highest quote level
+      var HQL = Math.max(this.findHighestQuoteLevel(post.content), 2)
+      HQL++
+      var quoteStart = ':'.repeat(HQL)
+      let text = `${quoteStart} cita ${post.creator.username} ${post.id}\n${post.content}\n${quoteStart}`
+      this.$refs.postCreate.addText(text)
     },
     makeNSFW () {
       this.$dialog.confirm({
