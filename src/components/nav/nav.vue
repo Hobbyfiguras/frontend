@@ -22,6 +22,7 @@
           <div class="level-left bm-level-item">
             <a href="https://discord.gg/FCTrhaQ"><b-icon icon="discord"></b-icon></a>
             <a href="https://twitter.com/Hobbyfiguras"><b-icon icon="twitter"></b-icon></a>
+            <a href="https://www.instagram.com/Hobbyfiguras/"><b-icon icon="instagram"></b-icon></a>
           </div>
           <div class="level-right bm-level-item" slot="trigger">
             <router-link :to="{name: 'login', query: {from: $route.path}}">
