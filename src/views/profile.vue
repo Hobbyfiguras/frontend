@@ -191,7 +191,7 @@ export default {
   },
   methods: {
     openMessageModal () {
-      this.$modal.open({
+      this.$buefy.modal.open({
         parent: this,
         component: SendMessageModal,
         props: { receiver: this.profileUser.username },

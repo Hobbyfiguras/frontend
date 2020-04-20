@@ -212,6 +212,34 @@ const router = new Router({
       ]
     },
     {
+      path: '/compraventa',
+      component: () => import(/* webpackChunkName: "classifieds" */ '@/views/classifieds/classifieds_base'),
+      children: [
+        {
+          path: '',
+          name: 'classifieds_index',
+          component: () => import(/* webpackChunkName: "classifieds" */ '@/views/classifieds/classifieds_index')
+        },
+        {
+          path: 'crear',
+          name: 'classifieds_create',
+          component: () => import(/* webpackChunkName: "classifieds" */ '@/views/classifieds/classifieds_create')
+        },
+        {
+          path: 'buscar/:text',
+          props: true,
+          name: 'classifieds_search',
+          component: () => import(/* webpackChunkName: "classifieds" */ '@/views/classifieds/classifieds_search')
+        },
+        {
+          path: 'anuncio/:slug',
+          name: 'classifieds_view',
+          props: true,
+          component: () => import(/* webpackChunkName: "classifieds" */ '@/views/classifieds/classifieds_view')
+        }
+      ]
+    },
+    {
       path: '/404',
       name: '404',
       component: notfound

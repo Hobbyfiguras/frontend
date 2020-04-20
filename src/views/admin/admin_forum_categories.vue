@@ -42,7 +42,7 @@ export default {
       this.categories.splice(this.categories.findIndex((foundCat) => foundCat.id === category.id), 1)
     },
     createCategory () {
-      this.$modal.open({
+      this.$buefy.modal.open({
         parent: this,
         component: CreateForumCategory,
         hasModalCard: true,

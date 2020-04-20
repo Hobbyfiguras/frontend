@@ -21,7 +21,7 @@ export default {
   components: { ItemMedia },
   methods: {
     openRelatedArticleSelector () {
-      this.$modal.open({
+      this.$buefy.modal.open({
         parent: this,
         component: ItemSearchModal,
         width: 960,

@@ -66,6 +66,9 @@ export default {
   async sendMessage (username, subject, content) {
     return API.makePOST(`/api/users/${username}/send_message/`, { subject, content })
   },
+  async sendMessageWithAD (username, subject, content, relatedAD) {
+    return API.makePOST(`/api/users/${username}/send_message/`, { subject, content, related_ad: relatedAD })
+  },
   async getUnreadNotifications (page = 1) {
     return API.makeGET(`/api/notifications/unread/?page=${page}`)
   },

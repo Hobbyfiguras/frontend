@@ -46,6 +46,7 @@
         </router-link>
         <router-link class="mobile-navbar-item is-vertical-center" :to="{'name': 'index'}"><b-icon icon="home"></b-icon> Inicio</router-link>
         <router-link class="mobile-navbar-item is-vertical-center" :to="{'name': 'ForumIndex'}"><b-icon icon="forum"></b-icon> Foro</router-link>
+        <router-link class="mobile-navbar-item is-vertical-center" :to="{'name': 'classifieds_index'}"><b-icon icon="handshake"></b-icon> Compra-venta</router-link>
         <router-link class="mobile-navbar-item is-vertical-center" :to="{'name': 'search'}"><b-icon icon="magnify"></b-icon> Buscar</router-link>
         <a class="mobile-navbar-item is-vertical-center" v-if="user" @click="logOff()"><b-icon icon="logout"></b-icon> Cerrar sesión</a>
       </Menu>
@@ -63,6 +64,7 @@
             <div class="navbar-start">
               <router-link :to="{name: 'index'}" class="navbar-item" exact-active-class="is-active"><b-icon icon="home"></b-icon></router-link>
               <router-link :to="{name: 'ForumIndex'}" class="navbar-item" active-class="is-active"><b-icon icon="forum"></b-icon></router-link>
+              <router-link :to="{name: 'classifieds_index'}" class="navbar-item" active-class="is-active"><b-icon icon="handshake"></b-icon></router-link>
               <router-link :to="{name: 'search'}" class="navbar-item" active-class="is-active"  slot="trigger"><b-icon icon="magnify"></b-icon></router-link>
             </div>
             <div class="navbar-end">

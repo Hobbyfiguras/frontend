@@ -32,17 +32,40 @@ import { mapState } from 'vuex'
 export default {
   components: { MarkdownEditor },
   mixins: [petitionsMixin],
-  props: ['receiver'],
+  props: {
+    receiver: {
+      type: String,
+      default: ''
+    },
+    defaultSubject: {
+      type: String,
+      default: ''
+    },
+    relatedAD: {
+      type: String,
+      default: ''
+    }
+  },
   data () {
     return {
       subject: '',
       content: ''
     }
   },
+  created () {
+    if (this.defaultSubject != '') {
+      this.subject = this.defaultSubject
+    }
+  },
   methods: {
     sendMessage () {
       console.log('sub', this.subject)
-      this.$awn.async(this.makePetition(FigureSite.sendMessage(this.receiver, this.subject, this.content)), 'Mensaje enviado correctamente.', 'Error enviando mensaje', 'Enviando mensaje')
+      if (this.relatedAD != '') {
+        this.$awn.async(this.makePetition(FigureSite.sendMessageWithAD(this.receiver, this.subject, this.content, this.relatedAD)), 'Mensaje enviado correctamente.', 'Error enviando mensaje', 'Enviando mensaje')
+
+      } else {
+        this.$awn.async(this.makePetition(FigureSite.sendMessage(this.receiver, this.subject, this.content)), 'Mensaje enviado correctamente.', 'Error enviando mensaje', 'Enviando mensaje')
+      }
       this.$parent.close()
     }
   },
