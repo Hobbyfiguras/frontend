@@ -18,8 +18,8 @@
                 <p class="is-size-7">por <a>{{post.creator.username}}</a> en {{post.thread.forum.name}}</p>
               </article>
             </router-link>
-            <router-link class="has-text-right has-text-primary" :to="{ name: 'forum_recent' }">Mostrar más</router-link>
-            <div class="tile is-child  notification is-primary post-time is-size-7 friendsites-title">
+            <router-link class="has-text-right has-text-primary show-more-url" :to="{ name: 'forum_recent' }">Mostrar más</router-link>
+            <div class="tile is-child notification is-primary post-time is-size-7">
               <div class="level is-mobile">
                 <div class="level-left">Webs amigas</div>
                 <div class="level-right">
@@ -104,7 +104,7 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style>
-.friendsites-title {
-  margin-top: 1rem !important;
+.show-more-url {
+  margin-bottom: 1rem !important;
 }
 </style>
