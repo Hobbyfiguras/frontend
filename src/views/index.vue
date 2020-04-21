@@ -19,9 +19,13 @@
               </article>
             </router-link>
             <router-link class="has-text-right has-text-primary" :to="{ name: 'forum_recent' }">Mostrar más</router-link>
-            <h2 class="title is-2">
-              Webs amigas
-            </h2>
+            <div class="tile is-child  notification is-primary post-time is-size-7">
+              <div class="level is-mobile">
+                <div class="level-left">Webs amigas</div>
+                <div class="level-right">
+                </div>
+              </div>
+            </div>
             <div class="tile is-child ">
               <div class="level is-mobile">
                 <a href="https://animeagari.com/"><img src="@/assets/images/banner_animeagari.png" /></a>
