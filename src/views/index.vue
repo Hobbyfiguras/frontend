@@ -19,7 +19,7 @@
               </article>
             </router-link>
             <router-link class="has-text-right has-text-primary" :to="{ name: 'forum_recent' }">Mostrar más</router-link>
-            <div class="tile is-child  notification is-primary post-time is-size-7">
+            <div class="tile is-child  notification is-primary post-time is-size-7 friendsites-title">
               <div class="level is-mobile">
                 <div class="level-left">Webs amigas</div>
                 <div class="level-right">
@@ -103,6 +103,8 @@ export default {
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style lang="scss">
-
+<style>
+.friendsites-title {
+  margin-top: 1rem !important;
+}
 </style>
