@@ -111,7 +111,7 @@
 
 .notification a:not(.button) {
   color: currentColor;
-  text-decoration: none;
+  text-decoration: none !important;
 }
 
 .is-vertical-center {

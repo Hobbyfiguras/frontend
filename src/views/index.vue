@@ -47,6 +47,12 @@
         </div>
       </div>
       <div class="column is-four-fifths">
+        <div class="tile">
+          <b-tabs expanded @change="tabsChanged" type="is-toggle">
+            <b-tab-item label="Noticias" icon="newspaper"></b-tab-item>
+            <b-tab-item label="Reviews" icon="camera"></b-tab-item>
+          </b-tabs>
+        </div>
         <div class="tile is-vertical is-ancestor">
           <NewsItem
             v-for="newsItem in news.results"
@@ -82,6 +88,7 @@ export default {
     return {
       news: [],
       posts: [],
+      mode: "normal", // normal or highlighted
       itemsPerPage: 10,
       currentPage: 1
     };
@@ -94,17 +101,42 @@ export default {
     $route: "fetchData"
   },
   methods: {
+    setMode(mode) {
+      console.log("setting mode! ", mode);
+      if (this.mode != mode) {
+        this.mode = mode;
+        this.currentPage = 1;
+        this.fetchData();
+      }
+    },
+    tabsChanged(new_tab_i) {
+      if (new_tab_i === 0) {
+        this.setMode("normal");
+      } else {
+        this.setMode("highlighted");
+      }
+    },
     fetchData() {
       if (this.$route.query.page) {
         var page = parseInt(this.$route.query.page);
         this.currentPage = page;
       }
-      this.makePetition(Forum.getFrontPageThreads(this.currentPage, 10)).then(
-        news => {
-          this.news = news;
-          console.log("news", this.news);
-        }
-      );
+      if (this.mode === "normal") {
+        this.makePetition(Forum.getFrontPageThreads(this.currentPage, 10)).then(
+          news => {
+            this.news = news;
+            console.log("news", this.news);
+          }
+        );
+      } else if (this.mode === "highlighted") {
+        this.makePetition(Forum.getHighlighted(this.currentPage, 10)).then(
+          news => {
+            this.news = news;
+            console.log("news", this.news);
+          }
+        );
+      }
+
       this.makePetition(Forum.getPosts()).then(posts => {
         this.posts = posts.results;
       });

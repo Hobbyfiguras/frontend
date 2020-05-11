@@ -45,6 +45,9 @@ export default {
   async getNews(page = 1, pageSize = 20) {
     return API.makeGET(`/api/forum/noticias-y-novedades/threads/?page=${page}&page_size=${pageSize}&ordering=-created`)
   },
+  async getHighlighted(page = 1, pageSize = 20) {
+    return API.makeGET(`/api/thread/highlighted?page=${page}&page_size=${pageSize}`)
+  },
   async getFrontPageThreads(page = 1, pageSize = 20) {
     return API.makeGET(`/api/thread/front_page?page=${page}&page_size=${pageSize}`)
   },
