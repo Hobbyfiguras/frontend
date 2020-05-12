@@ -124,7 +124,7 @@ export default {
       });
     },
     createForum(category) {
-      this.buefy.$modal.open({
+      this.$buefy.modal.open({
         parent: this,
         component: CreateForum,
         hasModalCard: true,

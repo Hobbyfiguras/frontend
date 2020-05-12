@@ -49,7 +49,7 @@ export default {
       );
     },
     createCategory() {
-      this.buefy.$modal.open({
+      this.$buefy.modal.open({
         parent: this,
         component: CreateForumCategory,
         hasModalCard: true,

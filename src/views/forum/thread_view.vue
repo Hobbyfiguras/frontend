@@ -255,7 +255,7 @@ export default {
   }, 500), // increase to ur needs
   methods: {
     openMoveThreadModal() {
-      this.buefy.$modal.open({
+      this.$buefy.modal.open({
         parent: this,
         component: MoveThreadModal,
         props: { thread: this.thread },
