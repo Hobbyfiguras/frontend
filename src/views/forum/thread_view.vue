@@ -296,7 +296,7 @@ export default {
       this.$refs.postCreate.addText(text);
     },
     makeNSFW() {
-      this.$dialog.confirm({
+      this.$buefy.dialog.confirm({
         title: "Hacer el hilo NSFW",
         message: "Esta acción no se puede revertir, ¿estás seguro?.",
         confirmText: "Aceptar",
