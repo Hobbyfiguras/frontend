@@ -2,98 +2,98 @@ import API from './api'
 
 export default {
   // Forum categories
-  async getForumCategories () {
+  async getForumCategories() {
     return API.makeGET('/api/forum/categories/')
   },
-  async createForumCategory (payload) {
+  async createForumCategory(payload) {
     return API.makePOST('/api/forum/categories/', payload)
   },
-  async updateForumCategory (payload) {
+  async updateForumCategory(payload) {
     return API.makePATCH(`/api/forum/categories/${payload.slug}/`)
   },
-  async deleteForumCategory (id) {
+  async deleteForumCategory(id) {
     return API.makeDELETE(`/api/forum/categories/${id}/`)
   },
   // Forum
-  async createForum (payload) {
+  async createForum(payload) {
     return API.makePOST('/api/forum/', payload)
   },
-  async getForum (slug) {
+  async getForum(slug) {
     return API.makeGET(`/api/forum/${slug}/`)
   },
-  async moveForumUp (slug) {
+  async moveForumUp(slug) {
     return API.makePOST(`/api/forum/${slug}/move_up/`, {})
   },
-  async moveForumDown (slug) {
+  async moveForumDown(slug) {
     return API.makePOST(`/api/forum/${slug}/move_down/`, {})
   },
-  async deleteForum (slug) {
+  async deleteForum(slug) {
     return API.makeDELETE(`/api/forum/${slug}/`)
   },
-  async updateForum (slug, payload) {
+  async updateForum(slug, payload) {
     return API.makePATCH(`/api/forum/${slug}/`, payload)
   },
-  async getThreads (page = 1, pageSize = 5) {
+  async getThreads(page = 1, pageSize = 5) {
     return API.makeGET(`/api/thread/?page=${page}&page_size=${pageSize}`)
   },
-  async getPosts (page = 1, pageSize = 5) {
+  async getPosts(page = 1, pageSize = 5) {
     return API.makeGET(`/api/posts/?page=${page}&page_size=${pageSize}`)
   },
-  async getForumThreads (slug, page = 1, pageSize = 20) {
+  async getForumThreads(slug, page = 1, pageSize = 20) {
     return API.makeGET(`/api/forum/${slug}/threads/?page=${page}&page_size=${pageSize}`)
   },
-  async getNews (page = 1, pageSize = 20) {
+  async getNews(page = 1, pageSize = 20) {
     return API.makeGET(`/api/forum/noticias-y-novedades/threads/?page=${page}&page_size=${pageSize}&ordering=-created`)
   },
-  async getThread (id, page = 1) {
+  async getThread(id, page = 1) {
     return API.makeGET(`/api/thread/${id}/?page=${page}`)
   },
-  async updateThread (id, payload) {
+  async updateThread(id, payload) {
     return API.makePATCH(`/api/thread/${id}/`, payload)
   },
-  async createThread (forumSlug, payload) {
+  async createThread(forumSlug, payload) {
     return API.makePOST(`/api/forum/${forumSlug}/create_thread/`, payload)
   },
-  async updatePost (postID, newContent) {
+  async updatePost(postID, newContent) {
     return API.makePATCH(`/api/posts/${postID}/`, { content: newContent })
   },
-  async getPost (postID) {
+  async getPost(postID) {
     return API.makeGET(`/api/posts/${postID}/`)
   },
-  async deletePost (postID, reason) {
+  async deletePost(postID, reason) {
     return API.makePOST(`/api/posts/${postID}/delete/`, { delete_reason: reason })
   },
-  async createPost (thread, content) {
+  async createPost(thread, content) {
     return API.makePOST(`/api/thread/${thread.id}/create_post/`, { content: content })
   },
-  async getReports (page = 1) {
+  async getReports(page = 1) {
     return API.makeGET(`/api/reports/?page=${page}`)
   },
-  async getForumSettings () {
+  async getForumSettings() {
     return API.makeGET(`/api/settings/`)
   },
-  async votePost (postID, postTypeID) {
+  async votePost(postID, postTypeID) {
     return API.makePOST(`/api/posts/${postID}/vote/`, { vote_type: postTypeID })
   },
-  async changeThreadSubscription (postID, subscribed) {
+  async changeThreadSubscription(postID, subscribed) {
     return API.makePOST(`/api/thread/${postID}/change_subscription/`, { subscribed })
   },
-  async reportPost (reason, postID) {
+  async reportPost(reason, postID) {
     return API.makePOST(`/api/posts/${postID}/report/`, { reason })
   },
-  async banUserForPost (user, payload) {
+  async banUserForPost(user, payload) {
     return API.makePOST(`/api/users/${user.username}/ban_user/`, payload)
   },
-  async threadSearch (text = '', username = '', forum = '', page = 1) {
+  async threadSearch(text = '', username = '', forum = '', page = 1) {
     return API.makeGET(`/api/search/threads/?text=${text}&username=${username}&forum__exact=${forum}&page=${page}`)
   },
-  async userSearch (text = '', page = 1) {
+  async userSearch(text = '', page = 1) {
     return API.makeGET(`/api/search/users/?text__fuzzy=${text}&page=${page}`)
   },
-  async makeThreadNSFW (thread) {
+  async makeThreadNSFW(thread) {
     return API.makePOST(`/api/thread/${thread}/make_nsfw/`)
   },
-  async moveThread (thread, forum) {
+  async moveThread(thread, forum) {
     return API.makePOST(`/api/thread/${thread}/move_thread/`, { forum: forum })
   }
 }

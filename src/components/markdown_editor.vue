@@ -466,7 +466,7 @@ export default {
         )
         this.selectTextBack(action.content.suffix ? action.content.suffix.length : 0, desiredContent.length)
       } else if (action.usesPrompt) {
-        this.$dialog.prompt({
+        this.$buefy.dialog.prompt({
           message: action.inputText,
           confirmText: 'Insertar',
           cancelText: 'Cancelar',

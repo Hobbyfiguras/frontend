@@ -223,10 +223,11 @@ const router = new Router({
         {
           path: 'crear',
           name: 'classifieds_create',
+          beforeEnter: requireAuth,
           component: () => import(/* webpackChunkName: "classifieds" */ '@/views/classifieds/classifieds_create')
         },
         {
-          path: 'buscar/:text',
+          path: 'buscar/:category/:text?',
           props: true,
           name: 'classifieds_search',
           component: () => import(/* webpackChunkName: "classifieds" */ '@/views/classifieds/classifieds_search')

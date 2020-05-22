@@ -1,8 +1,12 @@
 import API from './api'
 
 export default {
-    async getClassifieds (searchTerm = "", page = 1) {
-      return API.makeGET(`/api/search/classifieds?text=${searchTerm}&page=${page}`)
+    async getClassifieds (searchTerm = "", category = "", page = 1) {
+      var req = `/api/search/classifieds?text=${searchTerm}&page=${page}`
+      if (category !== "") {
+        req = req + `&category__exact=${category}`
+      }
+      return API.makeGET(req)
     },
     async createAD (payload) {
       return API.makePOST('/api/classifieds/create_ad/', payload, true)
@@ -15,6 +19,9 @@ export default {
     },
     async sendReview(slug, content, recommended) {
       return API.makePOST(`/api/classifieds/${slug}/send_review/`, {content, recommended})
+    },
+    async getCategories() {
+      return API.makeGET('/api/classified_categories')
     }
   }
   

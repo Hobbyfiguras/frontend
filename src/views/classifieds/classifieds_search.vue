@@ -22,7 +22,7 @@ import ClassifiedItem from '@/components/classifieds/classified_item'
 import PetitionsMixin from '@/components/mixins/petitions'
 import debounce from 'debounce'
 export default {
-  props: ["text", "page"],
+  props: ["text", "page", "category"],
   components: { ClassifiedItem },
   mounted () {
     this.fetchData()
@@ -41,7 +41,7 @@ export default {
   },
   methods: {
     fetchData () {
-      this.makePetition(Classifieds.getClassifieds(this.text, this.currentPage), true, true).then((classifieds) => {
+      this.makePetition(Classifieds.getClassifieds(this.text, this.category, this.currentPage), true, true).then((classifieds) => {
         this.classifieds = []
         for (let i = 0; i < classifieds.results.length; i++) {
           // classified search results are slightly different from what ClassifiedItem expects.

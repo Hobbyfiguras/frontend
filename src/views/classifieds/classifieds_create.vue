@@ -8,6 +8,11 @@
       <b-input v-model="description" type="textarea" maxlength="4000" placeholder="Kirino Kousaka la vampira vegana"></b-input>
     </b-field>
     <b-field>
+      <b-select v-model="selectedCategory" placeholder="Category">
+        <option v-for="category in categories" :key="category.slug" :value="category.slug">{{category.name}}</option>
+      </b-select>
+    </b-field>
+    <b-field>
       <b-select v-model="selectedCurrency" placeholder="Currency">
         <option v-for="currency in getAllowedCurrencies()" :key="currency.code" :value="currency.code">{{currency.currency}}</option>
       </b-select>
@@ -64,11 +69,22 @@ export default {
       selectedCurrency: 'EUR',
       description: '',
       title: '',
-      price: 0.0
+      price: 0.0,
+      categories: [],
+      selectedCategory: ""
     }
+  },
+  created () {
+    this.getCategories();
   },
   mixins: [PetitionsMixin],
   methods: {
+    getCategories() {
+      this.makePetition(Classifieds.getCategories()).then((categories) => {
+          this.categories = categories
+          this.selectedCategory = this.categories[0].slug
+      })
+    },
     deleteDropFile(index) {
       this.dropFiles.splice(index, 1)
     },
@@ -83,9 +99,11 @@ export default {
       var request = {
         content: this.description,
         price: this.price,
+        category: this.selectedCategory,
         price_currency: this.selectedCurrency,
-        title: this.title
+        title: this.title,
       }
+      console.log("req", request)
       var form_data = new FormData();
 
       var options = {
