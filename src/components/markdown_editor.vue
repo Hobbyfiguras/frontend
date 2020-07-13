@@ -79,7 +79,7 @@ export default {
       default: () => [
         ["bold", "italic", "underline", "strikethrough", "mark"],
         ["header"],
-        ["center"],
+        ["center", "justify"],
         ["ol", "ul"],
         ["superscript", "subscript"],
         ["image", "link", "video_youtube", "mfc"],
@@ -131,6 +131,17 @@ export default {
           },
           icon: "format-align-center",
           name: "Centrar",
+          newLineRequired: false,
+          selectable: true
+        },
+        justify: {
+          content: {
+            prefix: "-|",
+            dummy: "Justificar",
+            suffix: "|-"
+          },
+          icon: "format-align-justify",
+          name: "Justificar",
           newLineRequired: false,
           selectable: true
         },
