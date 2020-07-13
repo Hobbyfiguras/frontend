@@ -136,9 +136,9 @@ export default {
         },
         justify: {
           content: {
-            prefix: "-|",
+            prefix: "!",
             dummy: "Justificar",
-            suffix: "|-"
+            suffix: "!-"
           },
           icon: "format-align-justify",
           name: "Justificar",
