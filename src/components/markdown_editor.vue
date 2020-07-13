@@ -136,7 +136,7 @@ export default {
         },
         justify: {
           content: {
-            prefix: "!",
+            prefix: "-!",
             dummy: "Justificar",
             suffix: "!-"
           },
