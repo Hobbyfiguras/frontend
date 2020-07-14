@@ -117,6 +117,7 @@ export default {
       }
     },
     fetchData() {
+      console.log('query', this.$route.query.page)
       if (this.$route.query.page) {
         var page = parseInt(this.$route.query.page);
         this.currentPage = page;
