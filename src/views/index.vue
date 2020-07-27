@@ -53,12 +53,12 @@
             <b-tab-item label="Reviews" icon="camera"></b-tab-item>
           </b-tabs>
         </div>
-        <div class="tile is-vertical is-ancestor">
+        <div class="tile is-ancestor news-tile">
           <NewsItem
             v-for="newsItem in news.results"
             :key="newsItem.id"
             :newsItem="newsItem"
-            class="tile is-parent is-vertical"
+            class="tile is-parent is-vertical is-4"
           ></NewsItem>
         </div>
         <b-pagination
@@ -89,7 +89,7 @@ export default {
       news: [],
       posts: [],
       mode: "normal", // normal or highlighted
-      itemsPerPage: 10,
+      itemsPerPage: 9,
       currentPage: 1
     };
   },
@@ -123,14 +123,14 @@ export default {
         this.currentPage = page;
       }
       if (this.mode === "normal") {
-        this.makePetition(Forum.getFrontPageThreads(this.currentPage, 10)).then(
+        this.makePetition(Forum.getFrontPageThreads(this.currentPage, 9)).then(
           news => {
             this.news = news;
             console.log("news", this.news);
           }
         );
       } else if (this.mode === "highlighted") {
-        this.makePetition(Forum.getHighlighted(this.currentPage, 10)).then(
+        this.makePetition(Forum.getHighlighted(this.currentPage, 9)).then(
           news => {
             this.news = news;
             console.log("news", this.news);
@@ -157,5 +157,9 @@ export default {
 <style>
 .show-more-url {
   margin-bottom: 1rem !important;
+}
+
+.news-tile {
+  flex-wrap: wrap;
 }
 </style>
