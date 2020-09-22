@@ -3,7 +3,7 @@
       <Menu ref="navItem" :noOverlay="true" right>
         <div class="level is-marginless bm-top" v-if="user">
           <div class="level-left bm-level-item">
-            <a href="https://discord.gg/FCTrhaQ"><b-icon icon="discord"></b-icon></a>
+            <a href="https://discord.gg/UhKUZm"><b-icon icon="discord"></b-icon></a>
             <a href="https://twitter.com/Hobbyfiguras"><b-icon icon="twitter"></b-icon></a>
             <a href="https://www.instagram.com/Hobbyfiguras/"><b-icon icon="instagram"></b-icon></a>
             <a href="https://t.me/hobbyfiguras"><b-icon icon="telegram"></b-icon></a>
@@ -22,7 +22,7 @@
         <template v-else>
         <div class="level is-marginless bm-top">
           <div class="level-left bm-level-item">
-            <a href="https://discord.gg/FCTrhaQ"><b-icon icon="discord"></b-icon></a>
+            <a href="https://discord.gg/UhKUZm"><b-icon icon="discord"></b-icon></a>
             <a href="https://twitter.com/Hobbyfiguras"><b-icon icon="twitter"></b-icon></a>
             <a href="https://t.me/hobbyfiguras"><b-icon icon="telegram"></b-icon></a>
           </div>
@@ -69,7 +69,7 @@
               <router-link :to="{name: 'search'}" class="navbar-item" active-class="is-active"  slot="trigger"><b-icon icon="magnify"></b-icon></router-link>
             </div>
             <div class="navbar-end">
-              <a class="navbar-item" href="https://discord.gg/R7X78fy"><b-icon icon="discord"></b-icon></a>
+              <a class="navbar-item" href="https://discord.gg/UhKUZm"><b-icon icon="discord"></b-icon></a>
               <a class="navbar-item" href="https://twitter.com/Hobbyfiguras"><b-icon icon="twitter"></b-icon></a>
               <a class="navbar-item" href="https://www.instagram.com/Hobbyfiguras/"><b-icon icon="instagram"></b-icon></a>
               <a class="navbar-item" href="https://t.me/hobbyfiguras"><b-icon icon="telegram"></b-icon></a>
